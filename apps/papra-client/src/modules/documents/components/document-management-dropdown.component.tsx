@@ -4,7 +4,6 @@ import type { Document } from '../documents.types';
 import { A } from '@solidjs/router';
 import { Show } from 'solid-js';
 import { useConfig } from '@/modules/config/config.provider';
-import { useShareDocumentDialog } from '@/modules/document-share-links/components/share-document-dialog.component';
 import { useI18n } from '@/modules/i18n/i18n.provider';
 import { Button } from '@/modules/ui/components/button';
 import {
@@ -31,7 +30,6 @@ export const DocumentManagementDropdown: Component<{ document: Document }> = (pr
   const { deleteDocument } = useDeleteDocument();
   const { downloadDocument } = useDownloadDocument();
   const { openRenameDialog } = useRenameDocumentDialog();
-  const { openShareDialog } = useShareDocumentDialog();
   const { t } = useI18n();
 
   const deleteDoc = async () =>
@@ -85,20 +83,6 @@ export const DocumentManagementDropdown: Component<{ document: Document }> = (pr
         >
           <div class="i-tabler-download size-4 mr-2" />
           <span>{t('documents.actions.download.title')}</span>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem
-          class="cursor-pointer"
-          onClick={() =>
-            openShareDialog({
-              documentId: props.document.id,
-              organizationId: props.document.organizationId,
-              documentName: props.document.name,
-            })
-          }
-        >
-          <div class="i-tabler-share size-4 mr-2" />
-          <span>{t('document-share-links.share-action')}</span>
         </DropdownMenuItem>
 
         <DropdownMenuItem
