@@ -120,7 +120,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'user.settings.description': 'Configurează setările contului aici.',
 
   'user.settings.email.title': 'Adresa de e-mail',
-  'user.settings.email.description': 'Adresa de e-mail nu poate fi schimbată.',
   'user.settings.email.label': 'Adresa de e-mail',
 
   'user.settings.name.title': 'Numele complet',
@@ -558,7 +557,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Afișează panoul lateral',
   'documents.pdf-viewer.toolbar.previous-page': 'Pagina anterioară',
   'documents.pdf-viewer.toolbar.next-page': 'Pagina următoare',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Rotire în sensul acelor de ceasornic',
   'documents.pdf-viewer.toolbar.download': 'Descarcă',
   'documents.pdf-viewer.toolbar.print': 'Tipărește',
 

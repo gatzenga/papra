@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import type { Document } from '../documents.types';
-import { useParams } from '@solidjs/router';
+import { useParams } from '@/modules/shared/router/use-params';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/solid-query';
 import { createSignal, Show, Suspense } from 'solid-js';
 import { useConfig } from '@/modules/config/config.provider';

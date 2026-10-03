@@ -120,7 +120,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'user.settings.description': 'Hantera dina kontoinställningar här.',
 
   'user.settings.email.title': 'E-postadress',
-  'user.settings.email.description': 'Din e-postadress kan inte ändras.',
   'user.settings.email.label': 'E-postadress',
 
   'user.settings.name.title': 'Fullständigt namn',
@@ -552,7 +551,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Visa sidofältet',
   'documents.pdf-viewer.toolbar.previous-page': 'Föregående sida',
   'documents.pdf-viewer.toolbar.next-page': 'Nästa sida',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Rotera medurs',
   'documents.pdf-viewer.toolbar.download': 'Ladda ner',
   'documents.pdf-viewer.toolbar.print': 'Skriv ut',
 

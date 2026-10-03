@@ -114,7 +114,6 @@ export const translations = {
   'user.settings.description': 'Tu môžete spravovať nastavenia svojho účtu.',
 
   'user.settings.email.title': 'E-mailová adresa',
-  'user.settings.email.description': 'Vašu e-mailovú adresu nie je možné zmeniť.',
   'user.settings.email.label': 'E-mailová adresa',
 
   'user.settings.name.title': 'Celé meno',
@@ -566,7 +565,6 @@ export const translations = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Zobraziť bočný panel',
   'documents.pdf-viewer.toolbar.previous-page': 'Predchádzajúca strana',
   'documents.pdf-viewer.toolbar.next-page': 'Nasledujúca strana',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Otočiť doprava',
   'documents.pdf-viewer.toolbar.download': 'Stiahnuť',
   'documents.pdf-viewer.toolbar.print': 'Tlačiť',
 

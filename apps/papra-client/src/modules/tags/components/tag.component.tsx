@@ -58,7 +58,6 @@ export const TagLink: Component<
       href={
         props.href ??
         makeDocumentSearchPermalink({
-          organizationId: props.organizationId,
           search: { tags: [props] },
         })
       }

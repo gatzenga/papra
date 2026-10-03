@@ -73,13 +73,21 @@ export async function applyPdfOptimization({
 
   const previousStorageKey = document.originalStorageKey;
 
-  // 1. The new file goes next to the old one, under a free key
-  const { storageKey: newStorageKey } = await createDocumentStorageKey({
+  // 1. The new file goes next to the old one, under a free key (the usual key is taken by the old file)
+  const { storageKey: initialStorageKey } = await createDocumentStorageKey({
     documentId: document.id,
     documentName: document.name,
     documentDate: document.documentDate,
     documentCreatedAt: document.createdAt,
     organizationId: document.organizationId,
+  });
+
+  const { storageKey: newStorageKey } = await ensureStorageKeyIsAvailable({
+    initialStorageKey,
+    maxIncrementalSuffixAttempts,
+    enableRandomSuffixFallback,
+    storageService: documentsStorageService,
+    logger,
   });
 
   const encryptionContext = await documentsStorageService.saveFile({

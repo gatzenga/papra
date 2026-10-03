@@ -121,7 +121,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'user.settings.description': 'Διαχειριστείτε τις ρυθμίσεις του λογαριασμού σας εδώ.',
 
   'user.settings.email.title': 'Διεύθυνση email',
-  'user.settings.email.description': 'Η διεύθυνση email δεν μπορεί να αλλάξει.',
   'user.settings.email.label': 'Διεύθυνση email',
 
   'user.settings.name.title': 'Πλήρες όνομα',
@@ -559,7 +558,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Εμφάνιση πλαϊνής στήλης',
   'documents.pdf-viewer.toolbar.previous-page': 'Προηγούμενη σελίδα',
   'documents.pdf-viewer.toolbar.next-page': 'Επόμενη σελίδα',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Δεξιόστροφη περιστροφή',
   'documents.pdf-viewer.toolbar.download': 'Λήψη',
   'documents.pdf-viewer.toolbar.print': 'Εκτύπωση',
 

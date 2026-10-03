@@ -44,11 +44,7 @@ export const DocumentManagementDropdown: Component<{ document: Document }> = (pr
         )}
       />
       <DropdownMenuContent class="min-w-48">
-        <DropdownMenuItem
-          class="cursor-pointer "
-          as={A}
-          href={`/organizations/${props.document.organizationId}/documents/${props.document.id}`}
-        >
+        <DropdownMenuItem class="cursor-pointer " as={A} href={`/documents/${props.document.id}`}>
           <div class="i-tabler-info-circle size-4 mr-2" />
           <span>{t('documents.management.details')}</span>
         </DropdownMenuItem>

@@ -1,14 +1,37 @@
 import type { TEventBusEvent } from '@pdfslick/solid';
 import type { Component } from 'solid-js';
 import type { ToolbarProps } from '../pdf-viewer.types';
-import { createEffect, createSignal, onCleanup, Show } from 'solid-js';
+import { createEffect, createSignal, onCleanup, onMount, Show } from 'solid-js';
 import { useI18n } from '@/modules/i18n/i18n.provider';
 import { Button } from '@/modules/ui/components/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/modules/ui/components/tooltip';
 import { MoreActionsMenu } from './more-actions-menu.component';
 import { ZoomSelector } from './zoom-selector.component';
 
+// Below these toolbar widths the zoom controls, then every action, make room
+const ZOOM_MIN_WIDTH = 440;
+const ACTIONS_MIN_WIDTH = 560;
+
 export const PdfViewerToolbar: Component<ToolbarProps> = (props) => {
+  // oxlint-disable-next-line no-unassigned-vars -- assigned via Solid ref binding in JSX
+  let rootRef!: HTMLDivElement;
+  const [getWidth, setWidth] = createSignal(Infinity);
+
+  onMount(() => {
+    const observer = new ResizeObserver(([entry]) => {
+      if (entry) {
+        setWidth(entry.contentRect.width);
+      }
+    });
+
+    observer.observe(rootRef);
+    onCleanup(() => observer.disconnect());
+  });
+
+  const getShowZoom = () => getWidth() >= ZOOM_MIN_WIDTH;
+  // Actions are buttons while they fit, then they all move into the menu together
+  const getIsCompact = () => getWidth() < ACTIONS_MIN_WIDTH;
+
   // oxlint-disable-next-line no-unassigned-vars -- assigned via Solid ref binding in JSX
   let pageNumberRef!: HTMLInputElement;
   const { t } = useI18n();
@@ -60,7 +83,10 @@ export const PdfViewerToolbar: Component<ToolbarProps> = (props) => {
   };
 
   return (
-    <div class="flex items-center justify-between px-1 py-1 border-b bg-card text-card-foreground shrink-0 select-none">
+    <div
+      ref={rootRef}
+      class="flex items-center justify-between px-1 py-1 border-b bg-card text-card-foreground shrink-0 select-none"
+    >
       <div class="flex items-center">
         <Tooltip>
           <TooltipTrigger
@@ -90,11 +116,13 @@ export const PdfViewerToolbar: Component<ToolbarProps> = (props) => {
 
         <div class="mx-1 h-5 w-1px bg-border" />
 
-        <div class="hidden sm:flex items-center">
-          <ZoomSelector store={props.store} />
-        </div>
+        <Show when={getShowZoom()}>
+          <div class="flex items-center">
+            <ZoomSelector store={props.store} />
+          </div>
 
-        <div class="mx-0.5 h-5 w-px bg-border hidden sm:block" />
+          <div class="mx-0.5 h-5 w-px bg-border" />
+        </Show>
 
         <div class="flex items-center">
           <Tooltip>
@@ -152,41 +180,7 @@ export const PdfViewerToolbar: Component<ToolbarProps> = (props) => {
       </div>
 
       <div class="flex items-center">
-        <Tooltip>
-          <TooltipTrigger
-            as={(triggerProps: Record<string, unknown>) => (
-              <Button
-                {...triggerProps}
-                variant="ghost"
-                size="icon"
-                class="size-8 hidden md:inline-flex"
-                onClick={() => props.store.pdfSlick?.setRotation(props.store.pagesRotation + 90)}
-              >
-                <div class="i-tabler-rotate-clockwise size-4" />
-              </Button>
-            )}
-          />
-          <TooltipContent>{t('documents.pdf-viewer.toolbar.rotate-clockwise')}</TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger
-            as={(triggerProps: Record<string, unknown>) => (
-              <Button
-                {...triggerProps}
-                variant="ghost"
-                size="icon"
-                class="size-8 hidden sm:inline-flex"
-                onClick={() => props.store.pdfSlick?.downloadOrSave()}
-              >
-                <div class="i-tabler-download size-4" />
-              </Button>
-            )}
-          />
-          <TooltipContent>{t('documents.pdf-viewer.toolbar.download')}</TooltipContent>
-        </Tooltip>
-
-        <Show when={props.store.pdfSlick?.supportsPrinting}>
+        <Show when={!getIsCompact()}>
           <Tooltip>
             <TooltipTrigger
               as={(triggerProps: Record<string, unknown>) => (
@@ -194,18 +188,54 @@ export const PdfViewerToolbar: Component<ToolbarProps> = (props) => {
                   {...triggerProps}
                   variant="ghost"
                   size="icon"
-                  class="size-8 hidden sm:inline-flex"
-                  onClick={() => props.store.pdfSlick?.triggerPrinting()}
+                  class="size-8"
+                  onClick={() => props.onSearch()}
                 >
-                  <div class="i-tabler-printer size-4" />
+                  <div class="i-tabler-search size-4" />
                 </Button>
               )}
             />
-            <TooltipContent>{t('documents.pdf-viewer.toolbar.print')}</TooltipContent>
+            <TooltipContent>{t('documents.pdf-viewer.toolbar.search')}</TooltipContent>
           </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger
+              as={(triggerProps: Record<string, unknown>) => (
+                <Button
+                  {...triggerProps}
+                  variant="ghost"
+                  size="icon"
+                  class="size-8"
+                  onClick={() => props.store.pdfSlick?.downloadOrSave()}
+                >
+                  <div class="i-tabler-download size-4" />
+                </Button>
+              )}
+            />
+            <TooltipContent>{t('documents.pdf-viewer.toolbar.download')}</TooltipContent>
+          </Tooltip>
+
+          <Show when={props.store.pdfSlick?.supportsPrinting}>
+            <Tooltip>
+              <TooltipTrigger
+                as={(triggerProps: Record<string, unknown>) => (
+                  <Button
+                    {...triggerProps}
+                    variant="ghost"
+                    size="icon"
+                    class="size-8"
+                    onClick={() => props.store.pdfSlick?.triggerPrinting()}
+                  >
+                    <div class="i-tabler-printer size-4" />
+                  </Button>
+                )}
+              />
+              <TooltipContent>{t('documents.pdf-viewer.toolbar.print')}</TooltipContent>
+            </Tooltip>
+          </Show>
         </Show>
 
-        <MoreActionsMenu store={props.store} />
+        <MoreActionsMenu store={props.store} isCompact={getIsCompact()} onSearch={props.onSearch} />
       </div>
     </div>
   );

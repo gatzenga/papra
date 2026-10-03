@@ -223,16 +223,10 @@ export function makeDocumentSearchQuery({ tags = [], query }: DocumentSearchCrit
     .join(' ');
 }
 
-export function makeDocumentSearchPermalink({
-  organizationId,
-  search,
-}: {
-  organizationId: string;
-  search: DocumentSearchCriteria;
-}) {
+export function makeDocumentSearchPermalink({ search }: { search: DocumentSearchCriteria }) {
   const queryString = makeDocumentSearchQuery(search);
 
-  return `/organizations/${organizationId}/documents?query=${encodeURIComponent(queryString)}`;
+  return `/documents?query=${encodeURIComponent(queryString)}`;
 }
 
 const pdfMimeTypes = ['application/pdf'];
@@ -256,7 +250,7 @@ export function getDocumentOpenWithApps({
         id: 'pdf-viewer',
         labelKey: 'documents.open-with.pdf-viewer',
         icon: 'i-tabler-file-type-pdf',
-        href: `/organizations/${document.organizationId}/documents/${document.id}/pdf-viewer`,
+        href: `/documents/${document.id}/pdf-viewer`,
       },
     },
   ];

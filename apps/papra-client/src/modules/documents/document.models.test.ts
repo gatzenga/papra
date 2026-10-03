@@ -367,7 +367,6 @@ describe('files models', () => {
   describe('makeDocumentSearchPermalink', () => {
     test('constructs a url-safe permalink for document search with search query', () => {
       const permalink = makeDocumentSearchPermalink({
-        organizationId: 'org-123',
         search: {
           tags: [{ name: 'invoices', id: 'tag_1111' }, { name: 'receipts' }, { id: 'tag_2222' }],
           query: 'financial report',
@@ -375,7 +374,7 @@ describe('files models', () => {
       });
 
       expect(permalink).to.eql(
-        '/organizations/org-123/documents?query=tag%3Ainvoices%20tag%3Areceipts%20tag%3Atag_2222%20financial%20report',
+        '/documents?query=tag%3Ainvoices%20tag%3Areceipts%20tag%3Atag_2222%20financial%20report',
       );
     });
   });

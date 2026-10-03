@@ -3,7 +3,8 @@ import type { Component, JSX, ValidComponent } from 'solid-js';
 import type { Tag as TagType } from '../tags.types';
 import { safely } from '@corentinth/chisels';
 import { getValues, setValue } from '@modular-forms/solid';
-import { A, useParams } from '@solidjs/router';
+import { A } from '@solidjs/router';
+import { useParams } from '@/modules/shared/router/use-params';
 import { useMutation, useQuery } from '@tanstack/solid-query';
 import {
   createSolidTable,
@@ -403,7 +404,6 @@ export const TagsPage: Component = () => {
         cell: (data) => (
           <A
             href={makeDocumentSearchPermalink({
-              organizationId: params.organizationId,
               search: { tags: [data.row.original] },
             })}
             class="inline-flex items-center gap-1 hover:underline"

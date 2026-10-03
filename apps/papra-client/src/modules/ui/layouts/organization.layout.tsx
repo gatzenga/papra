@@ -1,6 +1,7 @@
 import type { Component, ParentComponent } from 'solid-js';
 
-import { A, useNavigate, useParams } from '@solidjs/router';
+import { A, useNavigate } from '@solidjs/router';
+import { useParams } from '@/modules/shared/router/use-params';
 import { AppLogo } from '@/modules/ui/components/app-logo';
 import { useQuery } from '@tanstack/solid-query';
 import { createEffect, on, onCleanup, onMount, Show } from 'solid-js';
@@ -36,17 +37,17 @@ const OrganizationLayoutSideNav: Component = () => {
         {
           label: t('layout.menu.home'),
           icon: 'i-tabler-home',
-          href: `/organizations/${params.organizationId}`,
+          href: `/home`,
         },
         {
           label: t('layout.menu.documents'),
           icon: 'i-tabler-file-text',
-          href: `/organizations/${params.organizationId}/documents`,
+          href: `/documents`,
         },
         {
           label: t('layout.menu.tags'),
           icon: 'i-tabler-tag',
-          href: `/organizations/${params.organizationId}/tags`,
+          href: `/tags`,
         },
       ],
     },
@@ -56,7 +57,7 @@ const OrganizationLayoutSideNav: Component = () => {
     {
       label: t('layout.menu.deleted-documents'),
       icon: 'i-tabler-trash',
-      href: `/organizations/${params.organizationId}/deleted`,
+      href: `/deleted`,
     },
   ];
 

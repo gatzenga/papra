@@ -1,5 +1,6 @@
 import type { Component } from 'solid-js';
-import { A, useParams } from '@solidjs/router';
+import { A } from '@solidjs/router';
+import { useParams } from '@/modules/shared/router/use-params';
 import { useQuery } from '@tanstack/solid-query';
 import { createMemo, lazy, onCleanup, Show, Suspense } from 'solid-js';
 import { useI18n } from '@/modules/i18n/i18n.provider';
@@ -76,12 +77,7 @@ export const DocumentPdfViewerPage: Component = () => {
               <span class="text-sm font-medium truncate">{documentQuery.data?.document.name}</span>
             </div>
 
-            <Button
-              as={A}
-              href={`/organizations/${params.organizationId}/documents/${params.documentId}`}
-              variant="ghost"
-              size="icon"
-            >
+            <Button as={A} href={`/documents/${params.documentId}`} variant="ghost" size="icon">
               <div class="i-tabler-x size-4" />
             </Button>
           </div>

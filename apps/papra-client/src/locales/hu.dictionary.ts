@@ -114,7 +114,6 @@ export const translations = {
   'user.settings.description': 'Itt kezelheti fiókbeállításait.',
 
   'user.settings.email.title': 'E-mail cím',
-  'user.settings.email.description': 'Az e-mail címe nem módosítható.',
   'user.settings.email.label': 'E-mail cím',
 
   'user.settings.name.title': 'Teljes név',
@@ -563,7 +562,6 @@ export const translations = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Oldalsáv megjelenítése',
   'documents.pdf-viewer.toolbar.previous-page': 'Előző oldal',
   'documents.pdf-viewer.toolbar.next-page': 'Következő oldal',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Forgatás az óramutató járásával megegyezően',
   'documents.pdf-viewer.toolbar.download': 'Letöltés',
   'documents.pdf-viewer.toolbar.print': 'Nyomtatás',
 

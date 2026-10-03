@@ -190,7 +190,7 @@ export const DocumentsPaginatedList: Component<{
 
             <div class="flex-1 flex flex-col gap-1 truncate">
               <A
-                href={`/organizations/${data.row.original.organizationId}/documents/${data.row.original.id}`}
+                href={`/documents/${data.row.original.id}`}
                 class="font-bold truncate block hover:underline"
                 title={data.row.original.name}
               >

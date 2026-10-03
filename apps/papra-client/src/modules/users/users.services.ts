@@ -19,3 +19,13 @@ export async function updateUser({ name }: { name: string }) {
 
   return { user };
 }
+
+export async function updateUserEmail({ email, password }: { email: string; password: string }) {
+  const { user } = await apiClient<{ user: Pick<UserMe, 'id' | 'email' | 'name'> }>({
+    path: '/api/users/me/email',
+    method: 'PUT',
+    body: { email, password },
+  });
+
+  return { user };
+}

@@ -22,6 +22,7 @@ export function createAuthClient() {
     requestPasswordReset: client.requestPasswordReset,
     resetPassword: client.resetPassword,
     sendVerificationEmail: client.sendVerificationEmail,
+    changePassword: client.changePassword,
     twoFactor: client.twoFactor,
     getSession: client.getSession,
     signOut: async () => {
@@ -44,6 +45,7 @@ export const {
   requestPasswordReset,
   resetPassword,
   sendVerificationEmail,
+  changePassword,
   twoFactor,
 } = isDemoMode ? createDemoAuthClient() : createAuthClient();
 

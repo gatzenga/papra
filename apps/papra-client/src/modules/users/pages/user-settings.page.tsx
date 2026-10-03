@@ -1,11 +1,14 @@
 import type { Component } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import { useQuery } from '@tanstack/solid-query';
-import { createSignal, Show, Suspense } from 'solid-js';
+import { createSignal, For, Show, Suspense } from 'solid-js';
 import * as v from 'valibot';
-import { signOut } from '@/modules/auth/auth.services';
+import { getValue, reset } from '@modular-forms/solid';
+import { changePassword, signOut } from '@/modules/auth/auth.services';
 import { useI18n } from '@/modules/i18n/i18n.provider';
 import { createForm } from '@/modules/shared/form/form';
+import { useI18nApiErrors } from '@/modules/shared/http/composables/i18n-api-errors';
+import { queryClient } from '@/modules/shared/query/query-client';
 import { Button } from '@/modules/ui/components/button';
 import {
   Card,
@@ -19,7 +22,7 @@ import { TextField, TextFieldLabel, TextFieldRoot } from '@/modules/ui/component
 import { TwoFactorCard } from '../components/two-factor-card';
 import { useUpdateCurrentUser } from '../users.composables';
 import { nameSchema } from '../users.schemas';
-import { fetchCurrentUser } from '../users.services';
+import { fetchCurrentUser, updateUserEmail } from '../users.services';
 import { authPagesPaths } from '@/modules/auth/auth.constants';
 
 const LogoutCard: Component = () => {
@@ -48,6 +51,33 @@ const LogoutCard: Component = () => {
 
 const UserEmailCard: Component<{ email: string }> = (props) => {
   const { t } = useI18n();
+  const { getErrorMessage } = useI18nApiErrors();
+
+  const { form, Form, Field } = createForm({
+    schema: v.object({
+      email: v.pipe(v.string(), v.trim(), v.email(t('user.settings.email.invalid'))),
+      password: v.string(),
+    }),
+    initialValues: {
+      email: props.email,
+      password: '',
+    },
+    onSubmit: async ({ email, password }) => {
+      try {
+        await updateUserEmail({ email: email.trim(), password });
+      } catch (error) {
+        createToast({ type: 'error', message: getErrorMessage({ error }) });
+        return;
+      }
+
+      await queryClient.invalidateQueries({ queryKey: ['users'], refetchType: 'all' });
+      reset(form, { initialValues: { email: email.trim().toLowerCase(), password: '' } });
+      createToast({ type: 'success', message: t('user.settings.email.updated') });
+    },
+  });
+
+  const getHasChanged = () =>
+    (getValue(form, 'email') ?? '').trim().toLowerCase() !== props.email.toLowerCase();
 
   return (
     <Card>
@@ -55,14 +85,165 @@ const UserEmailCard: Component<{ email: string }> = (props) => {
         <CardTitle>{t('user.settings.email.title')}</CardTitle>
         <CardDescription>{t('user.settings.email.description')}</CardDescription>
       </CardHeader>
-      <CardContent class="pt-6">
-        <TextFieldRoot>
-          <TextFieldLabel for="email" class="sr-only">
-            {t('user.settings.email.label')}
-          </TextFieldLabel>
-          <TextField id="email" value={props.email} disabled readOnly />
-        </TextFieldRoot>
-      </CardContent>
+
+      <Form>
+        <CardContent class="pt-6 flex flex-col gap-3">
+          <Field name="email">
+            {(field, inputProps) => (
+              <TextFieldRoot class="flex flex-col gap-1">
+                <TextFieldLabel for="email" class="sr-only">
+                  {t('user.settings.email.label')}
+                </TextFieldLabel>
+                <TextField
+                  type="email"
+                  id="email"
+                  autocomplete="email"
+                  {...inputProps}
+                  value={field.value}
+                  aria-invalid={Boolean(field.error)}
+                />
+                {field.error && <div class="text-red-500 text-sm">{field.error}</div>}
+              </TextFieldRoot>
+            )}
+          </Field>
+
+          <Show when={getHasChanged()}>
+            <Field name="password">
+              {(field, inputProps) => (
+                <TextFieldRoot class="flex flex-col gap-1">
+                  <TextFieldLabel for="email-password">
+                    {t('user.settings.email.password.label')}
+                  </TextFieldLabel>
+                  <TextField
+                    type="password"
+                    id="email-password"
+                    autocomplete="current-password"
+                    placeholder={t('user.settings.email.password.placeholder')}
+                    {...inputProps}
+                    value={field.value}
+                    aria-invalid={Boolean(field.error)}
+                  />
+                </TextFieldRoot>
+              )}
+            </Field>
+
+            <div class="flex justify-end">
+              <Button
+                type="submit"
+                isLoading={form.submitting}
+                disabled={(getValue(form, 'password') ?? '').length === 0}
+              >
+                {t('user.settings.email.update')}
+              </Button>
+            </div>
+          </Show>
+        </CardContent>
+      </Form>
+    </Card>
+  );
+};
+
+const ChangePasswordCard: Component = () => {
+  const { t } = useI18n();
+  const { getErrorMessage } = useI18nApiErrors();
+
+  const { form, Form, Field, createFormError } = createForm({
+    schema: v.object({
+      currentPassword: v.pipe(v.string(), v.nonEmpty(t('user.settings.password.current.required'))),
+      newPassword: v.pipe(
+        v.string(),
+        v.minLength(8, t('user.settings.password.new.min-length', { minLength: 8 })),
+        v.maxLength(128, t('user.settings.password.new.max-length', { maxLength: 128 })),
+      ),
+      confirmPassword: v.string(),
+    }),
+    initialValues: {
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
+    onSubmit: async ({ currentPassword, newPassword, confirmPassword }) => {
+      if (newPassword !== confirmPassword) {
+        throw createFormError({
+          message: t('user.settings.password.confirm.mismatch'),
+          fields: { confirmPassword: t('user.settings.password.confirm.mismatch') },
+        });
+      }
+
+      const { error } = await changePassword({
+        currentPassword,
+        newPassword,
+        revokeOtherSessions: true,
+      });
+
+      if (error) {
+        createToast({ type: 'error', message: getErrorMessage({ error }) });
+        return;
+      }
+
+      reset(form);
+      createToast({ type: 'success', message: t('user.settings.password.updated') });
+    },
+  });
+
+  const passwordFields = [
+    {
+      name: 'currentPassword',
+      id: 'current-password',
+      label: 'user.settings.password.current.label',
+      autocomplete: 'current-password',
+    },
+    {
+      name: 'newPassword',
+      id: 'new-password',
+      label: 'user.settings.password.new.label',
+      autocomplete: 'new-password',
+    },
+    {
+      name: 'confirmPassword',
+      id: 'confirm-password',
+      label: 'user.settings.password.confirm.label',
+      autocomplete: 'new-password',
+    },
+  ] as const;
+
+  return (
+    <Card>
+      <CardHeader class="border-b">
+        <CardTitle>{t('user.settings.password.title')}</CardTitle>
+        <CardDescription>{t('user.settings.password.description')}</CardDescription>
+      </CardHeader>
+
+      <Form>
+        <CardContent class="pt-6 flex flex-col gap-3">
+          <For each={passwordFields}>
+            {(passwordField) => (
+              <Field name={passwordField.name}>
+                {(field, inputProps) => (
+                  <TextFieldRoot class="flex flex-col gap-1">
+                    <TextFieldLabel for={passwordField.id}>{t(passwordField.label)}</TextFieldLabel>
+                    <TextField
+                      type="password"
+                      id={passwordField.id}
+                      autocomplete={passwordField.autocomplete}
+                      {...inputProps}
+                      value={field.value}
+                      aria-invalid={Boolean(field.error)}
+                    />
+                    {field.error && <div class="text-red-500 text-sm">{field.error}</div>}
+                  </TextFieldRoot>
+                )}
+              </Field>
+            )}
+          </For>
+
+          <div class="flex justify-end">
+            <Button type="submit" isLoading={form.submitting}>
+              {t('user.settings.password.update')}
+            </Button>
+          </div>
+        </CardContent>
+      </Form>
     </Card>
   );
 };
@@ -152,6 +333,7 @@ export const UserSettingsPage: Component = () => {
 
               <div class="mt-6 flex flex-col gap-6">
                 <UserEmailCard email={getUser().email} />
+                <ChangePasswordCard />
                 <UpdateFullNameCard name={getUser().name} />
                 <TwoFactorCard
                   twoFactorEnabled={getUser().twoFactorEnabled}

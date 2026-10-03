@@ -32,14 +32,9 @@ export function usePdfSearch() {
   return { getApi: useContext(PdfSearchContext)?.getApi };
 }
 
-// Called by a viewer: registers its search API in the header for as long as the viewer lives
-export function usePdfSearchRegistration({ store }: { store: PDFSlickState }) {
-  const registry = useContext(PdfSearchContext);
-
-  if (!registry) {
-    return;
-  }
-
+// The search API of one viewer: highlights matches in the document and steps through them
+export function usePdfSearchApi({ store }: { store: PDFSlickState }) {
+  const [getApi, setApi] = createSignal<PdfSearchApi>();
   const [getMatches, setMatches] = createSignal({ current: 0, total: 0 });
 
   createEffect(() => {
@@ -82,7 +77,7 @@ export function usePdfSearchRegistration({ store }: { store: PDFSlickState }) {
     eventBus.on('updatefindmatchescount', onMatchesCount);
     eventBus.on('updatefindcontrolstate', onMatchesCount);
 
-    registry.setApi({
+    setApi({
       getMatches,
       search: (query) => {
         currentQuery = query;
@@ -107,7 +102,25 @@ export function usePdfSearchRegistration({ store }: { store: PDFSlickState }) {
     onCleanup(() => {
       eventBus.off('updatefindmatchescount', onMatchesCount);
       eventBus.off('updatefindcontrolstate', onMatchesCount);
-      registry.setApi(undefined);
+      setApi(undefined);
     });
   });
+
+  return getApi;
+}
+
+// Called by a viewer: registers its search API in the header for as long as the viewer lives
+export function usePdfSearchRegistration({ store }: { store: PDFSlickState }) {
+  const registry = useContext(PdfSearchContext);
+  const getApi = usePdfSearchApi({ store });
+
+  if (!registry) {
+    return;
+  }
+
+  createEffect(() => {
+    registry.setApi(getApi());
+  });
+
+  onCleanup(() => registry.setApi(undefined));
 }

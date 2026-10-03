@@ -107,7 +107,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'user.settings.description': '在此管理您的账户设置。',
 
   'user.settings.email.title': '电子邮件地址',
-  'user.settings.email.description': '您的电子邮件地址无法更改。',
   'user.settings.email.label': '电子邮件地址',
 
   'user.settings.name.title': '全名',
@@ -513,7 +512,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': '显示侧栏',
   'documents.pdf-viewer.toolbar.previous-page': '上一页',
   'documents.pdf-viewer.toolbar.next-page': '下一页',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': '顺时针旋转',
   'documents.pdf-viewer.toolbar.download': '下载',
   'documents.pdf-viewer.toolbar.print': '打印',
 

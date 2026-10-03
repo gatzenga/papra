@@ -114,8 +114,30 @@ export const translations = {
   'user.settings.description': 'Manage your account settings here.',
 
   'user.settings.email.title': 'Email address',
-  'user.settings.email.description': 'Your email address cannot be changed.',
   'user.settings.email.label': 'Email address',
+  'user.settings.email.description':
+    'The address you use to log in. Changing it requires your current password.',
+  'user.settings.email.invalid': 'Enter a valid email address',
+  'user.settings.email.update': 'Save email',
+  'user.settings.email.updated': 'Your email address has been updated',
+  'user.settings.email.password.label': 'Current password',
+  'user.settings.email.password.placeholder': 'Confirm with your current password',
+  'user.settings.password.title': 'Password',
+  'user.settings.password.description':
+    'Change the password you use to log in. Your other sessions will be signed out.',
+  'user.settings.password.current.label': 'Current password',
+  'user.settings.password.current.required': 'Enter your current password',
+  'user.settings.password.new.label': 'New password',
+  'user.settings.password.new.min-length':
+    'The password must be at least {{ minLength }} characters',
+  'user.settings.password.new.max-length':
+    'The password must be at most {{ maxLength }} characters',
+  'user.settings.password.confirm.label': 'Confirm new password',
+  'user.settings.password.confirm.mismatch': 'The passwords do not match',
+  'user.settings.password.update': 'Change password',
+  'user.settings.password.updated': 'Your password has been changed',
+  'api-errors.users.invalid_password': 'The password is incorrect',
+  'api-errors.users.email_already_used': 'This email address is already used',
 
   'user.settings.name.title': 'Full name',
   'user.settings.name.description': 'Your full name is displayed to other organization members.',
@@ -562,9 +584,10 @@ export const translations = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Show sidebar',
   'documents.pdf-viewer.toolbar.previous-page': 'Previous page',
   'documents.pdf-viewer.toolbar.next-page': 'Next page',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Rotate clockwise',
   'documents.pdf-viewer.toolbar.download': 'Download',
   'documents.pdf-viewer.toolbar.print': 'Print',
+  'documents.pdf-viewer.toolbar.search': 'Search',
+  'documents.pdf-viewer.toolbar.search-close': 'Close search',
 
   'documents.pdf-viewer.zoom.zoom-out': 'Zoom out',
   'documents.pdf-viewer.zoom.zoom-in': 'Zoom in',

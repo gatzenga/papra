@@ -121,7 +121,6 @@ export const translations = {
   'user.settings.description': 'Gestiona la configuració del teu compte aquí.',
 
   'user.settings.email.title': 'Correu electrònic',
-  'user.settings.email.description': 'El teu correu electrònic no es pot canviar.',
   'user.settings.email.label': 'Correu electrònic',
 
   'user.settings.name.title': 'Nom complet',
@@ -591,7 +590,6 @@ export const translations = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Mostra la barra lateral',
   'documents.pdf-viewer.toolbar.previous-page': 'Pàgina anterior',
   'documents.pdf-viewer.toolbar.next-page': 'Pàgina següent',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Gira en sentit horari',
   'documents.pdf-viewer.toolbar.download': 'Descarrega',
   'documents.pdf-viewer.toolbar.print': 'Imprimeix',
 

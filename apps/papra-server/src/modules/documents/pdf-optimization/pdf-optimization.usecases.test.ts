@@ -128,6 +128,32 @@ describe('pdf-optimization usecases', () => {
       await rm(directory, { recursive: true, force: true });
     });
 
+    test('works when the key generator hands out the key of the existing file (legacy storage keys)', async () => {
+      const { db, documentsRepository, documentsStorageService, directory, document } =
+        await setup();
+
+      const { storageKey } = await applyPdfOptimization({
+        document,
+        optimizedFilePath: join(directory, 'output.pdf'),
+        userId: 'usr_1',
+        db,
+        documentsRepository,
+        documentsStorageService,
+        // Legacy keys depend on the document id only, so the old file already sits on that key
+        createDocumentStorageKey: async () => ({ storageKey: 'Akte.pdf' }),
+        maxIncrementalSuffixAttempts: 9,
+        enableRandomSuffixFallback: true,
+        logger: createNoopLogger(),
+      });
+
+      expect(storageKey).to.eql('Akte.pdf');
+      expect(await documentsStorageService.fileExists({ storageKey: '.trash/Akte.pdf' })).to.eql(
+        true,
+      );
+
+      await rm(directory, { recursive: true, force: true });
+    });
+
     test('an optimized file identical to the original is refused and nothing changes', async () => {
       const { documentsStorageService, directory, document, db, documentsRepository } =
         await setup();

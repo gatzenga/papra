@@ -1,6 +1,8 @@
 import type { Component } from 'solid-js';
-import { createSignal, onCleanup, onMount } from 'solid-js';
+import { createSignal, onCleanup, onMount, Show } from 'solid-js';
 import { cn } from '@/modules/shared/style/cn';
+import { PdfSearchBar } from './pdf-search-bar.component';
+import { usePdfSearchApi } from './pdf-search.provider';
 import { SideBar } from './sidebar/sidebar.component';
 import { PdfViewerToolbar } from './toolbar/pdf-viewer-toolbar.component';
 import { usePdfViewer } from './use-pdf-viewer';
@@ -17,6 +19,8 @@ export const PdfViewer: Component<{ url: string }> = (props) => {
     PDFSlickViewer,
   } = usePdfViewer({ url: props.url });
 
+  const getSearchApi = usePdfSearchApi({ store });
+  const [isSearchOpen, setIsSearchOpen] = createSignal(false);
   const [isSidebarOpen, setIsSidebarOpen] = createSignal(true);
   const [sidebarWidth, setSidebarWidth] = createSignal(SIDEBAR_DEFAULT_WIDTH);
   const [isDragging, setIsDragging] = createSignal(false);
@@ -43,6 +47,12 @@ export const PdfViewer: Component<{ url: string }> = (props) => {
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (!e.ctrlKey && !e.metaKey) {
+      return;
+    }
+
+    if (e.key.toLowerCase() === 'f') {
+      e.preventDefault();
+      setIsSearchOpen(true);
       return;
     }
 
@@ -106,7 +116,16 @@ export const PdfViewer: Component<{ url: string }> = (props) => {
         store={store}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
+        onSearch={() => setIsSearchOpen(true)}
       />
+
+      <Show when={isSearchOpen() && getSearchApi()}>
+        {(getApi) => (
+          <div class="flex items-center px-2 py-1 border-b bg-card shrink-0">
+            <PdfSearchBar api={getApi()} autofocus onClose={() => setIsSearchOpen(false)} />
+          </div>
+        )}
+      </Show>
 
       <div class="flex-1 flex overflow-hidden min-h-0">
         <div

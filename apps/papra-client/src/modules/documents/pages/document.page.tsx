@@ -2,7 +2,8 @@ import type { DropdownMenuTriggerProps } from '@kobalte/core/dropdown-menu';
 import type { Component, JSX } from 'solid-js';
 import type { Document, DocumentActivity } from '../documents.types';
 import { formatBytes } from '@corentinth/chisels';
-import { A, useNavigate, useParams, useSearchParams } from '@solidjs/router';
+import { A, useNavigate, useSearchParams } from '@solidjs/router';
+import { useParams } from '@/modules/shared/router/use-params';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/solid-query';
 import {
   createEffect,
@@ -232,10 +233,7 @@ const ActivityItem: Component<{ activity: DocumentActivity }> = (props) => {
               <span>
                 {te('activity.document.user.name', {
                   name: (
-                    <A
-                      href={`/organizations/${params.organizationId}/members`}
-                      class="underline hover:text-primary transition"
-                    >
+                    <A href={`/members`} class="underline hover:text-primary transition">
                       {getUser().name}
                     </A>
                   ),
@@ -260,26 +258,50 @@ const DocumentOpenWithDropdown: Component<{ document: Document; organizationId: 
 
   return (
     <Show when={getApps().length > 0}>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          as={(triggerProps: DropdownMenuTriggerProps) => (
-            <Button
-              variant="outline"
-              size="sm"
-              title={t('documents.open-with.label')}
-              aria-label={t('documents.open-with.label')}
-              {...triggerProps}
-            >
-              <div class="i-tabler-app-window size-4 @[34rem]:mr-2" />
-              <span class="hidden @[34rem]:inline">{t('documents.open-with.label')}</span>
-              <div class="i-tabler-chevron-down size-3 ml-1" />
-            </Button>
-          )}
-        />
-        <DropdownMenuContent>
-          <DocumentOpenWithDropdownItems apps={getApps()} />
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Show
+        when={getApps().length > 1}
+        fallback={
+          // A single way to open the document needs no menu
+          <For each={getApps()}>
+            {(app) => (
+              <Button
+                as="a"
+                href={app.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="outline"
+                size="sm"
+                title={t(app.labelKey)}
+                aria-label={t(app.labelKey)}
+              >
+                <div class={`${app.icon} size-4 @[34rem]:mr-2`} />
+                <span class="hidden @[34rem]:inline">{t(app.labelKey)}</span>
+              </Button>
+            )}
+          </For>
+        }
+      >
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            as={(triggerProps: DropdownMenuTriggerProps) => (
+              <Button
+                variant="outline"
+                size="sm"
+                title={t('documents.open-with.label')}
+                aria-label={t('documents.open-with.label')}
+                {...triggerProps}
+              >
+                <div class="i-tabler-app-window size-4 @[34rem]:mr-2" />
+                <span class="hidden @[34rem]:inline">{t('documents.open-with.label')}</span>
+                <div class="i-tabler-chevron-down size-3 ml-1" />
+              </Button>
+            )}
+          />
+          <DropdownMenuContent>
+            <DocumentOpenWithDropdownItems apps={getApps()} />
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </Show>
     </Show>
   );
 };
@@ -359,7 +381,7 @@ export const DocumentPage: Component = () => {
       return;
     }
 
-    navigate(`/organizations/${params.organizationId}/documents`);
+    navigate(`/documents`);
   };
 
   return (
@@ -423,7 +445,7 @@ export const DocumentPage: Component = () => {
                     >
                       <Button
                         as="a"
-                        href={`/organizations/${params.organizationId}/documents/${params.documentId}/optimize`}
+                        href={`/documents/${params.documentId}/optimize`}
                         target="_blank"
                         rel="noopener"
                         variant="outline"

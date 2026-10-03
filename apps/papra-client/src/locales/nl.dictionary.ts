@@ -121,7 +121,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'user.settings.description': 'Beheer hier uw accountinstellingen.',
 
   'user.settings.email.title': 'E-mailadres',
-  'user.settings.email.description': 'Uw e-mailadres kan niet worden gewijzigd.',
   'user.settings.email.label': 'E-mailadres',
 
   'user.settings.name.title': 'Volledige naam',
@@ -561,7 +560,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Zijbalk tonen',
   'documents.pdf-viewer.toolbar.previous-page': 'Vorige pagina',
   'documents.pdf-viewer.toolbar.next-page': 'Volgende pagina',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Rechtsom draaien',
   'documents.pdf-viewer.toolbar.download': 'Downloaden',
   'documents.pdf-viewer.toolbar.print': 'Afdrukken',
 

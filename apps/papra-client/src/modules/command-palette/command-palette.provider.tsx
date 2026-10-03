@@ -1,6 +1,8 @@
 import type { Accessor, ParentComponent } from 'solid-js';
 import { safely } from '@corentinth/chisels';
-import { useNavigate, useParams } from '@solidjs/router';
+import { useNavigate } from '@solidjs/router';
+import { useQuery } from '@tanstack/solid-query';
+import { fetchOrganizations } from '../organizations/organizations.services';
 import {
   createContext,
   createEffect,
@@ -53,7 +55,14 @@ export const CommandPaletteProvider: ParentComponent = (props) => {
   const [getIsLoading, setIsLoading] = createSignal(false);
   const [getMatchingDocumentsTotalCount, setMatchingDocumentsTotalCount] = createSignal(0);
 
-  const params = useParams();
+  // The provider lives above the routes, so it looks the organization up itself
+  // Only once opened: the palette is also mounted on public pages, where this request would fail
+  const organizationsQuery = useQuery(() => ({
+    enabled: getIsCommandPaletteOpen(),
+    queryKey: ['organizations'],
+    queryFn: fetchOrganizations,
+  }));
+  const getOrganizationId = () => organizationsQuery.data?.organizations[0]?.id ?? '';
   const { t } = useI18n();
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -88,7 +97,7 @@ export const CommandPaletteProvider: ParentComponent = (props) => {
     const [result] = await safely(
       fetchOrganizationDocuments({
         searchQuery,
-        organizationId: params.organizationId,
+        organizationId: getOrganizationId(),
         pageIndex: 0,
         pageSize: 5,
       }),
@@ -122,8 +131,7 @@ export const CommandPaletteProvider: ParentComponent = (props) => {
         ...getMatchingDocuments().map((document) => ({
           label: document.name,
           icon: getDocumentIcon({ document }),
-          action: () =>
-            navigate(`/organizations/${params.organizationId}/documents/${document.id}`),
+          action: () => navigate(`/documents/${document.id}`),
           forceMatch: true,
         })),
 
@@ -136,7 +144,6 @@ export const CommandPaletteProvider: ParentComponent = (props) => {
           action: () =>
             navigate(
               makeDocumentSearchPermalink({
-                organizationId: params.organizationId,
                 search: { query: getSearchQuery() },
               }),
             ),

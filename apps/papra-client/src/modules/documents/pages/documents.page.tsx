@@ -2,7 +2,7 @@ import type { RowSelectionState, SortingState } from '@tanstack/solid-table';
 import type { Component, Setter } from 'solid-js';
 import type { BatchTargetFilter } from '../documents-batch.services';
 import type { DocumentSearchSortField, DocumentSearchSortOrder } from '../documents.constants';
-import { useParams } from '@solidjs/router';
+import { useParams } from '@/modules/shared/router/use-params';
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/solid-query';
 import { createEffect, createMemo, createSignal, on, Show, Suspense } from 'solid-js';
 import { CreateDocumentViewModal } from '@/modules/document-views/components/document-view-modals';

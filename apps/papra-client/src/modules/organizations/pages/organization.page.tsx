@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import { formatBytes } from '@corentinth/chisels';
-import { useParams } from '@solidjs/router';
+import { useParams } from '@/modules/shared/router/use-params';
 import { keepPreviousData, useQuery } from '@tanstack/solid-query';
 import { Show, Suspense } from 'solid-js';
 import { useDocumentUpload } from '@/modules/documents/components/document-import-status.component';

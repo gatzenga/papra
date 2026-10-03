@@ -19,6 +19,7 @@ export function createDemoAuthClient() {
     requestPasswordReset: async () => Promise.resolve({}),
     resetPassword: async () => Promise.resolve({}),
     sendVerificationEmail: async () => Promise.resolve({}),
+    changePassword: async () => Promise.resolve({ data: null, error: null }),
     twoFactor: {
       enable: async () => Promise.resolve({ data: null, error: null }),
       disable: async () => Promise.resolve({ data: null, error: null }),

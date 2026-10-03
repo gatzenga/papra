@@ -117,7 +117,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'user.settings.description': 'Здесь вы можете управлять настройками аккаунта.',
 
   'user.settings.email.title': 'Адрес электронной почты',
-  'user.settings.email.description': 'Ваш адрес электронной почты не может быть изменён.',
   'user.settings.email.label': 'Адрес электронной почты',
 
   'user.settings.name.title': 'Полное имя',
@@ -553,7 +552,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Показать боковую панель',
   'documents.pdf-viewer.toolbar.previous-page': 'Предыдущая страница',
   'documents.pdf-viewer.toolbar.next-page': 'Следующая страница',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Повернуть по часовой стрелке',
   'documents.pdf-viewer.toolbar.download': 'Скачать',
   'documents.pdf-viewer.toolbar.print': 'Печать',
 

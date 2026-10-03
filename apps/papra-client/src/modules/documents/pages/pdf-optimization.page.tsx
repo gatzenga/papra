@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import { useParams } from '@solidjs/router';
+import { useParams } from '@/modules/shared/router/use-params';
 import { useQuery } from '@tanstack/solid-query';
 import {
   createEffect,
@@ -171,7 +171,7 @@ export const PdfOptimizationPage: Component = () => {
 
       window.close();
       // Closing only works for tabs opened by the app, otherwise show the document
-      window.location.href = `/organizations/${params.organizationId}/documents/${params.documentId}`;
+      window.location.href = `/documents/${params.documentId}`;
     } catch {
       createToast({ type: 'error', message: t('documents.pdf-optimization.apply-failed') });
       setIsApplying(false);

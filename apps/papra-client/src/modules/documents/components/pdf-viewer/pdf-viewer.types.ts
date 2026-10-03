@@ -16,4 +16,5 @@ export type ThumbnailsBarProps = PdfViewerStoreProps & {
 export type ToolbarProps = PdfViewerStoreProps & {
   isSidebarOpen: Accessor<boolean>;
   setIsSidebarOpen: Setter<boolean>;
+  onSearch: () => void;
 };

@@ -122,8 +122,30 @@ export const translations: Partial<TranslationsDictionary> = {
   'user.settings.description': 'Verwalten Sie hier Ihre Kontoeinstellungen.',
 
   'user.settings.email.title': 'E-Mail-Adresse',
-  'user.settings.email.description': 'Ihre E-Mail-Adresse kann nicht geändert werden.',
   'user.settings.email.label': 'E-Mail-Adresse',
+  'user.settings.email.description':
+    'Die Adresse, mit der du dich anmeldest. Zum Ändern brauchst du dein aktuelles Passwort.',
+  'user.settings.email.invalid': 'Gib eine gültige E-Mail-Adresse ein',
+  'user.settings.email.update': 'E-Mail speichern',
+  'user.settings.email.updated': 'Deine E-Mail-Adresse wurde geändert',
+  'user.settings.email.password.label': 'Aktuelles Passwort',
+  'user.settings.email.password.placeholder': 'Mit deinem aktuellen Passwort bestätigen',
+  'user.settings.password.title': 'Passwort',
+  'user.settings.password.description':
+    'Ändere das Passwort, mit dem du dich anmeldest. Deine anderen Sitzungen werden abgemeldet.',
+  'user.settings.password.current.label': 'Aktuelles Passwort',
+  'user.settings.password.current.required': 'Gib dein aktuelles Passwort ein',
+  'user.settings.password.new.label': 'Neues Passwort',
+  'user.settings.password.new.min-length':
+    'Das Passwort muss mindestens {{ minLength }} Zeichen lang sein',
+  'user.settings.password.new.max-length':
+    'Das Passwort darf höchstens {{ maxLength }} Zeichen lang sein',
+  'user.settings.password.confirm.label': 'Neues Passwort bestätigen',
+  'user.settings.password.confirm.mismatch': 'Die Passwörter stimmen nicht überein',
+  'user.settings.password.update': 'Passwort ändern',
+  'user.settings.password.updated': 'Dein Passwort wurde geändert',
+  'api-errors.users.invalid_password': 'Das Passwort ist falsch',
+  'api-errors.users.email_already_used': 'Diese E-Mail-Adresse wird bereits verwendet',
 
   'user.settings.name.title': 'Vollständiger Name',
   'user.settings.name.description':
@@ -572,9 +594,10 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Seitenleiste einblenden',
   'documents.pdf-viewer.toolbar.previous-page': 'Vorherige Seite',
   'documents.pdf-viewer.toolbar.next-page': 'Nächste Seite',
-  'documents.pdf-viewer.toolbar.rotate-clockwise': 'Im Uhrzeigersinn drehen',
   'documents.pdf-viewer.toolbar.download': 'Herunterladen',
   'documents.pdf-viewer.toolbar.print': 'Drucken',
+  'documents.pdf-viewer.toolbar.search': 'Suchen',
+  'documents.pdf-viewer.toolbar.search-close': 'Suche schließen',
 
   'documents.pdf-viewer.zoom.zoom-out': 'Verkleinern',
   'documents.pdf-viewer.zoom.zoom-in': 'Vergrößern',

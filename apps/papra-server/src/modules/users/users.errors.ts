@@ -35,3 +35,15 @@ export const createCannotDeleteSelfError = createErrorFactory({
   code: 'users.cannot_delete_self',
   statusCode: 400,
 });
+
+export const createUserInvalidPasswordError = createErrorFactory({
+  message: 'The password is incorrect',
+  code: 'users.invalid_password',
+  statusCode: 403,
+});
+
+export const createUserEmailAlreadyUsedError = createErrorFactory({
+  message: 'This email address is already used',
+  code: 'users.email_already_used',
+  statusCode: 409,
+});

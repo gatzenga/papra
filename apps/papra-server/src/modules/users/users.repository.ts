@@ -21,6 +21,7 @@ function createUsersRepository({ db }: { db: Database }) {
       getUserById,
       getUserByIdOrThrow,
       updateUser,
+      updateUserEmail,
       deleteUser,
       getUserCount,
       listUsers,
@@ -85,6 +86,24 @@ async function updateUser({ userId, name, db }: { userId: string; name: string; 
   const [user] = await db
     .update(usersTable)
     .set({ name })
+    .where(eq(usersTable.id, userId))
+    .returning();
+
+  return { user };
+}
+
+async function updateUserEmail({
+  userId,
+  email,
+  db,
+}: {
+  userId: string;
+  email: string;
+  db: Database;
+}) {
+  const [user] = await db
+    .update(usersTable)
+    .set({ email })
     .where(eq(usersTable.id, userId))
     .returning();
 
