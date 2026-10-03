@@ -69,6 +69,8 @@ ENV CLIENT_BASE_URL=http://localhost:1221
 ENV DOCUMENT_STORAGE_USE_LEGACY_STORAGE_KEY_DEFINITION_SYSTEM=false
 ENV DOCUMENT_STORAGE_KEY_PATTERN={{document.name}}
 ENV DOCUMENT_STORAGE_MIGRATE_LEGACY_ON_START=true
+# Renaming a document in the web interface renames the file on disk too
+ENV DOCUMENT_STORAGE_KEY_SYNC_ENABLED=true
 
 # Disable Better Auth telemetry
 ENV BETTER_AUTH_TELEMETRY=0

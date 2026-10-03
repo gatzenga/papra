@@ -15,7 +15,7 @@ import {
   organizationIdSchema,
   organizationNameSchema,
 } from './organization.schemas';
-import { ORGANIZATION_ROLES } from './organizations.constants';
+import { DEFAULT_ORGANIZATION_NAME, ORGANIZATION_ROLES } from './organizations.constants';
 import { createOrganizationsRepository } from './organizations.repository';
 import {
   buildInviteMemberToOrganization,
@@ -56,6 +56,18 @@ function setupGetOrganizationsRoute({ app, db }: RouteDefinitionContext) {
       const organizationsRepository = createOrganizationsRepository({ db });
 
       const { organizations } = await organizationsRepository.getUserOrganizations({ userId });
+
+      // This fork has no organization management: a user without organization silently gets
+      // the one organization all their documents live in.
+      if (organizations.length === 0) {
+        const { organization } = await createOrganization({
+          name: DEFAULT_ORGANIZATION_NAME,
+          userId,
+          organizationsRepository,
+        });
+
+        return context.json({ organizations: [organization] });
+      }
 
       return context.json({
         organizations,
