@@ -16,6 +16,5 @@ export default defineConfig({
     // MDX with markdown inside JSX component children gets mangled by the formatter
     // (the markdown/JSX boundary is ambiguous and indentation-sensitive). Plain .md is fine.
     '**/*.mdx',
-    'apps/docs/src/scripts/posthog.script.js',
   ],
 });

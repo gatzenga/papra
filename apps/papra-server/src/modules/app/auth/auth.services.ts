@@ -2,7 +2,6 @@ import type { Config } from '../../config/config.types';
 import type { Database } from '../database/database.types';
 import type { EventServices } from '../events/events.services';
 import type { AuthEmailsServices } from './auth.emails.services';
-import { expo } from '@better-auth/expo';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { genericOAuth, twoFactor } from 'better-auth/plugins';
@@ -132,7 +131,6 @@ export function getAuth({
       deleteUser: { enabled: false },
     },
     plugins: [
-      expo(),
       twoFactor(),
 
       ...(config.auth.providers.customs.length > 0

@@ -35,6 +35,5 @@ export default defineConfig({
     'playwright-report/**',
     'test-results/**',
 
-    'apps/docs/src/scripts/posthog.script.js',
   ],
 });

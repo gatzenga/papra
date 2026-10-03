@@ -1,5 +1,0 @@
-/* TEAM */
-Developer: Corentin Thomasset
-Site: https://corentin.tech
-Twitter: @cthmsst
-BlueSky: @corentin.tech

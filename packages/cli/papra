@@ -1,6 +1,0 @@
-#! /usr/bin/env sh
-
-# Simple command to run the papra cli for better dx
-# pass all args to the cli
-
-pnpm --silent dev $@
