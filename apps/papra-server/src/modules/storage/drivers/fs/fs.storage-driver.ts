@@ -9,14 +9,19 @@ import {
   createFileAlreadyExistsInStorageError,
   createFileNotFoundError,
 } from '../../storage.errors';
+import { TRASH_STORAGE_KEY_PREFIX } from '../../storage.constants';
 import { isFileNotFoundError } from './fs.storage-driver.models';
 
 export const FS_STORAGE_DRIVER_NAME = 'filesystem' as const;
 
-export const fsStorageDriverFactory = ({ root }: FilesystemStorageDriverOptions) => {
-  const getStoragePath = ({ storageKey }: { storageKey: string }) => ({
-    storagePath: join(root, storageKey),
-  });
+export const fsStorageDriverFactory = ({ root, trashRoot }: FilesystemStorageDriverOptions) => {
+  const getStoragePath = ({ storageKey }: { storageKey: string }) => {
+    if (trashRoot && storageKey.startsWith(TRASH_STORAGE_KEY_PREFIX)) {
+      return { storagePath: join(trashRoot, storageKey.slice(TRASH_STORAGE_KEY_PREFIX.length)) };
+    }
+
+    return { storagePath: join(root, storageKey) };
+  };
 
   return {
     name: FS_STORAGE_DRIVER_NAME,

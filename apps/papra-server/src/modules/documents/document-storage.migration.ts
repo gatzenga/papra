@@ -46,7 +46,9 @@ export async function migrateLegacyDocumentStorageKeys({
       createdAt: documentsTable.createdAt,
       originalStorageKey: documentsTable.originalStorageKey,
     })
-    .from(documentsTable);
+    .from(documentsTable)
+    // Trashed documents keep their file where the trash handling puts it
+    .where(eq(documentsTable.isDeleted, false));
 
   const legacyDocuments = documents.filter((document) =>
     isLegacyStorageKey({ storageKey: document.originalStorageKey, documentId: document.id }),

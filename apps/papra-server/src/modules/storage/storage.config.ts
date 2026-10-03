@@ -26,6 +26,12 @@ export function createStorageConfig({
           default: defaultFilesystemRoot,
           env: `${envPrefix}_FILESYSTEM_ROOT`,
         },
+        trashRoot: {
+          doc: 'Optional directory in which the files of trashed documents are stored. When empty, they stay in a `.trash` subfolder of the root',
+          schema: v.string(),
+          default: '',
+          env: `${envPrefix}_FILESYSTEM_TRASH_ROOT`,
+        },
       },
       s3: {
         accessKeyId: {

@@ -22,6 +22,12 @@ export const storagePatternConfig = {
     default: true,
     env: 'DOCUMENT_STORAGE_MIGRATE_LEGACY_ON_START',
   },
+  isTrashFolderEnabled: {
+    doc: 'Move the files of trashed documents to a separate trash location and back when they are restored. With the filesystem driver the location is the trash root, otherwise a `.trash` key prefix.',
+    schema: booleanishSchema,
+    default: false,
+    env: 'DOCUMENT_STORAGE_TRASH_FOLDER_ENABLED',
+  },
   maxIncrementalSuffixAttempts: {
     doc: 'How many incremental suffixes to try when a storage key is already taken (e.g. file_1.txt, file_2.txt, ...). Set to 0 to skip incremental suffixes entirely.',
     schema: coercedPositiveIntegerSchema,

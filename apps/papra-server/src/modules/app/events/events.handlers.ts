@@ -10,6 +10,7 @@ import { registerInsertActivityLogOnDocumentRestoredHandler } from '../../docume
 import { registerInsertActivityLogOnDocumentTagsChangedHandler } from '../../documents/events/activity-log.document-tags-changed';
 import { registerInsertActivityLogOnDocumentUpdatedHandler } from '../../documents/events/activity-log.document-updated';
 import { registerInsertActivityLogOnDocumentsTrashedHandler } from '../../documents/events/activity-log.documents-trashed';
+import { registerSyncDocumentFileWithTrashHandlers } from '../../documents/events/trash-storage.document-trashed';
 import { registerSyncDocumentStorageKeyHandler } from '../../documents/events/storage-key.document-updated';
 import { registerTrackDocumentCreatedHandler } from '../../documents/events/tracking.document-created';
 import { registerTriggerWebhooksOnDocumentCreatedHandler } from '../../documents/events/webhooks.document-created';
@@ -43,4 +44,5 @@ export function registerEventHandlers(deps: {
   registerInsertActivityLogOnDocumentTagsChangedHandler(deps);
   registerSyncDocumentSearchEventHandlers(deps);
   registerSyncDocumentStorageKeyHandler(deps);
+  registerSyncDocumentFileWithTrashHandlers(deps);
 }

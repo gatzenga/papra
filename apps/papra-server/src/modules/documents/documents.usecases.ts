@@ -17,6 +17,7 @@ import type { Document } from './documents.types';
 import type { StorageService } from '../storage/storage.services';
 import type { EncryptionContext } from '../storage/drivers/drivers.models';
 import type { CreateDocumentStorageKey } from './document-storage.usecases';
+import type { SyncDocumentFileWithTrashState } from './document-trash-storage.usecases';
 import { PassThrough } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import { safely } from '@corentinth/chisels';
@@ -50,6 +51,7 @@ import {
 } from './documents.models';
 import { createDocumentsRepository } from './documents.repository';
 import { buildCreateDocumentStorageKey } from './document-storage.usecases';
+import { buildSyncDocumentFileWithTrashState } from './document-trash-storage.usecases';
 import { buildResolveStoragePatternContext } from './storage-patterns/storage-pattern.usecases';
 import type { ExtractDocumentTextUsecase } from './content-extraction/content-extraction.usecases';
 
@@ -66,6 +68,7 @@ export async function createDocument({
   ocrLanguages = [],
   isContentExtractionEnabled = true,
   createDocumentStorageKey,
+  syncDocumentFileWithTrashState,
   documentsRepository,
   documentsStorageService,
   generateDocumentId = generateDocumentIdImpl,
@@ -87,6 +90,7 @@ export async function createDocument({
   ocrLanguages?: string[];
   isContentExtractionEnabled?: boolean;
   createDocumentStorageKey: CreateDocumentStorageKey;
+  syncDocumentFileWithTrashState?: SyncDocumentFileWithTrashState;
   documentsRepository: DocumentsRepository;
   documentsStorageService: StorageService;
   generateDocumentId?: () => string;
@@ -172,6 +176,7 @@ export async function createDocument({
         taggingRulesRepository,
         eventServices,
         documentsStorageService,
+        syncDocumentFileWithTrashState,
         logger,
       })
     : await createNewDocument({
@@ -254,13 +259,29 @@ export function createDocumentCreationUsecase({
     logger: initialDeps.logger,
   };
 
+  const syncDocumentFileWithTrashState =
+    initialDeps.syncDocumentFileWithTrashState ??
+    buildSyncDocumentFileWithTrashState({
+      storagePatternConfig: config.documentsStorage.pattern,
+      documentsRepository: deps.documentsRepository,
+      documentsStorageService,
+      createDocumentStorageKey: deps.createDocumentStorageKey,
+    });
+
   return async (args: {
     fileStream: Readable;
     fileName: string;
     mimeType: string;
     userId?: string;
     organizationId: string;
-  }) => createDocument({ taskServices, documentsStorageService, eventServices, ...args, ...deps });
+  }) => createDocument({
+      taskServices,
+      documentsStorageService,
+      eventServices,
+      syncDocumentFileWithTrashState,
+      ...args,
+      ...deps,
+    });
 }
 
 async function handleExistingDocument({
@@ -273,6 +294,7 @@ async function handleExistingDocument({
   taggingRulesRepository,
   eventServices,
   documentsStorageService,
+  syncDocumentFileWithTrashState,
   newDocumentStorageKey,
   logger,
 }: {
@@ -285,6 +307,7 @@ async function handleExistingDocument({
   taggingRulesRepository: TaggingRulesRepository;
   eventServices: EventServices;
   documentsStorageService: StorageService;
+  syncDocumentFileWithTrashState?: SyncDocumentFileWithTrashState;
   newDocumentStorageKey: string;
   logger: Logger;
 }) {
@@ -316,6 +339,16 @@ async function handleExistingDocument({
     tagsRepository,
     eventServices,
   });
+
+  // The restored document's file may still sit in the trash
+  const [, syncError] = await safely(
+    (async () => {
+      await syncDocumentFileWithTrashState?.({ document: restoredDocument });
+    })(),
+  );
+  if (syncError) {
+    logger.error({ error: syncError, documentId: restoredDocument.id }, 'Failed to restore file from trash');
+  }
 
   return { document: restoredDocument };
 }

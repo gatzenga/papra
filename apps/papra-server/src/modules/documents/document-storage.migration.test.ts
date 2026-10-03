@@ -11,6 +11,7 @@ import { createDocumentsRepository } from './documents.repository';
 const storagePatternConfig = {
   isStorageKeySyncEnabled: false,
   isLegacyMigrationOnStartEnabled: true,
+  isTrashFolderEnabled: false,
   useLegacyStorageKeyDefinitionSystem: false,
   storageKeyPattern: '{{document.name}}',
   enableRandomSuffixFallback: true,

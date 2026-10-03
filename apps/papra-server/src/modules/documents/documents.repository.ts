@@ -36,6 +36,8 @@ export function createDocumentsRepository({ db }: { db: Database }) {
       getAllOrganizationUndeletedDocumentsIterator,
       updateDocument,
       updateDocumentStorageKey,
+      updateDocumentStorageKeyById,
+      getAllDocumentsForStorageSync,
       getGlobalDocumentsStats,
       areAllDocumentsInOrganization,
     },
@@ -516,6 +518,50 @@ async function updateDocumentStorageKey({
     .returning({ id: documentsTable.id });
 
   return { updated: rows.length > 0 };
+}
+
+// Unlike updateDocumentStorageKey this also applies to trashed documents, it only moves the file
+async function updateDocumentStorageKeyById({
+  documentId,
+  sourceStorageKey,
+  storageKey,
+  db,
+}: {
+  documentId: string;
+  sourceStorageKey: string;
+  storageKey: string;
+  db: Database;
+}) {
+  const rows = await db
+    .update(documentsTable)
+    .set({ originalStorageKey: storageKey })
+    .where(
+      and(
+        eq(documentsTable.id, documentId),
+        eq(documentsTable.originalStorageKey, sourceStorageKey),
+      ),
+    )
+    .returning({ id: documentsTable.id });
+
+  if (rows.length === 0) {
+    throw createDocumentNotFoundError();
+  }
+}
+
+async function getAllDocumentsForStorageSync({ db }: { db: Database }) {
+  const documents = await db
+    .select({
+      id: documentsTable.id,
+      name: documentsTable.name,
+      organizationId: documentsTable.organizationId,
+      documentDate: documentsTable.documentDate,
+      createdAt: documentsTable.createdAt,
+      originalStorageKey: documentsTable.originalStorageKey,
+      isDeleted: documentsTable.isDeleted,
+    })
+    .from(documentsTable);
+
+  return { documents };
 }
 
 async function getGlobalDocumentsStats({ db }: { db: Database }) {

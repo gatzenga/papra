@@ -12,6 +12,14 @@ import { createGracefulShutdownService } from './modules/app/graceful-shutdown/g
 import { getProcessMode } from './modules/app/process.models';
 import { createServer } from './modules/app/server';
 import { parseConfig } from './modules/config/config';
+import { buildCreateDocumentStorageKey } from './modules/documents/document-storage.usecases';
+import {
+  buildSyncDocumentFileWithTrashState,
+  syncAllDocumentFilesWithTrashState,
+} from './modules/documents/document-trash-storage.usecases';
+import { createDocumentsRepository } from './modules/documents/documents.repository';
+import { buildResolveStoragePatternContext } from './modules/documents/storage-patterns/storage-pattern.usecases';
+import { createOrganizationsRepository } from './modules/organizations/organizations.repository';
 import { migrateLegacyDocumentStorageKeys } from './modules/documents/document-storage.migration';
 import { createDocumentSearchServices } from './modules/documents/document-search/document-search.registry';
 import { createStorageService } from './modules/storage/storage.services';
@@ -142,6 +150,27 @@ export async function startApp() {
       db: globalDependencies.db,
       documentsStorageService: globalDependencies.documentsStorageService,
       storagePatternConfig,
+    });
+  }
+
+  if (storagePatternConfig.isTrashFolderEnabled) {
+    const { db, documentsStorageService } = globalDependencies;
+    const documentsRepository = createDocumentsRepository({ db });
+
+    await syncAllDocumentFilesWithTrashState({
+      documentsRepository,
+      syncDocumentFileWithTrashState: buildSyncDocumentFileWithTrashState({
+        storagePatternConfig,
+        documentsRepository,
+        documentsStorageService,
+        createDocumentStorageKey: buildCreateDocumentStorageKey({
+          storagePatternConfig,
+          documentsStorageService,
+          resolveStoragePatternContext: buildResolveStoragePatternContext({
+            organizationsRepository: createOrganizationsRepository({ db }),
+          }),
+        }),
+      }),
     });
   }
 

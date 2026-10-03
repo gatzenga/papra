@@ -3,6 +3,7 @@ import type { StorageDriverName } from './drivers/storage-drivers.registry';
 
 export type FilesystemStorageDriverOptions = {
   root: string;
+  trashRoot?: string;
 };
 
 export type S3StorageDriverOptions = {

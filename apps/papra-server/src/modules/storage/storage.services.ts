@@ -22,7 +22,10 @@ type StorageDriverOptionsResolvers = {
 };
 
 const storageDriverOptionsResolvers = {
-  [FS_STORAGE_DRIVER_NAME]: (storageConfig) => storageConfig.drivers.filesystem,
+  [FS_STORAGE_DRIVER_NAME]: (storageConfig) => ({
+    root: storageConfig.drivers.filesystem.root,
+    trashRoot: storageConfig.drivers.filesystem.trashRoot || undefined,
+  }),
   [S3_STORAGE_DRIVER_NAME]: (storageConfig) => storageConfig.drivers.s3,
   [IN_MEMORY_STORAGE_DRIVER_NAME]: () => undefined,
   [AZ_BLOB_STORAGE_DRIVER_NAME]: (storageConfig) => storageConfig.drivers.azureBlob,
