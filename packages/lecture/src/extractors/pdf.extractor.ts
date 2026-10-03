@@ -10,12 +10,23 @@ import { createTesseractExtractor } from '../tesseract/tesseract.usecases';
 
 type OcrExtract = (imageBuffer: Buffer) => Promise<string>;
 
+// A page with fewer characters than this is treated as a scan without text layer
+const MIN_PAGE_TEXT_LENGTH = 20;
+
+function normalizeWhitespace(text: string) {
+  return text.replace(/\s+/g, ' ');
+}
+
 async function extractPdfText({ pdf }: { pdf: PDFDocumentProxy }) {
-  const { text, totalPages: pageCount } = await extractText(pdf, { mergePages: true });
+  const { text: pageTexts, totalPages: pageCount } = await extractText(pdf, { mergePages: false });
 
   return {
-    text: text?.trim().length > 0 ? text : undefined,
+    pageTexts,
     pageCount,
+    // Same normalization unpdf applies when merging pages, so text-only PDFs keep their output
+    text: normalizeWhitespace(pageTexts.join('\n')).trim().length > 0
+      ? normalizeWhitespace(pageTexts.join('\n'))
+      : undefined,
   };
 }
 
@@ -113,17 +124,19 @@ async function ocrPdfImages({
 async function ocrPdfRenderedPages({
   pdf,
   pageCount,
+  pageIndexes = Array.from({ length: pageCount }, (_, index) => index + 1),
   extract,
   logger,
 }: {
   pdf: PDFDocumentProxy;
   pageCount: number;
+  pageIndexes?: number[];
   extract: OcrExtract;
   logger?: Logger;
 }) {
   const renderedTexts: string[] = [];
 
-  for (let pageIndex = 1; pageIndex <= pageCount; pageIndex++) {
+  for (const pageIndex of pageIndexes) {
     const startTime = Date.now();
     const pageImage = await renderPageAsImage(pdf, pageIndex, {
       canvasImport: async () => canvas,
@@ -154,12 +167,49 @@ export const pdfExtractorDefinition = defineTextExtractor({
   extract: async ({ arrayBuffer, config, logger }) => {
     const pdf = await getDocumentProxy(arrayBuffer);
 
-    const { text, pageCount } = await extractPdfText({ pdf });
+    const { text, pageTexts, pageCount } = await extractPdfText({ pdf });
 
     if (text) {
+      const pagesWithoutText = pageTexts
+        .map((pageText, index) => ({ pageText, pageIndex: index + 1 }))
+        .filter(({ pageText }) => pageText.trim().length < MIN_PAGE_TEXT_LENGTH)
+        .map(({ pageIndex }) => pageIndex);
+
+      if (pagesWithoutText.length === 0) {
+        return {
+          content: text,
+          subExtractorsUsed: ['pdf-text'],
+        };
+      }
+
+      // Mixed document (text pages and scanned pages): OCR only the pages that have no text
+      logger?.info(
+        { pageCount, pagesWithoutTextCount: pagesWithoutText.length },
+        'PDF has pages without text, running OCR on them.',
+      );
+
+      const { extract, extractorType } = await createTesseractExtractor(config.tesseract);
+      const { renderedTexts } = await ocrPdfRenderedPages({
+        pdf,
+        pageCount,
+        pageIndexes: pagesWithoutText,
+        extract,
+        logger,
+      });
+
+      const ocrTextByPage = new Map(
+        pagesWithoutText.map((pageIndex, index) => [pageIndex, renderedTexts[index] ?? '']),
+      );
+
       return {
-        content: text,
-        subExtractorsUsed: ['pdf-text'],
+        content: pageTexts
+          .map((pageText, index) =>
+            pagesWithoutText.includes(index + 1)
+              ? (ocrTextByPage.get(index + 1) ?? '')
+              : normalizeWhitespace(pageText),
+          )
+          .join('\n'),
+        subExtractorsUsed: ['pdf-text', extractorType],
       };
     }
 
