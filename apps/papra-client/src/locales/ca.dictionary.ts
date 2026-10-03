@@ -243,7 +243,6 @@ export const translations = {
   'organizations.create.form.name.required': "Si us plau, introdueix el nom de l'organització",
   'organizations.create.form.submit': "Crea l'organització",
   'organizations.create.success': 'Organització creada correctament',
-  'organizations.switcher.create': 'Crea una organització nova',
 
   'organizations.create-first.title': 'Crea la teva organització',
   'organizations.create-first.description':
@@ -447,7 +446,6 @@ export const translations = {
     "El contingut del document s'extreu automàticament en pujar-lo. Només s'utilitza per les finalitats de cerca i indexació.",
   'documents.content.empty-placeholder':
     'Aquest document no té contingut extret, pots definir-lo manualment aquí.',
-  'documents.info.id': 'Identificador',
   'documents.info.name': 'Nom',
   'documents.info.type': 'Tipus',
   'documents.info.size': 'Mida',
@@ -593,8 +591,6 @@ export const translations = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Mostra la barra lateral',
   'documents.pdf-viewer.toolbar.previous-page': 'Pàgina anterior',
   'documents.pdf-viewer.toolbar.next-page': 'Pàgina següent',
-  'documents.pdf-viewer.toolbar.fit-width': "Ajusta a l'amplada",
-  'documents.pdf-viewer.toolbar.fit-page': 'Ajusta a la pàgina',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Gira en sentit horari',
   'documents.pdf-viewer.toolbar.download': 'Descarrega',
   'documents.pdf-viewer.toolbar.print': 'Imprimeix',
@@ -607,20 +603,8 @@ export const translations = {
   'documents.pdf-viewer.zoom.page-width': "Ajusta a l'amplada",
 
   'documents.pdf-viewer.more-actions.label': 'Més accions',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Mode de presentació',
-  'documents.pdf-viewer.more-actions.download': 'Descarrega',
-  'documents.pdf-viewer.more-actions.print': 'Imprimeix',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Vés a la primera pàgina',
   'documents.pdf-viewer.more-actions.go-to-last-page': "Vés a l'última pàgina",
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Gira en sentit horari',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise': 'Gira en sentit antihorari',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Desplaçament de pàgina',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Desplaçament vertical',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Desplaçament horitzontal',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Desplaçament ajustat',
-  'documents.pdf-viewer.more-actions.no-spreads': 'Sense dobles pàgines',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Dobles pàgines senars',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Dobles pàgines parells',
   'documents.pdf-viewer.more-actions.document-properties': 'Propietats del document',
 
   'documents.pdf-viewer.properties.title': 'Propietats del document',
@@ -649,7 +633,6 @@ export const translations = {
   'documents.pdf-viewer.thumbnails.page-alt': 'Pàgina {{ page }}',
 
   // Document share links
-  'document-share-links.share-action': 'Comparteix',
   'document-share-links.copy': "Copia l'enllaç",
   'document-share-links.copied': 'Enllaç copiat al porta-retalls',
   'document-share-links.copy-error': "No s'ha pogut copiar l'enllaç",
@@ -1067,12 +1050,7 @@ export const translations = {
   'layout.menu.home': 'Inici',
   'layout.menu.documents': 'Documents',
   'layout.menu.tags': 'Etiquetes',
-  'layout.menu.custom-properties': 'Propietats personalitzades',
-  'layout.menu.tagging-rules': "Regles d'etiquetatge",
-  'layout.menu.share-links': 'Enllaços compartits',
   'layout.menu.deleted-documents': 'Documents suprimits',
-  'layout.menu.organization-settings': 'Configuració',
-  'layout.menu.api-keys': 'Claus API',
   'layout.menu.settings': 'Configuració',
   'layout.menu.account': 'Compte',
   'layout.menu.general-settings': 'Configuració general',
@@ -1080,14 +1058,6 @@ export const translations = {
   'layout.menu.usage': 'Ús',
   'layout.menu.intake-emails': "Correus electrònics d'entrada",
   'layout.menu.webhooks': 'Webhooks',
-  'layout.menu.members': 'Membres',
-  'layout.menu.document-views': 'Vistes',
-  'layout.menu.invitations': 'Invitacions',
-  'layout.menu.admin': 'Administració',
-
-  'layout.upgrade-cta.title': 'Necessites més espai?',
-  'layout.upgrade-cta.description': "Obté 10x més emmagatzematge + col·laboració d'equip",
-  'layout.upgrade-cta.button': 'Actualitza ara',
 
   'layout.theme.light': 'Mode clar',
   'layout.theme.dark': 'Mode fosc',
@@ -1101,8 +1071,6 @@ export const translations = {
 
   'user-menu.trigger.label': "Menú d'usuari",
   'user-menu.account-settings': 'Configuració del compte',
-  'user-menu.api-keys': 'Claus API',
-  'user-menu.invitations': 'Invitacions',
   'user-menu.language': 'Idioma',
   'user-menu.theme': 'Tema',
   'user-menu.about': 'Quant a Papra',
@@ -1113,7 +1081,6 @@ export const translations = {
   'command-palette.search.placeholder': 'Cerca comandaments o documents',
   'command-palette.no-results': "No s'han trobat resultats",
   'command-palette.sections.documents': 'Documents',
-  'command-palette.sections.theme': 'Tema',
   'command-palette.show-more-results': 'Mostra {{ count }} resultats més per a "{{ query }}"',
 
   // API errors

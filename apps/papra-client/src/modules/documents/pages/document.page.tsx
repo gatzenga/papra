@@ -263,9 +263,15 @@ const DocumentOpenWithDropdown: Component<{ document: Document; organizationId: 
       <DropdownMenu>
         <DropdownMenuTrigger
           as={(triggerProps: DropdownMenuTriggerProps) => (
-            <Button variant="outline" size="sm" {...triggerProps}>
-              <div class="i-tabler-app-window size-4 mr-2" />
-              {t('documents.open-with.label')}
+            <Button
+              variant="outline"
+              size="sm"
+              title={t('documents.open-with.label')}
+              aria-label={t('documents.open-with.label')}
+              {...triggerProps}
+            >
+              <div class="i-tabler-app-window size-4 @[34rem]:mr-2" />
+              <span class="hidden @[34rem]:inline">{t('documents.open-with.label')}</span>
               <div class="i-tabler-chevron-down size-3 ml-1" />
             </Button>
           )}
@@ -363,7 +369,7 @@ export const DocumentPage: Component = () => {
           <Show when={documentQuery.data?.document}>
             {(getDocument) => (
               <div class="flex gap-4 md:pr-6">
-                <div class="flex-1 min-w-0">
+                <div class="flex-1 min-w-0 @container">
                   <Button
                     variant="ghost"
                     class="flex items-center gap-2 group bg-transparent! px-0 text-left h-auto max-w-full"
@@ -396,9 +402,13 @@ export const DocumentPage: Component = () => {
                       }
                       variant="outline"
                       size="sm"
+                      title={t('documents.actions.download.title')}
+                      aria-label={t('documents.actions.download.title')}
                     >
-                      <div class="i-tabler-download size-4 mr-2" />
-                      {t('documents.actions.download.title')}
+                      <div class="i-tabler-download size-4 @[34rem]:mr-2" />
+                      <span class="hidden @[34rem]:inline">
+                        {t('documents.actions.download.title')}
+                      </span>
                     </Button>
 
                     <DocumentOpenWithDropdown
@@ -418,9 +428,13 @@ export const DocumentPage: Component = () => {
                         rel="noopener"
                         variant="outline"
                         size="sm"
+                        title={t('documents.pdf-optimization.action')}
+                        aria-label={t('documents.pdf-optimization.action')}
                       >
-                        <div class="i-tabler-sparkles size-4 mr-2" />
-                        {t('documents.pdf-optimization.action')}
+                        <div class="i-tabler-sparkles size-4 @[34rem]:mr-2" />
+                        <span class="hidden @[34rem]:inline">
+                          {t('documents.pdf-optimization.action')}
+                        </span>
                       </Button>
                     </Show>
 
@@ -430,14 +444,22 @@ export const DocumentPage: Component = () => {
                         size="sm"
                         onClick={async () => restore({ document: getDocument() })}
                         isLoading={getIsRestoring()}
+                        title={t('documents.actions.restore')}
+                        aria-label={t('documents.actions.restore')}
                       >
-                        <div class="i-tabler-refresh size-4 mr-2" />
-                        {t('documents.actions.restore')}
+                        <div class="i-tabler-refresh size-4 @[34rem]:mr-2" />
+                        <span class="hidden @[34rem]:inline">{t('documents.actions.restore')}</span>
                       </Button>
                     ) : (
-                      <Button variant="destructive" size="sm" onClick={deleteDoc}>
-                        <div class="i-tabler-trash size-4 mr-2" />
-                        {t('documents.actions.delete')}
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={deleteDoc}
+                        title={t('documents.actions.delete')}
+                        aria-label={t('documents.actions.delete')}
+                      >
+                        <div class="i-tabler-trash size-4 @[34rem]:mr-2" />
+                        <span class="hidden @[34rem]:inline">{t('documents.actions.delete')}</span>
                       </Button>
                     )}
                   </div>

@@ -235,7 +235,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'organizations.create.form.name.required': 'Ange organisationsnamn',
   'organizations.create.form.submit': 'Skapa organisation',
   'organizations.create.success': 'Organisationen har skapats',
-  'organizations.switcher.create': 'Skapa ny organisation',
 
   'organizations.create-first.title': 'Skapa din organisation',
   'organizations.create-first.description':
@@ -417,7 +416,6 @@ export const translations: Partial<TranslationsDictionary> = {
     'Innehållet i dokumentet extraheras automatiskt från dokumentet vid uppladdning. Det används endast för sökning och indexering.',
   'documents.content.empty-placeholder':
     'Detta dokument har inget extraherat innehåll. Du kan ställa in det manuellt här.',
-  'documents.info.id': 'ID',
   'documents.info.name': 'Namn',
   'documents.info.type': 'Typ',
   'documents.info.size': 'Storlek',
@@ -554,8 +552,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Visa sidofältet',
   'documents.pdf-viewer.toolbar.previous-page': 'Föregående sida',
   'documents.pdf-viewer.toolbar.next-page': 'Nästa sida',
-  'documents.pdf-viewer.toolbar.fit-width': 'Passa bredd',
-  'documents.pdf-viewer.toolbar.fit-page': 'Passa sida',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Rotera medurs',
   'documents.pdf-viewer.toolbar.download': 'Ladda ner',
   'documents.pdf-viewer.toolbar.print': 'Skriv ut',
@@ -568,20 +564,8 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.zoom.page-width': 'Sidobredd',
 
   'documents.pdf-viewer.more-actions.label': 'Fler åtgärder',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Presentationsläge',
-  'documents.pdf-viewer.more-actions.download': 'Ladda ner',
-  'documents.pdf-viewer.more-actions.print': 'Skriv ut',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Gå till första sidan',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Gå till sista sidan',
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Rotera medurs',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise': 'Rotera moturs',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Sidoscrollning',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Vertikal scrollning',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Horisontell scrollning',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Omsluten scrollning',
-  'documents.pdf-viewer.more-actions.no-spreads': 'Inga uppslag',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Ojämna uppslag',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Jämna uppslag',
   'documents.pdf-viewer.more-actions.document-properties': 'Dokumentegenskaper',
 
   'documents.pdf-viewer.properties.title': 'Dokumentegenskaper',
@@ -608,7 +592,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.sidebar.attachments': 'Bilagor',
 
   'documents.pdf-viewer.thumbnails.page-alt': 'Sida {{ page }}',
-  'document-share-links.share-action': 'Dela',
   'document-share-links.copy': 'Kopiera länk',
   'document-share-links.copied': 'Länken kopierad till urklipp',
   'document-share-links.copy-error': 'Det gick inte att kopiera länken',
@@ -1012,26 +995,13 @@ export const translations: Partial<TranslationsDictionary> = {
   'layout.menu.home': 'Hem',
   'layout.menu.documents': 'Dokument',
   'layout.menu.tags': 'Taggar',
-  'layout.menu.custom-properties': 'Anpassade egenskaper',
-  'layout.menu.tagging-rules': 'Taggningsregler',
-  'layout.menu.share-links': 'Delningslänkar',
   'layout.menu.deleted-documents': 'Raderade dokument',
-  'layout.menu.organization-settings': 'Inställningar',
-  'layout.menu.api-keys': 'API-nycklar',
   'layout.menu.settings': 'Inställningar',
   'layout.menu.account': 'Konto',
   'layout.menu.general-settings': 'Allmänna inställningar',
   'layout.menu.usage': 'Användning',
   'layout.menu.intake-emails': 'Inmatningsadresser',
   'layout.menu.webhooks': 'Webhooks',
-  'layout.menu.members': 'Medlemmar',
-  'layout.menu.document-views': 'Vyer',
-  'layout.menu.invitations': 'Inbjudningar',
-  'layout.menu.admin': 'Admin',
-
-  'layout.upgrade-cta.title': 'Behöver du mer utrymme?',
-  'layout.upgrade-cta.description': 'Få 10x mer utrymme + teamsamarbete',
-  'layout.upgrade-cta.button': 'Uppgradera nu',
 
   'layout.theme.light': 'Ljust läge',
   'layout.theme.dark': 'Mörkt läge',
@@ -1045,8 +1015,6 @@ export const translations: Partial<TranslationsDictionary> = {
 
   'user-menu.trigger.label': 'Användarmeny',
   'user-menu.account-settings': 'Kontoinställningar',
-  'user-menu.api-keys': 'API-nycklar',
-  'user-menu.invitations': 'Inbjudningar',
   'user-menu.language': 'Språk',
   'user-menu.theme': 'Tema',
   'user-menu.about': 'Om Papra',
@@ -1057,7 +1025,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'command-palette.search.placeholder': 'Sök kommandon eller dokument',
   'command-palette.no-results': 'Inga resultat',
   'command-palette.sections.documents': 'Dokument',
-  'command-palette.sections.theme': 'Tema',
   'command-palette.show-more-results': 'Visa {{ count }} fler resultat för "{{ query }}"',
 
   // API errors

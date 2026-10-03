@@ -239,7 +239,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'organizations.create.form.name.required': 'Παρακαλώ εισαγάγετε όνομα οργανισμού',
   'organizations.create.form.submit': 'Δημιουργία οργανισμού',
   'organizations.create.success': 'Ο οργανισμός δημιουργήθηκε με επιτυχία',
-  'organizations.switcher.create': 'Δημιουργία νέου οργανισμού',
 
   'organizations.create-first.title': 'Δημιουργήστε τον οργανισμό σας',
   'organizations.create-first.description':
@@ -418,7 +417,6 @@ export const translations: Partial<TranslationsDictionary> = {
     'Το περιεχόμενο του εγγράφου εξάγεται αυτόματα κατά το ανέβασμα και χρησιμοποιείται μόνο για αναζήτηση.',
   'documents.content.empty-placeholder':
     'Το έγγραφο δεν έχει εξαγμένο περιεχόμενο. Μπορείτε να το προσθέσετε χειροκίνητα εδώ.',
-  'documents.info.id': 'ID',
   'documents.info.name': 'Όνομα',
   'documents.info.type': 'Τύπος',
   'documents.info.size': 'Μέγεθος',
@@ -561,8 +559,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Εμφάνιση πλαϊνής στήλης',
   'documents.pdf-viewer.toolbar.previous-page': 'Προηγούμενη σελίδα',
   'documents.pdf-viewer.toolbar.next-page': 'Επόμενη σελίδα',
-  'documents.pdf-viewer.toolbar.fit-width': 'Προσαρμογή πλάτους',
-  'documents.pdf-viewer.toolbar.fit-page': 'Προσαρμογή σελίδας',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Δεξιόστροφη περιστροφή',
   'documents.pdf-viewer.toolbar.download': 'Λήψη',
   'documents.pdf-viewer.toolbar.print': 'Εκτύπωση',
@@ -575,20 +571,8 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.zoom.page-width': 'Πλάτος σελίδας',
 
   'documents.pdf-viewer.more-actions.label': 'Περισσότερες ενέργειες',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Λειτουργία παρουσίασης',
-  'documents.pdf-viewer.more-actions.download': 'Λήψη',
-  'documents.pdf-viewer.more-actions.print': 'Εκτύπωση',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Μετάβαση στην πρώτη σελίδα',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Μετάβαση στην τελευταία σελίδα',
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Δεξιόστροφη περιστροφή',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise': 'Αριστερόστροφη περιστροφή',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Κύλιση ανά σελίδα',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Κατακόρυφη κύλιση',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Οριζόντια κύλιση',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Αναδιπλούμενη κύλιση',
-  'documents.pdf-viewer.more-actions.no-spreads': 'Χωρίς ανάπτυγμα',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Μονά αναπτύγματα',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Ζυγά αναπτύγματα',
   'documents.pdf-viewer.more-actions.document-properties': 'Ιδιότητες εγγράφου',
 
   'documents.pdf-viewer.properties.title': 'Ιδιότητες εγγράφου',
@@ -615,7 +599,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.sidebar.attachments': 'Συνημμένα',
 
   'documents.pdf-viewer.thumbnails.page-alt': 'Σελίδα {{ page }}',
-  'document-share-links.share-action': 'Κοινή χρήση',
   'document-share-links.copy': 'Αντιγραφή συνδέσμου',
   'document-share-links.copied': 'Ο σύνδεσμος αντιγράφηκε στο πρόχειρο',
   'document-share-links.copy-error': 'Αποτυχία αντιγραφής του συνδέσμου',
@@ -1029,26 +1012,13 @@ export const translations: Partial<TranslationsDictionary> = {
   'layout.menu.home': 'Αρχική',
   'layout.menu.documents': 'Έγγραφα',
   'layout.menu.tags': 'Ετικέτες',
-  'layout.menu.custom-properties': 'Προσαρμοσμένες ιδιότητες',
-  'layout.menu.tagging-rules': 'Κανόνες ετικετοποίησης',
-  'layout.menu.share-links': 'Σύνδεσμοι κοινής χρήσης',
   'layout.menu.deleted-documents': 'Διαγεγραμμένα έγγραφα',
-  'layout.menu.organization-settings': 'Ρυθμίσεις',
-  'layout.menu.api-keys': 'API keys',
   'layout.menu.settings': 'Ρυθμίσεις',
   'layout.menu.account': 'Λογαριασμός',
   'layout.menu.general-settings': 'Γενικές ρυθμίσεις',
   'layout.menu.usage': 'Χρήση',
   'layout.menu.intake-emails': 'Email εισαγωγής',
   'layout.menu.webhooks': 'Webhooks',
-  'layout.menu.members': 'Μέλη',
-  'layout.menu.document-views': 'Προβολές',
-  'layout.menu.invitations': 'Προσκλήσεις',
-  'layout.menu.admin': 'Διαχείριση',
-
-  'layout.upgrade-cta.title': 'Χρειάζεστε περισσότερο χώρο;',
-  'layout.upgrade-cta.description': 'Αποκτήστε 10x περισσότερο χώρο + συνεργασία ομάδας',
-  'layout.upgrade-cta.button': 'Αναβάθμιση τώρα',
 
   'layout.theme.light': 'Φωτεινό θέμα',
   'layout.theme.dark': 'Σκούρο θέμα',
@@ -1062,8 +1032,6 @@ export const translations: Partial<TranslationsDictionary> = {
 
   'user-menu.trigger.label': 'Μενού χρήστη',
   'user-menu.account-settings': 'Ρυθμίσεις λογαριασμού',
-  'user-menu.api-keys': 'API keys',
-  'user-menu.invitations': 'Προσκλήσεις',
   'user-menu.language': 'Γλώσσα',
   'user-menu.theme': 'Θέμα',
   'user-menu.about': 'Σχετικά με το Papra',
@@ -1074,7 +1042,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'command-palette.search.placeholder': 'Αναζήτηση εντολών ή εγγράφων',
   'command-palette.no-results': 'Δεν βρέθηκαν αποτελέσματα',
   'command-palette.sections.documents': 'Έγγραφα',
-  'command-palette.sections.theme': 'Θέμα',
   'command-palette.show-more-results': 'Εμφάνιση ακόμη {{ count }} αποτελεσμάτων για "{{ query }}"',
 
   // API errors

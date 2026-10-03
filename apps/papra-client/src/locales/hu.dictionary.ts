@@ -224,7 +224,6 @@ export const translations = {
   'organizations.create.form.name.required': 'Kérjük adja meg a szervezet nevét',
   'organizations.create.form.submit': 'Szervezet létrehozása',
   'organizations.create.success': 'A szervezet sikeresen létrejött',
-  'organizations.switcher.create': 'Új szervezet létrehozása',
 
   'organizations.create-first.title': 'Szervezet létrehozása',
   'organizations.create-first.description':
@@ -427,7 +426,6 @@ export const translations = {
     'A dokumentum tartalma feltöltéskor automatikusan kinyerésre kerül. Kizárólag keresési és indexelési célokra szolgál.',
   'documents.content.empty-placeholder':
     'Ehhez a dokumentumhoz nincs kinyert tartalom, itt manuálisan is megadhatja azt.',
-  'documents.info.id': 'Azonosító',
   'documents.info.name': 'Név',
   'documents.info.type': 'Típus',
   'documents.info.size': 'Méret',
@@ -534,17 +532,6 @@ export const translations = {
   'documents.rename.success': 'A dokumentum átnevezése sikeres',
   'documents.rename.cancel': 'Mégse',
 
-  'documents.reprocess.action': 'Újrafeldolgozás',
-  'documents.reprocess.confirm.title': 'Dokumentum újrafeldolgozása',
-  'documents.reprocess.confirm.description':
-    'Biztosan szeretnéd újra feldolgozni ezt a dokumentumot? A tartalom és a metaadatok újra kinyerésre kerülnek.',
-  'documents.reprocess.confirm.submit': 'Újrafeldolgozás',
-  'documents.reprocess.disabled': 'Az újrafeldolgozás jelenleg le van tiltva',
-  'documents.reprocess.error': 'Nem sikerült újrafeldolgozni a dokumentumot',
-  'documents.reprocess.queued': 'Újrafeldolgozás ütemezve',
-  'documents.reprocess.queued.description': 'A dokumentum hozzáadva a feldolgozási sorhoz.',
-  'documents.reprocess.rate-limited': 'Túl sok kérés. Kérjük próbáld újra később.',
-
   'import-documents.title.error': '{{ count }} dokumentum importálása sikertelen',
   'import-documents.title.success': '{{ count }} dokumentum importálva',
   'import-documents.title.pending': '{{ count }} / {{ total }} dokumentum importálva',
@@ -576,8 +563,6 @@ export const translations = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Oldalsáv megjelenítése',
   'documents.pdf-viewer.toolbar.previous-page': 'Előző oldal',
   'documents.pdf-viewer.toolbar.next-page': 'Következő oldal',
-  'documents.pdf-viewer.toolbar.fit-width': 'Szélességhez igazítás',
-  'documents.pdf-viewer.toolbar.fit-page': 'Oldalhoz igazítás',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Forgatás az óramutató járásával megegyezően',
   'documents.pdf-viewer.toolbar.download': 'Letöltés',
   'documents.pdf-viewer.toolbar.print': 'Nyomtatás',
@@ -590,22 +575,8 @@ export const translations = {
   'documents.pdf-viewer.zoom.page-width': 'Oldalszélességhez igazítás',
 
   'documents.pdf-viewer.more-actions.label': 'További műveletek',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Prezentáció mód',
-  'documents.pdf-viewer.more-actions.download': 'Letöltés',
-  'documents.pdf-viewer.more-actions.print': 'Nyomtatás',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Ugrás az első oldalra',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Ugrás az utolsó oldalra',
-  'documents.pdf-viewer.more-actions.rotate-clockwise':
-    'Forgatás az óramutató járásával megegyezően',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise':
-    'Forgatás az óramutató járásával ellentétesen',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Oldalgörgetés',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Függőleges görgetés',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Vízszintes görgetés',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Végtelenített görgetés',
-  'documents.pdf-viewer.more-actions.no-spreads': 'Nincs oldalpár',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Páratlan oldalpárok',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Páros oldalpárok',
   'documents.pdf-viewer.more-actions.document-properties': 'Dokumentum tulajdonságai',
 
   'documents.pdf-viewer.properties.title': 'Dokumentum tulajdonságai',
@@ -634,7 +605,6 @@ export const translations = {
   'documents.pdf-viewer.thumbnails.page-alt': '{{ page }}. oldal',
 
   // Document share links
-  'document-share-links.share-action': 'Megosztás',
   'document-share-links.copy': 'Link másolása',
   'document-share-links.copied': 'Link a vágólapra másolva',
   'document-share-links.copy-error': 'A link másolása sikertelen',
@@ -1051,12 +1021,7 @@ export const translations = {
   'layout.menu.home': 'Kezdőlap',
   'layout.menu.documents': 'Dokumentumok',
   'layout.menu.tags': 'Címkék',
-  'layout.menu.custom-properties': 'Egyedi tulajdonságok',
-  'layout.menu.tagging-rules': 'Címkézési szabályok',
-  'layout.menu.share-links': 'Megosztási linkek',
   'layout.menu.deleted-documents': 'Törölt dokumentumok',
-  'layout.menu.organization-settings': 'Beállítások',
-  'layout.menu.api-keys': 'API-kulcsok',
   'layout.menu.settings': 'Beállítások',
   'layout.menu.account': 'Fiók',
   'layout.menu.general-settings': 'Általános beállítások',
@@ -1064,15 +1029,6 @@ export const translations = {
   'layout.menu.usage': 'Használat',
   'layout.menu.intake-emails': 'Beérkező e-mailek',
   'layout.menu.webhooks': 'Webhookok',
-  'layout.menu.members': 'Tagok',
-  'layout.menu.document-views': 'Nézetek',
-  'layout.menu.invitations': 'Meghívók',
-  'layout.menu.admin': 'Adminisztráció',
-
-  'layout.upgrade-cta.title': 'Több helyre van szüksége?',
-  'layout.upgrade-cta.description':
-    'Szerezzen 10-szer több tárhelyet és csapatmunkát támogató funkciókat',
-  'layout.upgrade-cta.button': 'Frissítés most',
 
   'layout.theme.light': 'Világos mód',
   'layout.theme.dark': 'Sötét mód',
@@ -1086,8 +1042,6 @@ export const translations = {
 
   'user-menu.trigger.label': 'Felhasználói menü',
   'user-menu.account-settings': 'Fiókbeállítások',
-  'user-menu.api-keys': 'API-kulcsok',
-  'user-menu.invitations': 'Meghívók',
   'user-menu.language': 'Nyelv',
   'user-menu.theme': 'Téma',
   'user-menu.about': 'A Papráról',
@@ -1098,7 +1052,6 @@ export const translations = {
   'command-palette.search.placeholder': 'Parancsok vagy dokumentumok keresése',
   'command-palette.no-results': 'Nincs találat',
   'command-palette.sections.documents': 'Dokumentumok',
-  'command-palette.sections.theme': 'Téma',
   'command-palette.show-more-results':
     'További {{ count }} találat megjelenítése a következőre: „{{ query }}”',
 

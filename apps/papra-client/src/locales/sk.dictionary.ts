@@ -229,7 +229,6 @@ export const translations = {
   'organizations.create.form.name.required': 'Zadajte názov organizácie',
   'organizations.create.form.submit': 'Vytvoriť organizáciu',
   'organizations.create.success': 'Organizácia bola úspešne vytvorená',
-  'organizations.switcher.create': 'Vytvoriť novú organizáciu',
 
   'organizations.create-first.title': 'Vytvorte si organizáciu',
   'organizations.create-first.description':
@@ -429,7 +428,6 @@ export const translations = {
     'Obsah dokumentu sa automaticky extrahuje pri nahraní. Používa sa iba na vyhľadávanie a indexovanie.',
   'documents.content.empty-placeholder':
     'Tento dokument nemá extrahovaný obsah, môžete ho tu nastaviť ručne.',
-  'documents.info.id': 'ID',
   'documents.info.name': 'Názov',
   'documents.info.type': 'Typ',
   'documents.info.size': 'Veľkosť',
@@ -568,8 +566,6 @@ export const translations = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Zobraziť bočný panel',
   'documents.pdf-viewer.toolbar.previous-page': 'Predchádzajúca strana',
   'documents.pdf-viewer.toolbar.next-page': 'Nasledujúca strana',
-  'documents.pdf-viewer.toolbar.fit-width': 'Prispôsobiť šírke',
-  'documents.pdf-viewer.toolbar.fit-page': 'Prispôsobiť strane',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Otočiť doprava',
   'documents.pdf-viewer.toolbar.download': 'Stiahnuť',
   'documents.pdf-viewer.toolbar.print': 'Tlačiť',
@@ -582,20 +578,8 @@ export const translations = {
   'documents.pdf-viewer.zoom.page-width': 'Šírka strany',
 
   'documents.pdf-viewer.more-actions.label': 'Ďalšie akcie',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Prezentačný režim',
-  'documents.pdf-viewer.more-actions.download': 'Stiahnuť',
-  'documents.pdf-viewer.more-actions.print': 'Tlačiť',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Prejsť na prvú stranu',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Prejsť na poslednú stranu',
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Otočiť doprava',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise': 'Otočiť doľava',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Posúvanie po stranách',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Zvislé posúvanie',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Vodorovné posúvanie',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Posúvanie so zalamovaním',
-  'documents.pdf-viewer.more-actions.no-spreads': 'Bez dvojstrán',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Nepárne dvojstrany',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Párne dvojstrany',
   'documents.pdf-viewer.more-actions.document-properties': 'Vlastnosti dokumentu',
 
   'documents.pdf-viewer.properties.title': 'Vlastnosti dokumentu',
@@ -624,7 +608,6 @@ export const translations = {
   'documents.pdf-viewer.thumbnails.page-alt': 'Strana {{ page }}',
 
   // Document share links
-  'document-share-links.share-action': 'Zdieľať',
   'document-share-links.copy': 'Kopírovať odkaz',
   'document-share-links.copied': 'Odkaz bol skopírovaný do schránky',
   'document-share-links.copy-error': 'Nepodarilo sa skopírovať odkaz',
@@ -1039,12 +1022,7 @@ export const translations = {
   'layout.menu.home': 'Domov',
   'layout.menu.documents': 'Dokumenty',
   'layout.menu.tags': 'Štítky',
-  'layout.menu.custom-properties': 'Vlastné polia',
-  'layout.menu.tagging-rules': 'Pravidlá štítkovania',
-  'layout.menu.share-links': 'Odkazy na zdieľanie',
   'layout.menu.deleted-documents': 'Odstránené dokumenty',
-  'layout.menu.organization-settings': 'Nastavenia',
-  'layout.menu.api-keys': 'API kľúče',
   'layout.menu.settings': 'Nastavenia',
   'layout.menu.account': 'Účet',
   'layout.menu.general-settings': 'Všeobecné nastavenia',
@@ -1052,14 +1030,6 @@ export const translations = {
   'layout.menu.usage': 'Využitie',
   'layout.menu.intake-emails': 'Prijímacie e-maily',
   'layout.menu.webhooks': 'Webhooky',
-  'layout.menu.members': 'Členovia',
-  'layout.menu.document-views': 'Zobrazenia',
-  'layout.menu.invitations': 'Pozvánky',
-  'layout.menu.admin': 'Administrácia',
-
-  'layout.upgrade-cta.title': 'Potrebujete viac miesta?',
-  'layout.upgrade-cta.description': 'Získajte 10× viac úložiska + tímovú spoluprácu',
-  'layout.upgrade-cta.button': 'Prejsť na vyšší plán',
 
   'layout.theme.light': 'Svetlý režim',
   'layout.theme.dark': 'Tmavý režim',
@@ -1073,8 +1043,6 @@ export const translations = {
 
   'user-menu.trigger.label': 'Používateľské menu',
   'user-menu.account-settings': 'Nastavenia účtu',
-  'user-menu.api-keys': 'API kľúče',
-  'user-menu.invitations': 'Pozvánky',
   'user-menu.language': 'Jazyk',
   'user-menu.theme': 'Téma',
   'user-menu.about': 'O Papra',
@@ -1085,7 +1053,6 @@ export const translations = {
   'command-palette.search.placeholder': 'Hľadajte príkazy alebo dokumenty',
   'command-palette.no-results': 'Nenašli sa žiadne výsledky',
   'command-palette.sections.documents': 'Dokumenty',
-  'command-palette.sections.theme': 'Téma',
   'command-palette.show-more-results':
     'Zobraziť {{ count, =1:{count} ďalší výsledok, [2-4]:{count} ďalšie výsledky, {count} ďalších výsledkov }} pre „{{ query }}“',
 

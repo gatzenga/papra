@@ -160,48 +160,6 @@ export const PdfViewerToolbar: Component<ToolbarProps> = (props) => {
                 variant="ghost"
                 size="icon"
                 class="size-8 hidden md:inline-flex"
-                onClick={() => {
-                  if (props.store.pdfSlick) {
-                    props.store.pdfSlick.currentScaleValue = 'page-width';
-                  }
-                }}
-              >
-                <div class="i-tabler-arrows-horizontal size-4" />
-              </Button>
-            )}
-          />
-          <TooltipContent>{t('documents.pdf-viewer.toolbar.fit-width')}</TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger
-            as={(triggerProps: Record<string, unknown>) => (
-              <Button
-                {...triggerProps}
-                variant="ghost"
-                size="icon"
-                class="size-8 hidden md:inline-flex"
-                onClick={() => {
-                  if (props.store.pdfSlick) {
-                    props.store.pdfSlick.currentScaleValue = 'page-fit';
-                  }
-                }}
-              >
-                <div class="i-tabler-arrows-maximize size-4" />
-              </Button>
-            )}
-          />
-          <TooltipContent>{t('documents.pdf-viewer.toolbar.fit-page')}</TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger
-            as={(triggerProps: Record<string, unknown>) => (
-              <Button
-                {...triggerProps}
-                variant="ghost"
-                size="icon"
-                class="size-8 hidden md:inline-flex"
                 onClick={() => props.store.pdfSlick?.setRotation(props.store.pagesRotation + 90)}
               >
                 <div class="i-tabler-rotate-clockwise size-4" />

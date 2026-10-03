@@ -232,7 +232,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'organizations.create.form.name.required': 'Введите название организации',
   'organizations.create.form.submit': 'Создать организацию',
   'organizations.create.success': 'Организация успешно создана',
-  'organizations.switcher.create': 'Создать новую организацию',
 
   'organizations.create-first.title': 'Создать организацию',
   'organizations.create-first.description':
@@ -415,7 +414,6 @@ export const translations: Partial<TranslationsDictionary> = {
     'Содержимое документа автоматически извлекается из документа при загрузке. Оно используется только для поиска и индексации.',
   'documents.content.empty-placeholder':
     'У этого документа нет извлечённого содержимого, вы можете установить его вручную.',
-  'documents.info.id': 'ID',
   'documents.info.name': 'Имя',
   'documents.info.type': 'Тип',
   'documents.info.size': 'Размер',
@@ -555,8 +553,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Показать боковую панель',
   'documents.pdf-viewer.toolbar.previous-page': 'Предыдущая страница',
   'documents.pdf-viewer.toolbar.next-page': 'Следующая страница',
-  'documents.pdf-viewer.toolbar.fit-width': 'По ширине',
-  'documents.pdf-viewer.toolbar.fit-page': 'По размеру страницы',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Повернуть по часовой стрелке',
   'documents.pdf-viewer.toolbar.download': 'Скачать',
   'documents.pdf-viewer.toolbar.print': 'Печать',
@@ -569,20 +565,8 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.zoom.page-width': 'По ширине страницы',
 
   'documents.pdf-viewer.more-actions.label': 'Ещё',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Режим презентации',
-  'documents.pdf-viewer.more-actions.download': 'Скачать',
-  'documents.pdf-viewer.more-actions.print': 'Печать',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Перейти к первой странице',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Перейти к последней странице',
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Повернуть по часовой стрелке',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise': 'Повернуть против часовой стрелки',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Постраничная прокрутка',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Вертикальная прокрутка',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Горизонтальная прокрутка',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Непрерывная прокрутка',
-  'documents.pdf-viewer.more-actions.no-spreads': 'Без разворотов',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Нечётные развороты',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Чётные развороты',
   'documents.pdf-viewer.more-actions.document-properties': 'Свойства документа',
 
   'documents.pdf-viewer.properties.title': 'Свойства документа',
@@ -609,7 +593,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.sidebar.attachments': 'Вложения',
 
   'documents.pdf-viewer.thumbnails.page-alt': 'Страница {{ page }}',
-  'document-share-links.share-action': 'Поделиться',
   'document-share-links.copy': 'Копировать ссылку',
   'document-share-links.copied': 'Ссылка скопирована в буфер обмена',
   'document-share-links.copy-error': 'Не удалось скопировать ссылку',
@@ -1023,27 +1006,13 @@ export const translations: Partial<TranslationsDictionary> = {
   'layout.menu.home': 'Главная',
   'layout.menu.documents': 'Документы',
   'layout.menu.tags': 'Теги',
-  'layout.menu.custom-properties': 'Пользовательские свойства',
-  'layout.menu.tagging-rules': 'Правила тегирования',
-  'layout.menu.share-links': 'Ссылки для общего доступа',
   'layout.menu.deleted-documents': 'Удалённые документы',
-  'layout.menu.organization-settings': 'Настройки',
-  'layout.menu.api-keys': 'API ключи',
   'layout.menu.settings': 'Настройки',
   'layout.menu.account': 'Аккаунт',
   'layout.menu.general-settings': 'Общие настройки',
   'layout.menu.usage': 'Использование',
   'layout.menu.intake-emails': 'Email для импорта',
   'layout.menu.webhooks': 'Webhooks',
-  'layout.menu.members': 'Участники',
-  'layout.menu.document-views': 'Представления',
-  'layout.menu.invitations': 'Приглашения',
-  'layout.menu.admin': 'Админка',
-
-  'layout.upgrade-cta.title': 'Нужно больше места?',
-  'layout.upgrade-cta.description':
-    'Получите в 10 раз больше хранилища + возможности командной работы',
-  'layout.upgrade-cta.button': 'Обновить сейчас',
 
   'layout.theme.light': 'Светлая',
   'layout.theme.dark': 'Тёмная',
@@ -1057,8 +1026,6 @@ export const translations: Partial<TranslationsDictionary> = {
 
   'user-menu.trigger.label': 'Меню пользователя',
   'user-menu.account-settings': 'Настройки аккаунта',
-  'user-menu.api-keys': 'API ключи',
-  'user-menu.invitations': 'Приглашения',
   'user-menu.language': 'Язык',
   'user-menu.theme': 'Тема',
   'user-menu.about': 'Информация',
@@ -1069,7 +1036,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'command-palette.search.placeholder': 'Ищите команды или документы',
   'command-palette.no-results': 'Ничего не найдено',
   'command-palette.sections.documents': 'Документы',
-  'command-palette.sections.theme': 'Тема',
   'command-palette.show-more-results':
     'Показать ещё {{ count }} {{ count, =1:результат, [2-4]:результата, результатов }} для "{{ query }}"',
 

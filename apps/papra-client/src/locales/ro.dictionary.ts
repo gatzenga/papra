@@ -236,7 +236,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'organizations.create.form.name.required': 'Introdu numele organizației',
   'organizations.create.form.submit': 'Creează organizația',
   'organizations.create.success': 'Organizația a fost creată cu succes',
-  'organizations.switcher.create': 'Creează o organizație nouă',
 
   'organizations.create-first.title': 'Creează organizația',
   'organizations.create-first.description':
@@ -420,7 +419,6 @@ export const translations: Partial<TranslationsDictionary> = {
     'Conținutul documentului este extras automat din document la încarcare. Este folosit doar pentru căutare și indexare.',
   'documents.content.empty-placeholder':
     'Acest document nu are conținut extra, poți introduce manual aici.',
-  'documents.info.id': 'ID',
   'documents.info.name': 'Nume',
   'documents.info.type': 'Tip',
   'documents.info.size': 'Dimensiune',
@@ -560,8 +558,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Afișează panoul lateral',
   'documents.pdf-viewer.toolbar.previous-page': 'Pagina anterioară',
   'documents.pdf-viewer.toolbar.next-page': 'Pagina următoare',
-  'documents.pdf-viewer.toolbar.fit-width': 'Potrivire la lățime',
-  'documents.pdf-viewer.toolbar.fit-page': 'Potrivire la pagină',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Rotire în sensul acelor de ceasornic',
   'documents.pdf-viewer.toolbar.download': 'Descarcă',
   'documents.pdf-viewer.toolbar.print': 'Tipărește',
@@ -574,21 +570,8 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.zoom.page-width': 'Lățimea paginii',
 
   'documents.pdf-viewer.more-actions.label': 'Mai multe acțiuni',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Mod prezentare',
-  'documents.pdf-viewer.more-actions.download': 'Descarcă',
-  'documents.pdf-viewer.more-actions.print': 'Tipărește',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Mergi la prima pagină',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Mergi la ultima pagină',
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Rotire în sensul acelor de ceasornic',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise':
-    'Rotire în sens invers acelor de ceasornic',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Derulare pe pagini',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Derulare verticală',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Derulare orizontală',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Derulare continuă',
-  'documents.pdf-viewer.more-actions.no-spreads': 'Fără pagini duble',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Pagini duble impare',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Pagini duble pare',
   'documents.pdf-viewer.more-actions.document-properties': 'Proprietățile documentului',
 
   'documents.pdf-viewer.properties.title': 'Proprietățile documentului',
@@ -615,7 +598,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.sidebar.attachments': 'Atașamente',
 
   'documents.pdf-viewer.thumbnails.page-alt': 'Pagina {{ page }}',
-  'document-share-links.share-action': 'Partajează',
   'document-share-links.copy': 'Copiază linkul',
   'document-share-links.copied': 'Link copiat în clipboard',
   'document-share-links.copy-error': 'Copierea linkului a eșuat',
@@ -1034,27 +1016,13 @@ export const translations: Partial<TranslationsDictionary> = {
   'layout.menu.home': 'Acasă',
   'layout.menu.documents': 'Documente',
   'layout.menu.tags': 'Etichete',
-  'layout.menu.custom-properties': 'Proprietăți personalizate',
-  'layout.menu.tagging-rules': 'Reguli de etichetare',
-  'layout.menu.share-links': 'Linkuri de partajare',
   'layout.menu.deleted-documents': 'Documente șterse',
-  'layout.menu.organization-settings': 'Setări organizație',
-  'layout.menu.api-keys': 'Chei API',
   'layout.menu.settings': 'Setări',
   'layout.menu.account': 'Cont',
   'layout.menu.general-settings': 'Setări generale',
   'layout.menu.usage': 'Utilizare',
   'layout.menu.intake-emails': 'Email-uri de primire',
   'layout.menu.webhooks': 'Webhook-uri',
-  'layout.menu.members': 'Membri',
-  'layout.menu.document-views': 'Vizualizări',
-  'layout.menu.invitations': 'Invitații',
-  'layout.menu.admin': 'Administrare',
-
-  'layout.upgrade-cta.title': 'Ai nevoie de mai mult spațiu?',
-  'layout.upgrade-cta.description':
-    'Obține de 10x mai mult spațiu de stocare + colaborare în echipă',
-  'layout.upgrade-cta.button': 'Actualizează la Plus',
 
   'layout.theme.light': 'Mod luminos',
   'layout.theme.dark': 'Mod intunecat',
@@ -1068,8 +1036,6 @@ export const translations: Partial<TranslationsDictionary> = {
 
   'user-menu.trigger.label': 'Meniu utilizator',
   'user-menu.account-settings': 'Setări cont',
-  'user-menu.api-keys': 'Chei API',
-  'user-menu.invitations': 'Invitații',
   'user-menu.language': 'Limbă',
   'user-menu.theme': 'Temă',
   'user-menu.about': 'Despre Papra',
@@ -1080,7 +1046,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'command-palette.search.placeholder': 'Caută comenzi sau documente',
   'command-palette.no-results': 'Niciun rezultat gasit',
   'command-palette.sections.documents': 'Documente',
-  'command-palette.sections.theme': 'Temă',
   'command-palette.show-more-results': 'Arată încă {{ count }} rezultate pentru "{{ query }}"',
 
   // API errors

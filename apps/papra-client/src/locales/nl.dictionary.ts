@@ -237,7 +237,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'organizations.create.form.name.required': 'Voer een organisatienaam in',
   'organizations.create.form.submit': 'Organisatie aanmaken',
   'organizations.create.success': 'Organisatie succesvol aangemaakt',
-  'organizations.switcher.create': 'Nieuwe organisatie maken',
 
   'organizations.create-first.title': 'Maak uw organisatie',
   'organizations.create-first.description':
@@ -422,7 +421,6 @@ export const translations: Partial<TranslationsDictionary> = {
     'De inhoud van het document wordt automatisch geëxtraheerd bij het uploaden. Deze wordt alleen gebruikt voor zoeken en indexering.',
   'documents.content.empty-placeholder':
     'Dit document heeft geen geëxtraheerde inhoud; u kunt deze hier handmatig instellen.',
-  'documents.info.id': 'ID',
   'documents.info.name': 'Naam',
   'documents.info.type': 'Type',
   'documents.info.size': 'Grootte',
@@ -563,8 +561,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Zijbalk tonen',
   'documents.pdf-viewer.toolbar.previous-page': 'Vorige pagina',
   'documents.pdf-viewer.toolbar.next-page': 'Volgende pagina',
-  'documents.pdf-viewer.toolbar.fit-width': 'Breedte aanpassen',
-  'documents.pdf-viewer.toolbar.fit-page': 'Pagina aanpassen',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Rechtsom draaien',
   'documents.pdf-viewer.toolbar.download': 'Downloaden',
   'documents.pdf-viewer.toolbar.print': 'Afdrukken',
@@ -577,20 +573,8 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.zoom.page-width': 'Paginabreedte',
 
   'documents.pdf-viewer.more-actions.label': 'Meer acties',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Presentatiemodus',
-  'documents.pdf-viewer.more-actions.download': 'Downloaden',
-  'documents.pdf-viewer.more-actions.print': 'Afdrukken',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Naar eerste pagina',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Naar laatste pagina',
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Rechtsom draaien',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise': 'Linksom draaien',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Paginagewijs scrollen',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Verticaal scrollen',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Horizontaal scrollen',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Doorlopend scrollen',
-  'documents.pdf-viewer.more-actions.no-spreads': "Geen dubbele pagina's",
-  'documents.pdf-viewer.more-actions.odd-spreads': "Oneven dubbele pagina's",
-  'documents.pdf-viewer.more-actions.even-spreads': "Even dubbele pagina's",
   'documents.pdf-viewer.more-actions.document-properties': 'Documenteigenschappen',
 
   'documents.pdf-viewer.properties.title': 'Documenteigenschappen',
@@ -617,7 +601,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.sidebar.attachments': 'Bijlagen',
 
   'documents.pdf-viewer.thumbnails.page-alt': 'Pagina {{ page }}',
-  'document-share-links.share-action': 'Delen',
   'document-share-links.copy': 'Link kopiëren',
   'document-share-links.copied': 'Link gekopieerd naar klembord',
   'document-share-links.copy-error': 'Kopiëren van link mislukt',
@@ -1026,26 +1009,13 @@ export const translations: Partial<TranslationsDictionary> = {
   'layout.menu.home': 'Start',
   'layout.menu.documents': 'Documenten',
   'layout.menu.tags': 'Labels',
-  'layout.menu.custom-properties': 'Aangepaste eigenschappen',
-  'layout.menu.tagging-rules': 'Labelregels',
-  'layout.menu.share-links': 'Deellinks',
   'layout.menu.deleted-documents': 'Verwijderde documenten',
-  'layout.menu.organization-settings': 'Instellingen',
-  'layout.menu.api-keys': 'API-sleutels',
   'layout.menu.settings': 'Instellingen',
   'layout.menu.account': 'Account',
   'layout.menu.general-settings': 'Algemene instellingen',
   'layout.menu.usage': 'Gebruik',
   'layout.menu.intake-emails': 'Intake-e-mails',
   'layout.menu.webhooks': 'Webhooks',
-  'layout.menu.members': 'Leden',
-  'layout.menu.document-views': 'Weergaven',
-  'layout.menu.invitations': 'Uitnodigingen',
-  'layout.menu.admin': 'Beheer',
-
-  'layout.upgrade-cta.title': 'Meer ruimte nodig?',
-  'layout.upgrade-cta.description': 'Krijg 10x meer opslag + team samenwerking',
-  'layout.upgrade-cta.button': 'Nu upgraden',
 
   'layout.theme.light': 'Licht thema',
   'layout.theme.dark': 'Donker thema',
@@ -1059,8 +1029,6 @@ export const translations: Partial<TranslationsDictionary> = {
 
   'user-menu.trigger.label': 'Gebruikersmenu',
   'user-menu.account-settings': 'Accountinstellingen',
-  'user-menu.api-keys': 'API-sleutels',
-  'user-menu.invitations': 'Uitnodigingen',
   'user-menu.language': 'Taal',
   'user-menu.theme': 'Thema',
   'user-menu.about': 'Over Papra',
@@ -1071,7 +1039,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'command-palette.search.placeholder': 'Zoek opdrachten of documenten',
   'command-palette.no-results': 'Geen resultaten gevonden',
   'command-palette.sections.documents': 'Documenten',
-  'command-palette.sections.theme': 'Thema',
   'command-palette.show-more-results': '{{ count }} meer resultaten tonen voor "{{ query }}"',
 
   // API errors

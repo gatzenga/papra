@@ -228,7 +228,6 @@ export const translations = {
   'organizations.create.form.name.required': 'Please enter an organization name',
   'organizations.create.form.submit': 'Create organization',
   'organizations.create.success': 'Organization created successfully',
-  'organizations.switcher.create': 'Create new organization',
 
   'organizations.create-first.title': 'Create your organization',
   'organizations.create-first.description':
@@ -424,23 +423,10 @@ export const translations = {
   'documents.actions.cancel': 'Cancel',
   'documents.actions.save': 'Save',
   'documents.actions.saving': 'Saving...',
-  'documents.reprocess.action': 'Reprocess document',
-  'documents.reprocess.confirm.title': 'Reprocess document?',
-  'documents.reprocess.confirm.description':
-    'The content of the document will be re-extracted and the tagging rules will be re-applied. Manual changes to the content will be lost. The operation is done in the background and may take a few minutes to complete.',
-  'documents.reprocess.confirm.submit': 'Reprocess',
-  'documents.reprocess.queued': 'Document reprocessing queued',
-  'documents.reprocess.queued.description':
-    'Processing runs in the background, it may take a few minutes to complete, refresh to see the updated content.',
-  'documents.reprocess.error': 'Failed to queue document reprocessing. Please try again.',
-  'documents.reprocess.rate-limited':
-    'Your organization has reached the reprocessing limit. Please try again later.',
-  'documents.reprocess.disabled': 'Document reprocessing is disabled on this server.',
   'documents.content.alert':
     'The content of the document is automatically extracted from the document on upload. It is only used for search and indexing purposes.',
   'documents.content.empty-placeholder':
     'This document has no extracted content, you can set it manually here.',
-  'documents.info.id': 'ID',
   'documents.info.name': 'Name',
   'documents.info.type': 'Type',
   'documents.info.size': 'Size',
@@ -576,8 +562,6 @@ export const translations = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Show sidebar',
   'documents.pdf-viewer.toolbar.previous-page': 'Previous page',
   'documents.pdf-viewer.toolbar.next-page': 'Next page',
-  'documents.pdf-viewer.toolbar.fit-width': 'Fit width',
-  'documents.pdf-viewer.toolbar.fit-page': 'Fit page',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Rotate clockwise',
   'documents.pdf-viewer.toolbar.download': 'Download',
   'documents.pdf-viewer.toolbar.print': 'Print',
@@ -590,20 +574,8 @@ export const translations = {
   'documents.pdf-viewer.zoom.page-width': 'Page width',
 
   'documents.pdf-viewer.more-actions.label': 'More actions',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Presentation mode',
-  'documents.pdf-viewer.more-actions.download': 'Download',
-  'documents.pdf-viewer.more-actions.print': 'Print',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Go to first page',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Go to last page',
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Rotate clockwise',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise': 'Rotate counterclockwise',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Page scrolling',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Vertical scrolling',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Horizontal scrolling',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Wrapped scrolling',
-  'documents.pdf-viewer.more-actions.no-spreads': 'No spreads',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Odd spreads',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Even spreads',
   'documents.pdf-viewer.more-actions.document-properties': 'Document properties',
 
   'documents.pdf-viewer.properties.title': 'Document properties',
@@ -632,7 +604,6 @@ export const translations = {
   'documents.pdf-viewer.thumbnails.page-alt': 'Page {{ page }}',
 
   // Document share links
-  'document-share-links.share-action': 'Share',
   'document-share-links.copy': 'Copy link',
   'document-share-links.copied': 'Link copied to clipboard',
   'document-share-links.copy-error': 'Failed to copy the link',
@@ -1043,12 +1014,7 @@ export const translations = {
   'layout.menu.home': 'Home',
   'layout.menu.documents': 'Documents',
   'layout.menu.tags': 'Tags',
-  'layout.menu.custom-properties': 'Custom Properties',
-  'layout.menu.tagging-rules': 'Tagging rules',
-  'layout.menu.share-links': 'Share links',
   'layout.menu.deleted-documents': 'Deleted documents',
-  'layout.menu.organization-settings': 'Settings',
-  'layout.menu.api-keys': 'API keys',
   'layout.menu.settings': 'Settings',
   'layout.menu.account': 'Account',
   'layout.menu.general-settings': 'General settings',
@@ -1056,14 +1022,6 @@ export const translations = {
   'layout.menu.usage': 'Usage',
   'layout.menu.intake-emails': 'Intake emails',
   'layout.menu.webhooks': 'Webhooks',
-  'layout.menu.members': 'Members',
-  'layout.menu.document-views': 'Views',
-  'layout.menu.invitations': 'Invitations',
-  'layout.menu.admin': 'Admin',
-
-  'layout.upgrade-cta.title': 'Need more space?',
-  'layout.upgrade-cta.description': 'Get 10x more storage + team collaboration',
-  'layout.upgrade-cta.button': 'Upgrade now',
 
   'layout.theme.light': 'Light mode',
   'layout.theme.dark': 'Dark mode',
@@ -1096,8 +1054,6 @@ export const translations = {
 
   'user-menu.trigger.label': 'User menu',
   'user-menu.account-settings': 'Account settings',
-  'user-menu.api-keys': 'API keys',
-  'user-menu.invitations': 'Invitations',
   'user-menu.language': 'Language',
   'user-menu.theme': 'Theme',
   'user-menu.about': 'About Papra',
@@ -1108,7 +1064,6 @@ export const translations = {
   'command-palette.search.placeholder': 'Search commands or documents',
   'command-palette.no-results': 'No results found',
   'command-palette.sections.documents': 'Documents',
-  'command-palette.sections.theme': 'Theme',
   'command-palette.show-more-results': 'Show {{ count }} more results for "{{ query }}"',
 
   // API errors

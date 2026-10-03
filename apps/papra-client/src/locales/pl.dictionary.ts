@@ -234,7 +234,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'organizations.create.form.name.required': 'Wprowadź nazwę organizacji',
   'organizations.create.form.submit': 'Utwórz organizację',
   'organizations.create.success': 'Organizacja została pomyślnie utworzona',
-  'organizations.switcher.create': 'Utwórz nową organizację',
 
   'organizations.create-first.title': 'Utwórz swoją organizację',
   'organizations.create-first.description':
@@ -415,7 +414,6 @@ export const translations: Partial<TranslationsDictionary> = {
     'Zawartość dokumentu jest automatycznie wyodrębniana z dokumentu podczas przesyłania. Jest używana tylko do wyszukiwania i indeksowania.',
   'documents.content.empty-placeholder':
     'Ten dokument nie ma wyodrębnionej zawartości, możesz ją ustawić ręcznie tutaj.',
-  'documents.info.id': 'ID',
   'documents.info.name': 'Nazwa',
   'documents.info.type': 'Typ',
   'documents.info.size': 'Rozmiar',
@@ -553,8 +551,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.toolbar.show-sidebar': 'Pokaż panel boczny',
   'documents.pdf-viewer.toolbar.previous-page': 'Poprzednia strona',
   'documents.pdf-viewer.toolbar.next-page': 'Następna strona',
-  'documents.pdf-viewer.toolbar.fit-width': 'Dopasuj do szerokości',
-  'documents.pdf-viewer.toolbar.fit-page': 'Dopasuj do strony',
   'documents.pdf-viewer.toolbar.rotate-clockwise': 'Obróć w prawo',
   'documents.pdf-viewer.toolbar.download': 'Pobierz',
   'documents.pdf-viewer.toolbar.print': 'Drukuj',
@@ -567,20 +563,8 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.zoom.page-width': 'Szerokość strony',
 
   'documents.pdf-viewer.more-actions.label': 'Więcej działań',
-  'documents.pdf-viewer.more-actions.presentation-mode': 'Tryb prezentacji',
-  'documents.pdf-viewer.more-actions.download': 'Pobierz',
-  'documents.pdf-viewer.more-actions.print': 'Drukuj',
   'documents.pdf-viewer.more-actions.go-to-first-page': 'Przejdź do pierwszej strony',
   'documents.pdf-viewer.more-actions.go-to-last-page': 'Przejdź do ostatniej strony',
-  'documents.pdf-viewer.more-actions.rotate-clockwise': 'Obróć w prawo',
-  'documents.pdf-viewer.more-actions.rotate-counterclockwise': 'Obróć w lewo',
-  'documents.pdf-viewer.more-actions.page-scrolling': 'Przewijanie stronami',
-  'documents.pdf-viewer.more-actions.vertical-scrolling': 'Przewijanie pionowe',
-  'documents.pdf-viewer.more-actions.horizontal-scrolling': 'Przewijanie poziome',
-  'documents.pdf-viewer.more-actions.wrapped-scrolling': 'Przewijanie ciągłe',
-  'documents.pdf-viewer.more-actions.no-spreads': 'Bez rozkładówek',
-  'documents.pdf-viewer.more-actions.odd-spreads': 'Nieparzyste rozkładówki',
-  'documents.pdf-viewer.more-actions.even-spreads': 'Parzyste rozkładówki',
   'documents.pdf-viewer.more-actions.document-properties': 'Właściwości dokumentu',
 
   'documents.pdf-viewer.properties.title': 'Właściwości dokumentu',
@@ -607,7 +591,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'documents.pdf-viewer.sidebar.attachments': 'Załączniki',
 
   'documents.pdf-viewer.thumbnails.page-alt': 'Strona {{ page }}',
-  'document-share-links.share-action': 'Udostępnij',
   'document-share-links.copy': 'Kopiuj link',
   'document-share-links.copied': 'Link skopiowany do schowka',
   'document-share-links.copy-error': 'Nie udało się skopiować linku',
@@ -1015,26 +998,13 @@ export const translations: Partial<TranslationsDictionary> = {
   'layout.menu.home': 'Strona główna',
   'layout.menu.documents': 'Dokumenty',
   'layout.menu.tags': 'Tagi',
-  'layout.menu.custom-properties': 'Właściwości niestandardowe',
-  'layout.menu.tagging-rules': 'Zasady tagowania',
-  'layout.menu.share-links': 'Linki udostępniania',
   'layout.menu.deleted-documents': 'Usunięte dokumenty',
-  'layout.menu.organization-settings': 'Ustawienia',
-  'layout.menu.api-keys': 'Klucze API',
   'layout.menu.settings': 'Ustawienia',
   'layout.menu.account': 'Konto',
   'layout.menu.general-settings': 'Ustawienia ogólne',
   'layout.menu.usage': 'Użycie',
   'layout.menu.intake-emails': 'Adresy przyjęć',
   'layout.menu.webhooks': 'Webhooki',
-  'layout.menu.members': 'Członkowie',
-  'layout.menu.document-views': 'Widoki',
-  'layout.menu.invitations': 'Zaproszenia',
-  'layout.menu.admin': 'Administracja',
-
-  'layout.upgrade-cta.title': 'Potrzebujesz więcej miejsca?',
-  'layout.upgrade-cta.description': 'Uzyskaj 10x więcej przestrzeni + współpracę zespołową',
-  'layout.upgrade-cta.button': 'Ulepsz teraz',
 
   'layout.theme.light': 'Tryb jasny',
   'layout.theme.dark': 'Tryb ciemny',
@@ -1048,8 +1018,6 @@ export const translations: Partial<TranslationsDictionary> = {
 
   'user-menu.trigger.label': 'Menu użytkownika',
   'user-menu.account-settings': 'Ustawienia konta',
-  'user-menu.api-keys': 'Klucze API',
-  'user-menu.invitations': 'Zaproszenia',
   'user-menu.language': 'Język',
   'user-menu.theme': 'Motyw',
   'user-menu.about': 'O Papra',
@@ -1060,7 +1028,6 @@ export const translations: Partial<TranslationsDictionary> = {
   'command-palette.search.placeholder': 'Szukaj poleceń lub dokumentów',
   'command-palette.no-results': 'Nie znaleziono wyników',
   'command-palette.sections.documents': 'Dokumenty',
-  'command-palette.sections.theme': 'Motyw',
   'command-palette.show-more-results': 'Pokaż {{ count }} więcej wyników dla "{{ query }}"',
 
   // API errors
