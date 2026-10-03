@@ -460,11 +460,6 @@ export const DocumentPage: Component = () => {
                         <KeyValues
                           data={[
                             {
-                              label: t('documents.info.id'),
-                              value: getDocument().id,
-                              icon: 'i-tabler-id',
-                            },
-                            {
                               label: t('documents.info.name'),
                               value: (
                                 <Button
