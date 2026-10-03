@@ -112,19 +112,40 @@ export function handleTextExpression({
   db: Database;
 }): QueryResult {
   const { value } = expression;
+  // Free text only looks at the document name and its tag names, not at the document content
   const { queryString } = formatFts5QueryValue({
     value,
     organizationId,
-    matchingColumns: [documentsFtsTable.name.name, documentsFtsTable.content.name],
+    matchingColumns: [documentsFtsTable.name.name],
   });
 
+  const escapedTagName = normalizeTagName({ name: value }).replace(
+    /[\\%_]/g,
+    (char) => `\\${char}`,
+  );
+
   return {
-    sqlQuery: inArray(
-      documentsTable.id,
-      db
-        .selectDistinct({ documentId: documentsFtsTable.documentId })
-        .from(documentsFtsTable)
-        .where(eq(documentsFtsTable, queryString)),
+    sqlQuery: or(
+      inArray(
+        documentsTable.id,
+        db
+          .selectDistinct({ documentId: documentsFtsTable.documentId })
+          .from(documentsFtsTable)
+          .where(eq(documentsFtsTable, queryString)),
+      ),
+      inArray(
+        documentsTable.id,
+        db
+          .selectDistinct({ documentId: documentsTagsTable.documentId })
+          .from(documentsTagsTable)
+          .innerJoin(tagsTable, eq(documentsTagsTable.tagId, tagsTable.id))
+          .where(
+            and(
+              eq(tagsTable.organizationId, organizationId),
+              sql`${tagsTable.normalizedName} LIKE ${`%${escapedTagName}%`} ESCAPE '\\'`,
+            ),
+          ),
+      ),
     ),
     issues: [],
   };

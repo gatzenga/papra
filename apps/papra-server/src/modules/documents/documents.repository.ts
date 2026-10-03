@@ -37,7 +37,6 @@ export function createDocumentsRepository({ db }: { db: Database }) {
       updateDocument,
       updateDocumentStorageKey,
       updateDocumentStorageKeyById,
-      getAllDocumentsForStorageSync,
       getGlobalDocumentsStats,
       areAllDocumentsInOrganization,
     },
@@ -546,22 +545,6 @@ async function updateDocumentStorageKeyById({
   if (rows.length === 0) {
     throw createDocumentNotFoundError();
   }
-}
-
-async function getAllDocumentsForStorageSync({ db }: { db: Database }) {
-  const documents = await db
-    .select({
-      id: documentsTable.id,
-      name: documentsTable.name,
-      organizationId: documentsTable.organizationId,
-      documentDate: documentsTable.documentDate,
-      createdAt: documentsTable.createdAt,
-      originalStorageKey: documentsTable.originalStorageKey,
-      isDeleted: documentsTable.isDeleted,
-    })
-    .from(documentsTable);
-
-  return { documents };
 }
 
 async function getGlobalDocumentsStats({ db }: { db: Database }) {

@@ -36,6 +36,11 @@ RUN groupadd -r nonroot && useradd -r -g nonroot nonroot && \
     mkdir -p /home/nonroot && \
     chown -R nonroot:nonroot /home/nonroot
 
+# OCRmyPDF (with Tesseract for German and English) powers the manual "Optimize PDF" feature
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ocrmypdf tesseract-ocr-deu tesseract-ocr-eng ghostscript unpaper \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 RUN mkdir -p ./app-data/db ./app-data/documents && chown -R nonroot:nonroot /app
@@ -63,11 +68,9 @@ ENV INGESTION_FOLDER_ROOT=./ingestion
 ENV EMAILS_DRY_RUN=true
 ENV CLIENT_BASE_URL=http://localhost:1221
 
-# Store documents under their real name (no organization folder) instead of <org>/originals/<doc-id>.
-# Existing documents are copied to their name on the next start, the old files are kept.
+# Store documents under their real name (no organization folder) instead of <org>/originals/<doc-id>
 ENV DOCUMENT_STORAGE_USE_LEGACY_STORAGE_KEY_DEFINITION_SYSTEM=false
 ENV DOCUMENT_STORAGE_KEY_PATTERN={{document.name}}
-ENV DOCUMENT_STORAGE_MIGRATE_LEGACY_ON_START=true
 # Renaming a document in the web interface renames the file on disk too
 ENV DOCUMENT_STORAGE_KEY_SYNC_ENABLED=true
 # Files of trashed documents move to their own folder next to the documents and back on restore

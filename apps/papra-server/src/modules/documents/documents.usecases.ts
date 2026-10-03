@@ -263,7 +263,8 @@ export function createDocumentCreationUsecase({
     mimeType: string;
     userId?: string;
     organizationId: string;
-  }) => createDocument({
+  }) =>
+    createDocument({
       taskServices,
       documentsStorageService,
       eventServices,
@@ -336,7 +337,10 @@ async function handleExistingDocument({
     })(),
   );
   if (syncError) {
-    logger.error({ error: syncError, documentId: restoredDocument.id }, 'Failed to restore file from trash');
+    logger.error(
+      { error: syncError, documentId: restoredDocument.id },
+      'Failed to restore file from trash',
+    );
   }
 
   return { document: restoredDocument };

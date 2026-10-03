@@ -16,12 +16,6 @@ export const storagePatternConfig = {
     default: true,
     env: 'DOCUMENT_STORAGE_USE_LEGACY_STORAGE_KEY_DEFINITION_SYSTEM',
   },
-  isLegacyMigrationOnStartEnabled: {
-    doc: 'On startup, copy documents that still use the legacy storage key format ({{organization.id}}/originals/{{document.id}}) to the configured pattern and update the database. Old files are kept and the migration is skipped once nothing is left to migrate.',
-    schema: booleanishSchema,
-    default: true,
-    env: 'DOCUMENT_STORAGE_MIGRATE_LEGACY_ON_START',
-  },
   isTrashFolderEnabled: {
     doc: 'Move the files of trashed documents to a separate trash location and back when they are restored. With the filesystem driver the location is the trash root, otherwise a `.trash` key prefix.',
     schema: booleanishSchema,

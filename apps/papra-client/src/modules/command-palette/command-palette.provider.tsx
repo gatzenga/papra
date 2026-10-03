@@ -18,7 +18,6 @@ import { useI18n } from '../i18n/i18n.provider';
 import { cn } from '../shared/style/cn';
 import { toArrayIf } from '../shared/utils/array';
 import { debounce } from '../shared/utils/timing';
-import { useTheme } from '../theme/theme.provider';
 import {
   CommandDialog,
   CommandEmpty,
@@ -84,7 +83,6 @@ export const CommandPaletteProvider: ParentComponent = (props) => {
   );
 
   const navigate = useNavigate();
-  const { setThemePreference } = useTheme();
 
   const searchDocs = debounce(async ({ searchQuery }: { searchQuery: string }) => {
     const [result] = await safely(
@@ -144,26 +142,6 @@ export const CommandPaletteProvider: ParentComponent = (props) => {
             ),
           forceMatch: true,
         }),
-      ],
-    },
-    {
-      label: t('command-palette.sections.theme'),
-      options: [
-        {
-          label: t('layout.theme.light'),
-          icon: 'i-tabler-sun',
-          action: () => setThemePreference('light'),
-        },
-        {
-          label: t('layout.theme.dark'),
-          icon: 'i-tabler-moon',
-          action: () => setThemePreference('dark'),
-        },
-        {
-          label: t('layout.theme.system'),
-          icon: 'i-tabler-device-laptop',
-          action: () => setThemePreference('system'),
-        },
       ],
     },
   ];

@@ -3,7 +3,8 @@ import type { Component, ParentComponent } from 'solid-js';
 import { A, useNavigate, useParams } from '@solidjs/router';
 import { AppLogo } from '@/modules/ui/components/app-logo';
 import { useQuery } from '@tanstack/solid-query';
-import { createEffect, on } from 'solid-js';
+import { createEffect, on, onCleanup, onMount, Show } from 'solid-js';
+import { DOCUMENTS_BROADCAST_CHANNEL } from '@/modules/documents/documents.constants';
 import {
   DocumentUploadProvider,
   useDocumentUpload,
@@ -16,6 +17,11 @@ import { SideNav } from '@/modules/ui/components/sidenav';
 import { Button } from '../components/button';
 import { SidenavLayout } from './sidenav.layout';
 import { useCommandPalette } from '@/modules/command-palette/command-palette.provider';
+import { PdfSearchBar } from '@/modules/documents/components/pdf-viewer/pdf-search-bar.component';
+import {
+  PdfSearchProvider,
+  usePdfSearch,
+} from '@/modules/documents/components/pdf-viewer/pdf-search.provider';
 import { GlobalDropArea } from '@/modules/documents/components/global-drop-area.component';
 import { UserSettingsDropdown } from '@/modules/users/components/user-settings.component';
 
@@ -96,8 +102,16 @@ const OrganizationLayoutSideNav: Component = () => {
 export const OrganizationLayout: ParentComponent = (props) => {
   const params = useParams();
   const navigate = useNavigate();
-  const { openCommandPalette } = useCommandPalette();
-  const { t } = useI18n();
+
+  // The PDF optimization runs in its own tab and tells this one when it replaced a file
+  onMount(() => {
+    const channel = new BroadcastChannel(DOCUMENTS_BROADCAST_CHANNEL);
+    channel.onmessage = () => {
+      void queryClient.invalidateQueries({ queryKey: ['organizations', params.organizationId] });
+    };
+
+    onCleanup(() => channel.close());
+  });
 
   const query = useQuery(() => ({
     queryKey: ['organizations', params.organizationId],
@@ -121,32 +135,52 @@ export const OrganizationLayout: ParentComponent = (props) => {
   );
 
   return (
-    <DocumentUploadProvider organizationId={params.organizationId}>
-      <SidenavLayout
-        children={props.children}
-        sideNav={OrganizationLayoutSideNav}
-        header={() => (
-          <div class="flex justify-between w-full">
-            <div class="flex items-center">
-              <Button
-                variant="outline"
-                class="lg:min-w-64 justify-start gap-2 px-2.5 sm:px-4"
-                onClick={openCommandPalette}
-              >
-                <div class="i-tabler-search size-4" />
-                <span class="hidden sm:inline">{t('layout.search.placeholder')}</span>
-              </Button>
-            </div>
+    <PdfSearchProvider>
+      <DocumentUploadProvider organizationId={params.organizationId}>
+        <SidenavLayout
+          children={props.children}
+          sideNav={OrganizationLayoutSideNav}
+          header={() => (
+            <div class="flex justify-between w-full">
+              <OrganizationLayoutSearch />
 
-            <div class="flex items-center gap-2">
-              <OrganizationLayoutImportButton />
+              <div class="flex items-center gap-2">
+                <OrganizationLayoutImportButton />
 
-              <UserSettingsDropdown />
+                <UserSettingsDropdown />
+              </div>
             </div>
-          </div>
-        )}
-      />
-    </DocumentUploadProvider>
+          )}
+        />
+      </DocumentUploadProvider>
+    </PdfSearchProvider>
+  );
+};
+
+// Quick search everywhere, except on a PDF where it becomes a search inside that PDF
+const OrganizationLayoutSearch: Component = () => {
+  const { openCommandPalette } = useCommandPalette();
+  const { t } = useI18n();
+  const { getApi } = usePdfSearch();
+
+  return (
+    <div class="flex items-center">
+      <Show
+        when={getApi?.()}
+        fallback={
+          <Button
+            variant="outline"
+            class="lg:min-w-64 justify-start gap-2 px-2.5 sm:px-4"
+            onClick={openCommandPalette}
+          >
+            <div class="i-tabler-search size-4" />
+            <span class="hidden sm:inline">{t('layout.search.placeholder')}</span>
+          </Button>
+        }
+      >
+        {(getPdfSearchApi) => <PdfSearchBar api={getPdfSearchApi()} />}
+      </Show>
+    </div>
   );
 };
 

@@ -20,7 +20,6 @@ import { buildResolveStoragePatternContext } from './storage-patterns/storage-pa
 
 const baseStoragePatternConfig = {
   isStorageKeySyncEnabled: true,
-  isLegacyMigrationOnStartEnabled: false,
   isTrashFolderEnabled: false,
   useLegacyStorageKeyDefinitionSystem: false,
   storageKeyPattern: '{{organization.id}}/{{document.name}}',

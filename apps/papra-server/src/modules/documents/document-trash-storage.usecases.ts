@@ -98,38 +98,3 @@ export function buildSyncDocumentFileWithTrashState({
     return { moved: true };
   };
 }
-
-// On startup, brings every document in line with its trash state (e.g. trashed before the trash
-// folder existed). Failures are logged and do not stop the others.
-export async function syncAllDocumentFilesWithTrashState({
-  documentsRepository,
-  syncDocumentFileWithTrashState,
-  logger = createLogger({ namespace: 'document-trash-storage' }),
-}: {
-  documentsRepository: Pick<DocumentsRepository, 'getAllDocumentsForStorageSync'>;
-  syncDocumentFileWithTrashState: SyncDocumentFileWithTrashState;
-  logger?: Logger;
-}) {
-  const { documents } = await documentsRepository.getAllDocumentsForStorageSync();
-
-  let moved = 0;
-  let failed = 0;
-
-  for (const document of documents) {
-    try {
-      const result = await syncDocumentFileWithTrashState({ document });
-      if (result.moved) {
-        moved++;
-      }
-    } catch (error) {
-      failed++;
-      logger.error({ error, documentId: document.id }, 'Failed to sync document file with trash');
-    }
-  }
-
-  if (moved > 0 || failed > 0) {
-    logger.info({ moved, failed }, 'Document files synced with trash state');
-  }
-
-  return { moved, failed };
-}

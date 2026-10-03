@@ -24,6 +24,7 @@ function setValidParams(path: string) {
     .replaceAll(':shareLinkToken', 't'.repeat(SHARE_LINK_TOKEN_LENGTH))
     .replaceAll(':documentViewId', 'dv_444444444444444444444444')
     .replaceAll(':planEntitlementId', 'pla_ent_555555555555555555555555')
+    .replaceAll(':jobId', '123e4567-e89b-42d3-a456-426614174000')
     .replaceAll(':type', 'selfhst-premium');
 
   // throw if there are any remaining params

@@ -88,7 +88,7 @@ describe('config models', () => {
           },
           documents: {
             deletedDocumentsRetentionDays: 30,
-            },
+          },
           intakeEmails: {
             isEnabled: true,
             address: {

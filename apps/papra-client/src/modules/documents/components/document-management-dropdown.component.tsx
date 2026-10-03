@@ -15,10 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/modules/ui/components/dropdown-menu';
 import { getDocumentOpenWithApps } from '../document.models';
-import {
-  useDeleteDocument,
-  useDownloadDocument,
-} from '../documents.composables';
+import { useDeleteDocument, useDownloadDocument } from '../documents.composables';
 import { DocumentOpenWithDropdownItems } from './open-with.component';
 import { useRenameDocumentDialog } from './rename-document-button.component';
 

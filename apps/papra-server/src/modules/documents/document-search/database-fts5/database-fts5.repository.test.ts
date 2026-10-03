@@ -5,14 +5,14 @@ import { createDocumentSearchRepository } from './database-fts5.repository';
 
 describe('database-fts5 repository', () => {
   describe('searchOrganizationDocuments', () => {
-    test('provides full text search on document name, original name, and content', async () => {
+    test('provides full text search on the document name only (free text does not match the content)', async () => {
       const documents = [
         {
           id: 'doc_1',
           organizationId: 'org_1',
-          name: 'Document 1',
+          name: 'Lorem ipsum 1',
           originalName: 'document-1.pdf',
-          content: 'lorem ipsum',
+          content: 'unrelated text',
           originalStorageKey: '',
           mimeType: 'application/pdf',
           originalSha256Hash: 'hash1',
@@ -21,9 +21,9 @@ describe('database-fts5 repository', () => {
         {
           id: 'doc_2',
           organizationId: 'org_1',
-          name: 'File 2',
+          name: 'Lorem file 2',
           originalName: 'document-2.pdf',
-          content: 'lorem',
+          content: 'unrelated text',
           originalStorageKey: '',
           mimeType: 'application/pdf',
           originalSha256Hash: 'hash2',
@@ -61,6 +61,118 @@ describe('database-fts5 repository', () => {
 
       expect(searchResults).to.have.length(2);
       expect(searchResults.map((doc) => doc.id).toSorted()).to.eql(['doc_1', 'doc_2']);
+    });
+
+    test('free text search matches a document through one of its tag names', async () => {
+      const documents = [
+        {
+          id: 'doc_1',
+          organizationId: 'org_1',
+          name: 'Scan 1',
+          originalName: 'scan-1.pdf',
+          content: 'nothing relevant',
+          originalStorageKey: '',
+          mimeType: 'application/pdf',
+          originalSha256Hash: 'hash1',
+          isDeleted: false,
+        },
+        {
+          id: 'doc_2',
+          organizationId: 'org_1',
+          name: 'Scan 2',
+          originalName: 'scan-2.pdf',
+          content: 'nothing relevant',
+          originalStorageKey: '',
+          mimeType: 'application/pdf',
+          originalSha256Hash: 'hash2',
+          isDeleted: false,
+        },
+      ];
+
+      const { db } = await createInMemoryDatabase({
+        organizations: [{ id: 'org_1', name: 'Organization 1' }],
+        documents,
+        tags: [
+          {
+            id: 'tag_1',
+            organizationId: 'org_1',
+            name: 'Insurance',
+            normalizedName: 'insurance',
+            color: '#ff0000',
+          },
+          {
+            id: 'tag_2',
+            organizationId: 'org_1',
+            name: 'Taxes',
+            normalizedName: 'taxes',
+            color: '#00ff00',
+          },
+        ],
+        documentsTags: [
+          { documentId: 'doc_1', tagId: 'tag_1' },
+          { documentId: 'doc_1', tagId: 'tag_2' },
+        ],
+      });
+
+      const documentsSearchRepository = createDocumentSearchRepository({ db });
+
+      await documentsSearchRepository.indexDocuments({ documents });
+
+      const { documents: searchResults } =
+        await documentsSearchRepository.searchOrganizationDocuments({
+          organizationId: 'org_1',
+          searchQuery: 'insur',
+          pageIndex: 0,
+          pageSize: 10,
+        });
+
+      expect(searchResults.map((doc) => doc.id)).to.eql(['doc_1']);
+    });
+
+    test('free text search does not match words that only exist in the document content', async () => {
+      const documents = [
+        {
+          id: 'doc_1',
+          organizationId: 'org_1',
+          name: 'Scan 1',
+          originalName: 'scan-1.pdf',
+          content: 'lorem ipsum dolor',
+          originalStorageKey: '',
+          mimeType: 'application/pdf',
+          originalSha256Hash: 'hash1',
+          isDeleted: false,
+        },
+      ];
+
+      const { db } = await createInMemoryDatabase({
+        organizations: [{ id: 'org_1', name: 'Organization 1' }],
+        documents,
+      });
+
+      const documentsSearchRepository = createDocumentSearchRepository({ db });
+
+      await documentsSearchRepository.indexDocuments({ documents });
+
+      const { documents: freeTextResults } =
+        await documentsSearchRepository.searchOrganizationDocuments({
+          organizationId: 'org_1',
+          searchQuery: 'lorem',
+          pageIndex: 0,
+          pageSize: 10,
+        });
+
+      expect(freeTextResults).to.have.length(0);
+
+      // The explicit content filter still searches the content
+      const { documents: contentFilterResults } =
+        await documentsSearchRepository.searchOrganizationDocuments({
+          organizationId: 'org_1',
+          searchQuery: 'content:lorem',
+          pageIndex: 0,
+          pageSize: 10,
+        });
+
+      expect(contentFilterResults.map((doc) => doc.id)).to.eql(['doc_1']);
     });
 
     test('search query can have special characters', async () => {
@@ -158,7 +270,7 @@ describe('database-fts5 repository', () => {
         const { documentsCount, documents: searchDocuments } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 0,
             pageSize: 10,
           });
@@ -191,7 +303,7 @@ describe('database-fts5 repository', () => {
           {
             id: 'doc_1',
             organizationId: 'org_1',
-            name: 'Document 1',
+            name: 'Tagged document 1',
             originalName: 'document-1.pdf',
             content: 'lorem ipsum',
             originalStorageKey: '',
@@ -202,7 +314,7 @@ describe('database-fts5 repository', () => {
           {
             id: 'doc_2',
             organizationId: 'org_1',
-            name: 'Document 2',
+            name: 'Tagged document 2',
             originalName: 'document-2.pdf',
             content: 'lorem ipsum',
             originalStorageKey: '',
@@ -245,7 +357,7 @@ describe('database-fts5 repository', () => {
         const { documentsCount, documents: searchDocuments } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'tag',
             pageIndex: 0,
             pageSize: 10,
           });
@@ -282,7 +394,7 @@ describe('database-fts5 repository', () => {
         const { documents: firstPageDocuments, documentsCount: firstTotalCount } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 0,
             pageSize: 10,
           });
@@ -305,7 +417,7 @@ describe('database-fts5 repository', () => {
         const { documents: secondPageDocuments, documentsCount: secondTotalCount } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 1,
             pageSize: 5,
           });
@@ -365,7 +477,7 @@ describe('database-fts5 repository', () => {
         const { documents: firstPageDocuments, documentsCount } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 0,
             pageSize: 10,
           });
@@ -497,7 +609,7 @@ describe('database-fts5 repository', () => {
           expectedDocumentsIds: ['doc_3'],
         },
         {
-          searchQuery: 'tag:car NOT contract',
+          searchQuery: 'tag:car NOT insurance',
           expectedDocumentsIds: ['doc_3'],
         },
         {
@@ -557,7 +669,7 @@ describe('database-fts5 repository', () => {
         {
           id: 'doc_1',
           organizationId: 'org_1',
-          name: 'Organization 1 Secret Document',
+          name: 'Organization 1 Confidential Document',
           originalName: 'secret-org1.pdf',
           content: 'confidential data for org 1',
           originalStorageKey: '',
@@ -579,7 +691,7 @@ describe('database-fts5 repository', () => {
         {
           id: 'doc_3',
           organizationId: 'org_2',
-          name: 'Organization 2 Secret Document',
+          name: 'Organization 2 Confidential Document',
           originalName: 'secret-org2.pdf',
           content: 'confidential data for org 2',
           originalStorageKey: '',
@@ -704,7 +816,7 @@ describe('database-fts5 repository', () => {
       const { documents: searchResults } =
         await documentsSearchRepository.searchOrganizationDocuments({
           organizationId: 'org_1',
-          searchQuery: 'lorem',
+          searchQuery: 'content:lorem',
           pageIndex: 0,
           pageSize: 10,
         });
@@ -762,7 +874,7 @@ describe('database-fts5 repository', () => {
         const { documents: ascResults } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 0,
             pageSize: 10,
             sort: { field: 'name', order: 'asc' },
@@ -773,7 +885,7 @@ describe('database-fts5 repository', () => {
         const { documents: descResults } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 0,
             pageSize: 10,
             sort: { field: 'name', order: 'desc' },
@@ -832,7 +944,7 @@ describe('database-fts5 repository', () => {
         const { documents: ascResults } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 0,
             pageSize: 10,
             sort: { field: 'documentDate', order: 'asc' },
@@ -843,7 +955,7 @@ describe('database-fts5 repository', () => {
         const { documents: descResults } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 0,
             pageSize: 10,
             sort: { field: 'documentDate', order: 'desc' },
@@ -903,7 +1015,7 @@ describe('database-fts5 repository', () => {
         const { documents: searchResults } =
           await documentsSearchRepository.searchOrganizationDocuments({
             organizationId: 'org_1',
-            searchQuery: 'lorem',
+            searchQuery: 'content:lorem',
             pageIndex: 0,
             pageSize: 10,
             sort: { field: 'updatedAt', order: 'desc' },
@@ -970,14 +1082,14 @@ describe('database-fts5 repository', () => {
 
         const { documents: page0 } = await documentsSearchRepository.searchOrganizationDocuments({
           organizationId: 'org_1',
-          searchQuery: 'lorem',
+          searchQuery: 'content:lorem',
           pageIndex: 0,
           pageSize: 2,
           sort: { field: 'name', order: 'asc' },
         });
         const { documents: page1 } = await documentsSearchRepository.searchOrganizationDocuments({
           organizationId: 'org_1',
-          searchQuery: 'lorem',
+          searchQuery: 'content:lorem',
           pageIndex: 1,
           pageSize: 2,
           sort: { field: 'name', order: 'asc' },
@@ -1028,7 +1140,7 @@ describe('database-fts5 repository', () => {
       // Verify document is searchable
       const { documents } = await documentsSearchRepository.searchOrganizationDocuments({
         organizationId: 'org_1',
-        searchQuery: 'searchable',
+        searchQuery: 'content:searchable',
         pageIndex: 0,
         pageSize: 10,
       });
@@ -1085,7 +1197,7 @@ describe('database-fts5 repository', () => {
 
       const { documents: results } = await documentsSearchRepository.searchOrganizationDocuments({
         organizationId: 'org_1',
-        searchQuery: 'content',
+        searchQuery: 'content:content',
         pageIndex: 0,
         pageSize: 10,
       });
@@ -1233,7 +1345,7 @@ describe('database-fts5 repository', () => {
       const { documents: rewriteMatches } =
         await documentsSearchRepository.searchOrganizationDocuments({
           organizationId: 'org_1',
-          searchQuery: 'rewritten',
+          searchQuery: 'content:rewritten',
           pageIndex: 0,
           pageSize: 10,
         });
@@ -1309,7 +1421,7 @@ describe('database-fts5 repository', () => {
 
       const beforeDelete = await documentsSearchRepository.searchOrganizationDocuments({
         organizationId: 'org_1',
-        searchQuery: 'deleted',
+        searchQuery: 'content:deleted',
         pageIndex: 0,
         pageSize: 10,
       });
@@ -1320,7 +1432,7 @@ describe('database-fts5 repository', () => {
 
       const afterDelete = await documentsSearchRepository.searchOrganizationDocuments({
         organizationId: 'org_1',
-        searchQuery: 'deleted',
+        searchQuery: 'content:deleted',
         pageIndex: 0,
         pageSize: 10,
       });
@@ -1378,7 +1490,7 @@ describe('database-fts5 repository', () => {
 
       const { documents: results } = await documentsSearchRepository.searchOrganizationDocuments({
         organizationId: 'org_1',
-        searchQuery: 'shared',
+        searchQuery: 'content:shared',
         pageIndex: 0,
         pageSize: 10,
       });

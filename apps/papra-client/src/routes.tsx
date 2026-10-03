@@ -14,6 +14,7 @@ import { DeletedDocumentsPage } from './modules/documents/pages/deleted-document
 import { DocumentPdfViewerPage } from './modules/documents/pages/document-pdf-viewer.page';
 import { DocumentPage } from './modules/documents/pages/document.page';
 import { DocumentsPage } from './modules/documents/pages/documents.page';
+import { PdfOptimizationPage } from './modules/documents/pages/pdf-optimization.page';
 import { useLastOrganization } from './modules/organizations/composables/use-last-organization';
 import { fetchOrganizations } from './modules/organizations/organizations.services';
 import { OrganizationPage } from './modules/organizations/pages/organization.page';
@@ -89,6 +90,10 @@ export const routes: RouteDefinition[] = [
           {
             path: '/documents/:documentId/pdf-viewer',
             component: DocumentPdfViewerPage,
+          },
+          {
+            path: '/documents/:documentId/optimize',
+            component: PdfOptimizationPage,
           },
         ],
       },

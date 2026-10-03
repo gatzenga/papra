@@ -26,3 +26,6 @@ export type DocumentSearchSortOrder = (typeof DOCUMENT_SEARCH_SORT_ORDERS)[numbe
 
 export const DEFAULT_DOCUMENT_SEARCH_SORT_FIELD: DocumentSearchSortField = 'documentDate';
 export const DEFAULT_DOCUMENT_SEARCH_SORT_ORDER: DocumentSearchSortOrder = 'desc';
+
+// Tabs of the app tell each other about changed documents through this channel
+export const DOCUMENTS_BROADCAST_CHANNEL = 'papra-documents';

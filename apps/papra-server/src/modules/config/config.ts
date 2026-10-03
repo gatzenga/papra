@@ -10,6 +10,7 @@ import { databaseConfig } from '../app/database/database.config';
 import { customPropertiesConfig } from '../custom-properties/custom-properties.config';
 import { documentShareLinksConfig } from '../document-share-links/document-share-links.config';
 import { documentSearchConfig } from '../documents/document-search/document-search.config';
+import { pdfOptimizationConfig } from '../documents/pdf-optimization/pdf-optimization.config';
 import { documentsConfig } from '../documents/documents.config';
 import { documentEncryptionConfig } from '../documents/document-encryption.config';
 import { documentMaxUploadSizeConfig } from '../documents/document-storage.config';
@@ -172,6 +173,7 @@ export const configDefinition = {
 
   database: databaseConfig,
   documents: documentsConfig,
+  pdfOptimization: pdfOptimizationConfig,
   documentsStorage: documentsStorageConfig,
   documentSearch: documentSearchConfig,
   auth: authConfig,

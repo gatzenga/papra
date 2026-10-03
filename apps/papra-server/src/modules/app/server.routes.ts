@@ -7,6 +7,7 @@ import { registerDocumentShareLinksRoutes } from '../document-share-links/docume
 import { registerDocumentViewsRoutes } from '../document-views/document-views.routes';
 import { registerDocumentActivityRoutes } from '../documents/document-activity/document-activity.routes';
 import { registerDocumentsBatchRoutes } from '../documents/documents-batch/documents-batch.routes';
+import { registerPdfOptimizationRoutes } from '../documents/pdf-optimization/pdf-optimization.routes';
 import { registerDocumentsRoutes } from '../documents/documents.routes';
 import { registerIntakeEmailsRoutes } from '../intake-emails/intake-emails.routes';
 import { registerInvitationsRoutes } from '../invitations/invitations.routes';
@@ -32,6 +33,7 @@ export function registerRoutes(context: RouteDefinitionContext) {
   registerOrganizationSettingsRoutes(context);
   registerDocumentsRoutes(context);
   registerDocumentsBatchRoutes(context);
+  registerPdfOptimizationRoutes(context);
   registerTagsRoutes(context);
   registerDocumentViewsRoutes(context);
   registerTaggingRulesRoutes(context);

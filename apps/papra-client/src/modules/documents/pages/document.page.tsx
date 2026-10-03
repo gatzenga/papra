@@ -406,6 +406,24 @@ export const DocumentPage: Component = () => {
                       organizationId={params.organizationId}
                     />
 
+                    <Show
+                      when={
+                        getDocument().mimeType === 'application/pdf' && !getDocument().isDeleted
+                      }
+                    >
+                      <Button
+                        as="a"
+                        href={`/organizations/${params.organizationId}/documents/${params.documentId}/optimize`}
+                        target="_blank"
+                        rel="noopener"
+                        variant="outline"
+                        size="sm"
+                      >
+                        <div class="i-tabler-sparkles size-4 mr-2" />
+                        {t('documents.pdf-optimization.action')}
+                      </Button>
+                    </Show>
+
                     {getDocument().isDeleted ? (
                       <Button
                         variant="destructive"

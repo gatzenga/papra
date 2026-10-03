@@ -45,7 +45,10 @@ export function registerSyncDocumentFileWithTrashHandlers({
     organizationId: string;
   }) {
     for (const documentId of documentIds) {
-      const { document } = await documentsRepository.getDocumentById({ documentId, organizationId });
+      const { document } = await documentsRepository.getDocumentById({
+        documentId,
+        organizationId,
+      });
 
       if (document) {
         await syncDocumentFileWithTrashState({ document });

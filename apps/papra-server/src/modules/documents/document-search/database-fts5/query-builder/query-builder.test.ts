@@ -393,7 +393,7 @@ describe('query-builder', async () => {
   });
 
   describe('handleTextExpression', () => {
-    test('builds a fts5 query matching both name and content columns scoped on organization id', () => {
+    test('builds a query matching the name column (fts5) or the tag names, never the content, scoped on organization id', () => {
       const { sqlQuery, issues } = handleTextExpression({
         expression: { type: 'text', value: 'budget report' },
         organizationId: 'org_1',
@@ -403,8 +403,8 @@ describe('query-builder', async () => {
       expect(issues).to.eql([]);
 
       expect(stringifySqlQuery(sqlQuery)).to.eql({
-        query: `"documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?)`,
-        params: ['organization_id:"org_1" {name content}:"budget report"*'],
+        query: `("documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?) or "documents"."id" in (select distinct "documents_tags"."document_id" from "documents_tags" inner join "tags" on "documents_tags"."tag_id" = "tags"."id" where ("tags"."organization_id" = ? and "tags"."normalized_name" LIKE ? ESCAPE '\\')))`,
+        params: ['organization_id:"org_1" name:"budget report"*', 'org_1', '%budget report%'],
       });
     });
 
@@ -418,8 +418,8 @@ describe('query-builder', async () => {
       expect(issues).to.eql([]);
 
       expect(stringifySqlQuery(sqlQuery)).to.eql({
-        query: `"documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?)`,
-        params: ['organization_id:"org_1" {name content}:"Q3 (final)"*'],
+        query: `("documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?) or "documents"."id" in (select distinct "documents_tags"."document_id" from "documents_tags" inner join "tags" on "documents_tags"."tag_id" = "tags"."id" where ("tags"."organization_id" = ? and "tags"."normalized_name" LIKE ? ESCAPE '\\')))`,
+        params: ['organization_id:"org_1" name:"Q3 (final)"*', 'org_1', '%q3 (final)%'],
       });
     });
   });
@@ -442,9 +442,11 @@ describe('query-builder', async () => {
       expect(issues).to.eql([]);
 
       expect(stringifySqlQuery(sqlQuery)).to.eql({
-        query: `("documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?) and "documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?))`,
+        query: `(("documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?) or "documents"."id" in (select distinct "documents_tags"."document_id" from "documents_tags" inner join "tags" on "documents_tags"."tag_id" = "tags"."id" where ("tags"."organization_id" = ? and "tags"."normalized_name" LIKE ? ESCAPE '\\'))) and "documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?))`,
         params: [
-          'organization_id:"org_1" {name content}:"invoice"*',
+          'organization_id:"org_1" name:"invoice"*',
+          'org_1',
+          '%invoice%',
           'organization_id:"org_1" name:"Q3"*',
         ],
       });
@@ -500,10 +502,14 @@ describe('query-builder', async () => {
       expect(issues).to.eql([]);
 
       expect(stringifySqlQuery(sqlQuery)).to.eql({
-        query: `("documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?) or "documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?))`,
+        query: `(("documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?) or "documents"."id" in (select distinct "documents_tags"."document_id" from "documents_tags" inner join "tags" on "documents_tags"."tag_id" = "tags"."id" where ("tags"."organization_id" = ? and "tags"."normalized_name" LIKE ? ESCAPE '\\'))) or ("documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?) or "documents"."id" in (select distinct "documents_tags"."document_id" from "documents_tags" inner join "tags" on "documents_tags"."tag_id" = "tags"."id" where ("tags"."organization_id" = ? and "tags"."normalized_name" LIKE ? ESCAPE '\\'))))`,
         params: [
-          'organization_id:"org_1" {name content}:"invoice"*',
-          'organization_id:"org_1" {name content}:"receipt"*',
+          'organization_id:"org_1" name:"invoice"*',
+          'org_1',
+          '%invoice%',
+          'organization_id:"org_1" name:"receipt"*',
+          'org_1',
+          '%receipt%',
         ],
       });
     });
@@ -555,8 +561,8 @@ describe('query-builder', async () => {
       expect(issues).to.eql([]);
 
       expect(stringifySqlQuery(sqlQuery)).to.eql({
-        query: `not "documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?)`,
-        params: ['organization_id:"org_1" {name content}:"spam"*'],
+        query: `not ("documents"."id" in (select distinct "document_id" from "documents_fts" where "documents_fts" = ?) or "documents"."id" in (select distinct "documents_tags"."document_id" from "documents_tags" inner join "tags" on "documents_tags"."tag_id" = "tags"."id" where ("tags"."organization_id" = ? and "tags"."normalized_name" LIKE ? ESCAPE '\\')))`,
+        params: ['organization_id:"org_1" name:"spam"*', 'org_1', '%spam%'],
       });
     });
 
