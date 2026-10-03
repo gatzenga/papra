@@ -128,6 +128,27 @@ export async function fetchDocument({
   };
 }
 
+// The document whose file has this name, active or trashed
+export async function fetchDocumentBySlug({
+  slug,
+  isDeleted,
+  organizationId,
+}: {
+  slug: string;
+  isDeleted: boolean;
+  organizationId: string;
+}) {
+  const { document } = await apiClient<{ document: AsDto<Document> }>({
+    method: 'GET',
+    path: `/api/organizations/${organizationId}/documents/lookup`,
+    query: { slug, isDeleted: String(isDeleted) },
+  });
+
+  return {
+    document: coerceDates(document),
+  };
+}
+
 export async function fetchDocumentFile({
   documentId,
   organizationId,

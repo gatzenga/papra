@@ -12,6 +12,7 @@ import { createError } from '../shared/errors/errors';
 import { omitUndefined } from '../shared/objects';
 import { isDefined, isNil, uniq } from '../shared/utils';
 import { createDocumentAlreadyExistsError, createDocumentNotFoundError } from './documents.errors';
+import { TRASH_STORAGE_KEY_PREFIX } from '../storage/storage.constants';
 import { documentsTable } from './documents.table';
 
 export type DocumentsRepository = ReturnType<typeof createDocumentsRepository>;
@@ -22,6 +23,7 @@ export function createDocumentsRepository({ db }: { db: Database }) {
       saveOrganizationDocument,
       getOrganizationDeletedDocuments,
       getDocumentById,
+      getDocumentBySlug,
       softDeleteDocument,
       softDeleteDocuments,
       getOrganizationDeletedDocumentsCount,
@@ -165,6 +167,35 @@ async function getDocumentById({
     .from(documentsTable)
     .where(
       and(eq(documentsTable.id, documentId), eq(documentsTable.organizationId, organizationId)),
+    );
+
+  return { document };
+}
+
+// Documents are found by the name of their file: the active one by its key, a trashed one by the key
+// it had before it moved to the trash
+async function getDocumentBySlug({
+  slug,
+  isDeleted,
+  organizationId,
+  db,
+}: {
+  slug: string;
+  isDeleted: boolean;
+  organizationId: string;
+  db: Database;
+}) {
+  const [document] = await db
+    .select()
+    .from(documentsTable)
+    .where(
+      and(
+        eq(documentsTable.organizationId, organizationId),
+        eq(documentsTable.isDeleted, isDeleted),
+        isDeleted
+          ? inArray(documentsTable.originalStorageKey, [slug, `${TRASH_STORAGE_KEY_PREFIX}${slug}`])
+          : eq(documentsTable.originalStorageKey, slug),
+      ),
     );
 
   return { document };

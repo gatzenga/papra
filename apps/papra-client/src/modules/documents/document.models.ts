@@ -223,6 +223,17 @@ export function makeDocumentSearchQuery({ tags = [], query }: DocumentSearchCrit
     .join(' ');
 }
 
+// Documents are addressed by the name of their file (unique), trashed ones are marked as such
+export function getDocumentPath({
+  document,
+  suffix = '',
+}: {
+  document: { id: string; slug?: string; isDeleted?: boolean };
+  suffix?: string;
+}) {
+  return `/documents/${encodeURIComponent(document.slug ?? document.id)}${suffix}${document.isDeleted ? '?deleted=1' : ''}`;
+}
+
 export function makeDocumentSearchPermalink({ search }: { search: DocumentSearchCriteria }) {
   const queryString = makeDocumentSearchQuery(search);
 
@@ -250,7 +261,7 @@ export function getDocumentOpenWithApps({
         id: 'pdf-viewer',
         labelKey: 'documents.open-with.pdf-viewer',
         icon: 'i-tabler-file-type-pdf',
-        href: `/documents/${document.id}/pdf-viewer`,
+        href: getDocumentPath({ document, suffix: '/pdf-viewer' }),
       },
     },
   ];

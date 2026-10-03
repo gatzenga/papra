@@ -16,6 +16,7 @@ import { createToast } from '@/modules/ui/components/sonner';
 import { Button } from '@/modules/ui/components/button';
 import { Progress } from '@/modules/ui/components/progress';
 import { linkScrollContainers } from '../components/pdf-viewer/synced-pdf-pane.component';
+import { getDocumentPath } from '../document.models';
 import { DOCUMENTS_BROADCAST_CHANNEL } from '../documents.constants';
 import { fetchDocument, fetchDocumentFile } from '../documents.services';
 import type { PdfOptimizationJob } from '../pdf-optimization.services';
@@ -171,7 +172,9 @@ export const PdfOptimizationPage: Component = () => {
 
       window.close();
       // Closing only works for tabs opened by the app, otherwise show the document
-      window.location.href = `/documents/${params.documentId}`;
+      window.location.href = documentQuery.data
+        ? getDocumentPath({ document: documentQuery.data.document })
+        : '/documents';
     } catch {
       createToast({ type: 'error', message: t('documents.pdf-optimization.apply-failed') });
       setIsApplying(false);

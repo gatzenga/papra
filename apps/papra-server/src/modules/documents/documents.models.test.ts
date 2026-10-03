@@ -3,6 +3,7 @@ import {
   buildOriginalDocumentKey,
   ensureSafeFileName,
   formatDocumentForApi,
+  getDocumentSlug,
   isDocumentSizeLimitEnabled,
   joinStorageKeyParts,
 } from './documents.models';
@@ -117,7 +118,13 @@ describe('documents models', () => {
         updatedAt: new Date('2025-01-01'),
         documentDate: new Date('2025-12-24'),
         notes: null,
+        slug: 'org_1/originals/doc_1.txt',
       });
+    });
+
+    test('the slug of a trashed document is the name its file had before it moved to the trash', () => {
+      expect(getDocumentSlug({ storageKey: '.trash/Rechnung.pdf' })).to.eql('Rechnung.pdf');
+      expect(getDocumentSlug({ storageKey: 'Rechnung.pdf' })).to.eql('Rechnung.pdf');
     });
   });
 

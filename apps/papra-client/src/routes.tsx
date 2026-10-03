@@ -10,6 +10,7 @@ import { RequestPasswordResetPage } from './modules/auth/pages/request-password-
 import { ResetPasswordPage } from './modules/auth/pages/reset-password.page';
 import { DeletedDocumentsPage } from './modules/documents/pages/deleted-documents.page';
 import { DocumentPdfViewerPage } from './modules/documents/pages/document-pdf-viewer.page';
+import { DocumentProvider } from './modules/documents/document.provider';
 import { DocumentPage } from './modules/documents/pages/document.page';
 import { DocumentsPage } from './modules/documents/pages/documents.page';
 import { PdfOptimizationPage } from './modules/documents/pages/pdf-optimization.page';
@@ -64,8 +65,14 @@ export const routes: RouteDefinition[] = [
                 component: DocumentsPage,
               },
               {
-                path: '/documents/:documentId',
-                component: DocumentPage,
+                path: '/documents/:documentSlug',
+                component: DocumentProvider,
+                children: [
+                  {
+                    path: '/',
+                    component: DocumentPage,
+                  },
+                ],
               },
               {
                 path: '/deleted',
@@ -78,12 +85,18 @@ export const routes: RouteDefinition[] = [
             ],
           },
           {
-            path: '/documents/:documentId/pdf-viewer',
-            component: DocumentPdfViewerPage,
-          },
-          {
-            path: '/documents/:documentId/optimize',
-            component: PdfOptimizationPage,
+            path: '/documents/:documentSlug',
+            component: DocumentProvider,
+            children: [
+              {
+                path: '/pdf-viewer',
+                component: DocumentPdfViewerPage,
+              },
+              {
+                path: '/optimize',
+                component: PdfOptimizationPage,
+              },
+            ],
           },
         ],
       },

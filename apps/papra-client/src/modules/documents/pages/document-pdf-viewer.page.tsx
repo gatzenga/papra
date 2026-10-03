@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/solid-query';
 import { createMemo, lazy, onCleanup, Show, Suspense } from 'solid-js';
 import { useI18n } from '@/modules/i18n/i18n.provider';
 import { Button } from '@/modules/ui/components/button';
+import { getDocumentPath } from '../document.models';
 import { fetchDocument, fetchDocumentFile } from '../documents.services';
 
 const PdfViewer = lazy(async () =>
@@ -77,7 +78,16 @@ export const DocumentPdfViewerPage: Component = () => {
               <span class="text-sm font-medium truncate">{documentQuery.data?.document.name}</span>
             </div>
 
-            <Button as={A} href={`/documents/${params.documentId}`} variant="ghost" size="icon">
+            <Button
+              as={A}
+              href={
+                documentQuery.data
+                  ? getDocumentPath({ document: documentQuery.data.document })
+                  : '/documents'
+              }
+              variant="ghost"
+              size="icon"
+            >
               <div class="i-tabler-x size-4" />
             </Button>
           </div>

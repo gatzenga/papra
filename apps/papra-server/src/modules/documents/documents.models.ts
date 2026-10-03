@@ -1,3 +1,4 @@
+import { TRASH_STORAGE_KEY_PREFIX } from '../storage/storage.constants';
 import type { PartialBy } from '@corentinth/chisels';
 import type { DbSelectableDocument } from './documents.types';
 import filenamify from 'filenamify';
@@ -46,12 +47,22 @@ export function formatDocumentForApi<T extends PartialBy<DbSelectableDocument, '
 }: {
   document: T;
 }) {
-  return omit(document, [
-    'fileEncryptionAlgorithm',
-    'fileEncryptionKeyWrapped',
-    'fileEncryptionKekVersion',
-    'originalStorageKey',
-  ]);
+  return {
+    ...omit(document, [
+      'fileEncryptionAlgorithm',
+      'fileEncryptionKeyWrapped',
+      'fileEncryptionKekVersion',
+      'originalStorageKey',
+    ]),
+    // The name of the file on disk, it is unique and used in the document URLs instead of the id
+    slug: getDocumentSlug({ storageKey: document.originalStorageKey }),
+  };
+}
+
+export function getDocumentSlug({ storageKey }: { storageKey: string | undefined }) {
+  return storageKey?.startsWith(TRASH_STORAGE_KEY_PREFIX)
+    ? storageKey.slice(TRASH_STORAGE_KEY_PREFIX.length)
+    : storageKey;
 }
 
 export function formatDocumentsForApi<T extends PartialBy<DbSelectableDocument, 'content'>>({

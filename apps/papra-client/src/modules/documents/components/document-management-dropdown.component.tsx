@@ -14,7 +14,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/modules/ui/components/dropdown-menu';
-import { getDocumentOpenWithApps } from '../document.models';
+import { getDocumentOpenWithApps, getDocumentPath } from '../document.models';
 import { useDeleteDocument, useDownloadDocument } from '../documents.composables';
 import { DocumentOpenWithDropdownItems } from './open-with.component';
 import { useRenameDocumentDialog } from './rename-document-button.component';
@@ -44,7 +44,11 @@ export const DocumentManagementDropdown: Component<{ document: Document }> = (pr
         )}
       />
       <DropdownMenuContent class="min-w-48">
-        <DropdownMenuItem class="cursor-pointer " as={A} href={`/documents/${props.document.id}`}>
+        <DropdownMenuItem
+          class="cursor-pointer "
+          as={A}
+          href={getDocumentPath({ document: props.document })}
+        >
           <div class="i-tabler-info-circle size-4 mr-2" />
           <span>{t('documents.management.details')}</span>
         </DropdownMenuItem>

@@ -17,7 +17,7 @@ import { createSubscriptionsRepository } from '../subscriptions/subscriptions.re
 import { createTagsRepository } from '../tags/tags.repository';
 import { DEFAULT_DOCUMENT_SEARCH_SORT } from './document-search/document-search.constants';
 import { searchOrganizationDocuments } from './document-search/document-search.usecase';
-import { createDocumentIsNotDeletedError } from './documents.errors';
+import { createDocumentIsNotDeletedError, createDocumentNotFoundError } from './documents.errors';
 import {
   formatDocumentForApi,
   formatDocumentsForApi,
@@ -50,6 +50,7 @@ export function registerDocumentsRoutes(context: RouteDefinitionContext) {
   setupRestoreDocumentRoute(context);
   setupGetDeletedDocumentsRoute(context);
   setupGetOrganizationDocumentsStatsRoute(context);
+  setupLookupDocumentRoute(context);
   setupGetDocumentRoute(context);
   setupDeleteTrashDocumentRoute(context);
   setupDeleteAllTrashDocumentsRoute(context);
@@ -151,6 +152,53 @@ function setupGetDeletedDocumentsRoute({ app, db }: RouteDefinitionContext) {
         documents: formatDocumentsForApi({ documents }),
         documentsCount,
       });
+    },
+  );
+}
+
+// Finds a document by the name of its file, registered before the route by id
+function setupLookupDocumentRoute({ app, db }: RouteDefinitionContext) {
+  app.get(
+    '/api/organizations/:organizationId/documents/lookup',
+    requireAuthentication({ apiKeyPermissions: ['documents:read'] }),
+    validateParams(v.strictObject({ organizationId: organizationIdSchema })),
+    validateQuery(
+      v.strictObject({
+        slug: v.pipe(v.string(), v.minLength(1), v.maxLength(1024)),
+        isDeleted: v.optional(v.picklist(['true', 'false']), 'false'),
+      }),
+    ),
+    async (context) => {
+      const { userId } = getUser({ context });
+
+      const { organizationId } = context.req.valid('param');
+      const { slug, isDeleted } = context.req.valid('query');
+
+      const documentsRepository = createDocumentsRepository({ db });
+
+      await ensureUserIsInOrganization({
+        userId,
+        organizationId,
+        organizationsRepository: createOrganizationsRepository({ db }),
+      });
+
+      const { document } = await documentsRepository.getDocumentBySlug({
+        slug,
+        isDeleted: isDeleted === 'true',
+        organizationId,
+      });
+
+      if (!document) {
+        throw createDocumentNotFoundError();
+      }
+
+      const { enrichedDocument } = await enrichAndFormatDocumentForApi({
+        document,
+        tagsRepository: createTagsRepository({ db }),
+        customPropertiesRepository: createCustomPropertiesRepository({ db }),
+      });
+
+      return context.json({ document: enrichedDocument });
     },
   );
 }

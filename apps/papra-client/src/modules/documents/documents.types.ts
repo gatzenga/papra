@@ -5,6 +5,8 @@ import type { DOCUMENT_ACTIVITY_EVENTS } from './documents.constants';
 
 export type Document = {
   id: string;
+  // The file name, unique, used in the document URLs
+  slug?: string;
   organizationId: string;
   name: string;
   mimeType: string;

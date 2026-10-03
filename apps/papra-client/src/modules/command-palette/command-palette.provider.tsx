@@ -14,7 +14,11 @@ import {
   Show,
   useContext,
 } from 'solid-js';
-import { getDocumentIcon, makeDocumentSearchPermalink } from '../documents/document.models';
+import {
+  getDocumentIcon,
+  getDocumentPath,
+  makeDocumentSearchPermalink,
+} from '../documents/document.models';
 import { fetchOrganizationDocuments } from '../documents/documents.services';
 import { useI18n } from '../i18n/i18n.provider';
 import { cn } from '../shared/style/cn';
@@ -48,9 +52,9 @@ export function useCommandPalette() {
 
 export const CommandPaletteProvider: ParentComponent = (props) => {
   const [getIsCommandPaletteOpen, setIsCommandPaletteOpen] = createSignal(false);
-  const [getMatchingDocuments, setMatchingDocuments] = createSignal<{ id: string; name: string }[]>(
-    [],
-  );
+  const [getMatchingDocuments, setMatchingDocuments] = createSignal<
+    { id: string; name: string; slug?: string; isDeleted?: boolean }[]
+  >([]);
   const [getSearchQuery, setSearchQuery] = createSignal('');
   const [getIsLoading, setIsLoading] = createSignal(false);
   const [getMatchingDocumentsTotalCount, setMatchingDocumentsTotalCount] = createSignal(0);
@@ -131,7 +135,7 @@ export const CommandPaletteProvider: ParentComponent = (props) => {
         ...getMatchingDocuments().map((document) => ({
           label: document.name,
           icon: getDocumentIcon({ document }),
-          action: () => navigate(`/documents/${document.id}`),
+          action: () => navigate(getDocumentPath({ document })),
           forceMatch: true,
         })),
 

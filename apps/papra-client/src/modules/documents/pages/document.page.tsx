@@ -50,6 +50,7 @@ import {
   getDaysBeforePermanentDeletion,
   getDocumentActivityIcon,
   getDocumentOpenWithApps,
+  getDocumentPath,
 } from '../document.models';
 import {
   useDeleteDocument,
@@ -445,7 +446,7 @@ export const DocumentPage: Component = () => {
                     >
                       <Button
                         as="a"
-                        href={`/documents/${params.documentId}/optimize`}
+                        href={getDocumentPath({ document: getDocument(), suffix: '/optimize' })}
                         target="_blank"
                         rel="noopener"
                         variant="outline"

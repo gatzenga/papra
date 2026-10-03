@@ -1,3 +1,4 @@
+import { getDocumentPath } from '../document.models';
 import type { ParentComponent } from 'solid-js';
 import type { Document } from '../documents.types';
 import { safely } from '@corentinth/chisels';
@@ -208,7 +209,7 @@ export const DocumentUploadProvider: ParentComponent<{ organizationId: string }>
                     <Switch>
                       <Match when={task.status === 'success'}>
                         <A
-                          href={`/documents/${(task as TaskSuccess).document.id}`}
+                          href={getDocumentPath({ document: (task as TaskSuccess).document })}
                           class="text-sm truncate min-w-0 flex items-center gap-4 min-h-48px group hover:bg-muted/50 transition-colors px-6 border-b border-border/80"
                         >
                           <div class="flex-1 truncate">{task.file.name}</div>
