@@ -33,7 +33,6 @@ import { createError } from '../shared/errors/errors';
 import { createLogger } from '../shared/logger/logger';
 import { createByteCounter } from '../shared/streams/byte-counter';
 import { createSha256HashTransformer } from '../shared/streams/stream-hash';
-import { collectStreamToFile } from '../shared/streams/stream.convertion';
 import { isNil } from '../shared/utils';
 import { createSubscriptionsRepository } from '../subscriptions/subscriptions.repository';
 import { createTaggingRulesRepository } from '../tagging-rules/tagging-rules.repository';
@@ -53,7 +52,6 @@ import { createDocumentsRepository } from './documents.repository';
 import { buildCreateDocumentStorageKey } from './document-storage.usecases';
 import { buildSyncDocumentFileWithTrashState } from './document-trash-storage.usecases';
 import { buildResolveStoragePatternContext } from './storage-patterns/storage-pattern.usecases';
-import type { ExtractDocumentTextUsecase } from './content-extraction/content-extraction.usecases';
 
 type DocumentStorageContext = {
   storageKey: string;
@@ -65,8 +63,6 @@ export async function createDocument({
   mimeType,
   userId,
   organizationId,
-  ocrLanguages = [],
-  isContentExtractionEnabled = true,
   createDocumentStorageKey,
   syncDocumentFileWithTrashState,
   documentsRepository,
@@ -87,8 +83,6 @@ export async function createDocument({
   mimeType: string;
   userId?: string;
   organizationId: string;
-  ocrLanguages?: string[];
-  isContentExtractionEnabled?: boolean;
   createDocumentStorageKey: CreateDocumentStorageKey;
   syncDocumentFileWithTrashState?: SyncDocumentFileWithTrashState;
   documentsRepository: DocumentsRepository;
@@ -196,8 +190,6 @@ export async function createDocument({
         planEntitlementDefinitionRegistry,
         documentId,
         taskServices,
-        ocrLanguages,
-        isContentExtractionEnabled,
         logger,
       });
 
@@ -252,9 +244,6 @@ export function createDocumentCreationUsecase({
           organizationsRepository: createOrganizationsRepository({ db }),
         }),
       }),
-    ocrLanguages: initialDeps.ocrLanguages ?? config.documents.ocrLanguages,
-    isContentExtractionEnabled:
-      initialDeps.isContentExtractionEnabled ?? config.documents.isContentExtractionEnabled,
     generateDocumentId: initialDeps.generateDocumentId,
     logger: initialDeps.logger,
   };
@@ -369,9 +358,6 @@ async function createNewDocument({
   documentsStorageService,
   newFileStorageContext,
   documentId,
-  taskServices,
-  ocrLanguages = [],
-  isContentExtractionEnabled = true,
   logger,
 }: {
   createdAt: Date;
@@ -390,8 +376,6 @@ async function createNewDocument({
   planEntitlementDefinitionRegistry: PlanEntitlementDefinitionRegistry;
   newFileStorageContext: DocumentStorageContext;
   taskServices: TaskServices;
-  ocrLanguages?: string[];
-  isContentExtractionEnabled?: boolean;
   logger: Logger;
 }) {
   // TODO: wrap in a transaction
@@ -446,13 +430,6 @@ async function createNewDocument({
   }
 
   const { document } = result;
-
-  if (isContentExtractionEnabled) {
-    await taskServices.scheduleJob({
-      taskName: 'extract-document-file-content',
-      data: { documentId, organizationId, ocrLanguages },
-    });
-  }
 
   logger.info({ documentId, userId, organizationId, mimeType }, 'Document created');
 
@@ -619,69 +596,6 @@ export async function deleteAllTrashDocuments({
       }),
     ),
   );
-}
-
-export async function extractAndSaveDocumentFileContent({
-  documentId,
-  organizationId,
-  documentsRepository,
-  documentsStorageService,
-  taggingRulesRepository,
-  tagsRepository,
-  eventServices,
-  extractDocumentText,
-}: {
-  documentId: string;
-  organizationId: string;
-  documentsRepository: DocumentsRepository;
-  documentsStorageService: StorageService;
-  taggingRulesRepository: TaggingRulesRepository;
-  tagsRepository: TagsRepository;
-  eventServices: EventServices;
-  extractDocumentText: ExtractDocumentTextUsecase;
-}) {
-  const { document } = await documentsRepository.getDocumentById({ documentId, organizationId });
-
-  if (!document) {
-    throw createDocumentNotFoundError();
-  }
-
-  const { fileStream } = await documentsStorageService.getFileStream({
-    storageKey: document.originalStorageKey,
-    fileEncryptionAlgorithm: document.fileEncryptionAlgorithm,
-    fileEncryptionKekVersion: document.fileEncryptionKekVersion,
-    fileEncryptionKeyWrapped: document.fileEncryptionKeyWrapped,
-  });
-
-  const { file } = await collectStreamToFile({
-    fileStream,
-    fileName: document.name,
-    mimeType: document.mimeType,
-  });
-
-  const { text } = await extractDocumentText({ file });
-
-  const { document: updatedDocument } = await updateDocument({
-    documentId,
-    organizationId,
-    changes: { content: text },
-    documentsRepository,
-    eventServices,
-  });
-
-  if (isNil(updatedDocument)) {
-    // This should never happen, but for type safety
-    throw createDocumentNotFoundError();
-  }
-
-  await applyTaggingRules({
-    document: updatedDocument,
-    taggingRulesRepository,
-    tagsRepository,
-    eventServices,
-  });
-
-  return { document: updatedDocument };
 }
 
 export async function trashDocument({

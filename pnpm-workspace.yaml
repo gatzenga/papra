@@ -29,11 +29,9 @@ syncInjectedDepsAfterScripts:
   - build
 
 allowBuilds:
-  canvas: true
   core-js: true
   sharp: true
   esbuild: true
-  tesseract.js: false
   cpu-features: false
   dtrace-provider: false
   protobufjs: false

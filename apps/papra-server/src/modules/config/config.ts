@@ -43,7 +43,6 @@ import { getCommitInfo } from './config.usecases';
 import { planEntitlementsConfig } from '../plan-entitlements/plan-entitlements.config';
 import { aiConfig } from '../ai/ai.config';
 import { autoTaggingConfig } from '../auto-tagging/auto-tagging.config';
-import { documentContentExtractionConfig } from '../documents/content-extraction/content-extraction.config';
 import { ensureIntakeEmailWebhookSecretisSetWhenIntakeEmailsAreEnabled } from '../intake-emails/intake-emails.config.models';
 
 const documentsStorageConfig = {
@@ -174,7 +173,6 @@ export const configDefinition = {
   database: databaseConfig,
   documents: documentsConfig,
   documentsStorage: documentsStorageConfig,
-  documentContentExtraction: documentContentExtractionConfig,
   documentSearch: documentSearchConfig,
   auth: authConfig,
   ingestionFolder: ingestionFolderConfig,

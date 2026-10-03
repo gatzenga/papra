@@ -2,7 +2,6 @@ import type { Component } from 'solid-js';
 import type { Document } from '../documents.types';
 import { useMutation, useQueryClient } from '@tanstack/solid-query';
 import { createSignal, Show } from 'solid-js';
-import { useConfig } from '@/modules/config/config.provider';
 import { useI18n } from '@/modules/i18n/i18n.provider';
 import { cn } from '@/modules/shared/style/cn';
 import { Alert, AlertDescription } from '@/modules/ui/components/alert';
@@ -10,13 +9,10 @@ import { Button } from '@/modules/ui/components/button';
 import { createToast } from '@/modules/ui/components/sonner';
 import { TextArea } from '@/modules/ui/components/textarea';
 import { TextFieldRoot } from '@/modules/ui/components/textfield';
-import { useReprocessDocument } from '../documents.composables';
 import { updateDocument } from '../documents.services';
 
 export const DocumentContentEditionPanel: Component<{ document: Document }> = (props) => {
   const { t } = useI18n();
-  const { config } = useConfig();
-  const { reprocess, getIsReprocessing } = useReprocessDocument();
   const queryClient = useQueryClient();
 
   const [isEditing, setIsEditing] = createSignal(false);
@@ -72,21 +68,9 @@ export const DocumentContentEditionPanel: Component<{ document: Document }> = (p
       </TextFieldRoot>
       <div class="flex flex-wrap justify-end gap-2">
         <Show
-          when={config.documents.isReprocessingEnabled && !props.document.isDeleted && !isEditing()}
-        >
-          <Button
-            variant="outline"
-            onClick={async () => reprocess({ document: props.document })}
-            isLoading={getIsReprocessing()}
-          >
-            <div class="i-tabler-refresh size-4 mr-2" />
-            {t('documents.reprocess.action')}
-          </Button>
-        </Show>
-        <Show
           when={isEditing()}
           fallback={
-            <Button variant="outline" onClick={handleEdit} disabled={getIsReprocessing()}>
+            <Button variant="outline" onClick={handleEdit}>
               <div class="i-tabler-edit size-4 mr-2" />
               {t('documents.actions.edit')}
             </Button>

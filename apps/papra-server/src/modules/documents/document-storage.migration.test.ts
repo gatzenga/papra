@@ -57,7 +57,7 @@ describe('document-storage migration', () => {
       });
     }
 
-    const run = () =>
+    const run = async () =>
       migrateLegacyDocumentStorageKeys({ db, documentsStorageService, storagePatternConfig, logger: createNoopLogger() });
 
     expect(await run()).to.eql({ migrated: 2, failed: 0 });

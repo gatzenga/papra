@@ -57,7 +57,6 @@
     "@libsql/client": "^0.14.0",
     "@owlrelay/api-sdk": "^0.0.4",
     "@owlrelay/webhook": "^0.0.4",
-    "@papra/lecture": "workspace:*",
     "@papra/search-parser": "workspace:*",
     "@papra/std": "workspace:*",
     "@papra/webhooks": "workspace:*",

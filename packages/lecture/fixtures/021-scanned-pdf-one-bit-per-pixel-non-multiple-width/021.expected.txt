@@ -1,1 +1,0 @@
-Test 1bpp width non-multiple of 8

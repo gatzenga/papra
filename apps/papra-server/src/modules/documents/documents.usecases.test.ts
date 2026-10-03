@@ -13,7 +13,6 @@ import {
   collectReadableStreamToString,
   createReadableStream,
 } from '../shared/streams/readable-stream';
-import { createTaggingRulesRepository } from '../tagging-rules/tagging-rules.repository';
 import { createTagsRepository } from '../tags/tags.repository';
 import { documentsTagsTable } from '../tags/tags.table';
 import { createInMemoryTaskServices } from '../tasks/tasks.test-utils';
@@ -26,7 +25,6 @@ import { documentsTable } from './documents.table';
 import {
   createDocumentCreationUsecase,
   enrichAndFormatDocumentsForApi,
-  extractAndSaveDocumentFileContent,
   restoreDocument,
   trashDocument,
   updateDocument,
@@ -766,135 +764,6 @@ describe('documents usecases', () => {
         originalSize: 9,
         mimeType: 'text/plain',
       });
-    });
-  });
-
-  describe('extractAndSaveDocumentFileContent', () => {
-    test('given a stored document, its content is extracted and saved in the db', async () => {
-      const { db } = await createInMemoryDatabase({
-        users: [{ id: 'user-1', email: 'user-1@example.com' }],
-        organizations: [{ id: 'organization-1', name: 'Organization 1' }],
-        organizationMembers: [
-          { organizationId: 'organization-1', userId: 'user-1', role: ORGANIZATION_ROLES.OWNER },
-        ],
-      });
-
-      const config = overrideConfig({
-        organizationPlans: { isFreePlanUnlimited: true },
-        documentsStorage: { driver: 'in-memory' },
-      });
-
-      const documentsRepository = createDocumentsRepository({ db });
-      const documentsStorageService = createStorageService({
-        storageConfig: config.documentsStorage,
-        encryptionOptions: {
-          isEncryptionEnabled: config.documentsStorage.encryption.isEncryptionEnabled,
-          keyEncryptionKeys: config.documentsStorage.encryption.documentKeyEncryptionKeys,
-        },
-      });
-      const taggingRulesRepository = createTaggingRulesRepository({ db });
-      const tagsRepository = createTagsRepository({ db });
-
-      await db.insert(documentsTable).values({
-        id: 'document-1',
-        organizationId: 'organization-1',
-        originalStorageKey: 'organization-1/originals/document-1.txt',
-        mimeType: 'text/plain',
-        name: 'file-1.txt',
-        originalName: 'file-1.txt',
-        originalSha256Hash: 'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9',
-      });
-
-      await documentsStorageService.saveFile({
-        fileStream: createReadableStream({ content: 'hello world' }),
-        fileName: 'file-1.txt',
-        mimeType: 'text/plain',
-        storageKey: 'organization-1/originals/document-1.txt',
-      });
-
-      await extractAndSaveDocumentFileContent({
-        documentId: 'document-1',
-        organizationId: 'organization-1',
-        documentsRepository,
-        documentsStorageService,
-        taggingRulesRepository,
-        tagsRepository,
-        eventServices: createTestEventServices(),
-        extractDocumentText: async ({ file }) => ({
-          text: await collectReadableStreamToString({ stream: file.stream() }),
-        }),
-      });
-
-      const documentRecords = await db.select().from(documentsTable);
-
-      expect(documentRecords.length).to.eql(1);
-      expect(documentRecords[0]).to.deep.include({
-        id: 'document-1',
-        organizationId: 'organization-1',
-        content: 'hello world', // The content is extracted and saved in the db
-      });
-    });
-
-    test('a document.updated event is emitted when the document content is extracted and saved', async () => {
-      const { db } = await createInMemoryDatabase({
-        users: [{ id: 'user-1', email: 'user-1@example.com' }],
-        organizations: [{ id: 'organization-1', name: 'Organization 1' }],
-        organizationMembers: [
-          { organizationId: 'organization-1', userId: 'user-1', role: ORGANIZATION_ROLES.OWNER },
-        ],
-      });
-
-      const config = overrideConfig({
-        organizationPlans: { isFreePlanUnlimited: true },
-        documentsStorage: { driver: 'in-memory' },
-      });
-
-      const documentsRepository = createDocumentsRepository({ db });
-      const documentsStorageService = createStorageService({
-        storageConfig: config.documentsStorage,
-        encryptionOptions: {
-          isEncryptionEnabled: config.documentsStorage.encryption.isEncryptionEnabled,
-          keyEncryptionKeys: config.documentsStorage.encryption.documentKeyEncryptionKeys,
-        },
-      });
-      const taggingRulesRepository = createTaggingRulesRepository({ db });
-      const tagsRepository = createTagsRepository({ db });
-
-      await db.insert(documentsTable).values({
-        id: 'document-1',
-        organizationId: 'organization-1',
-        originalStorageKey: 'organization-1/originals/document-1.txt',
-        mimeType: 'text/plain',
-        name: 'file-1.txt',
-        originalName: 'file-1.txt',
-        originalSha256Hash: 'b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9',
-      });
-
-      await documentsStorageService.saveFile({
-        fileStream: createReadableStream({ content: 'hello world' }),
-        fileName: 'file-1.txt',
-        mimeType: 'text/plain',
-        storageKey: 'organization-1/originals/document-1.txt',
-      });
-
-      const eventServices = createTestEventServices();
-
-      await extractAndSaveDocumentFileContent({
-        documentId: 'document-1',
-        organizationId: 'organization-1',
-        documentsRepository,
-        documentsStorageService,
-        taggingRulesRepository,
-        tagsRepository,
-        eventServices,
-        extractDocumentText: async ({ file }) => ({
-          text: await collectReadableStreamToString({ stream: file.stream() }),
-        }),
-      });
-
-      expect(eventServices.getEmittedEvents().map(({ eventName }) => eventName)).to.eql([
-        'document.updated',
-      ]);
     });
   });
 

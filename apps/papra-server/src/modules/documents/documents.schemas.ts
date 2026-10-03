@@ -4,7 +4,7 @@ import {
   documentSearchSortFields,
   documentSearchSortOrders,
 } from './document-search/document-search.constants';
-import { DOCUMENT_ID_REGEX, OCR_LANGUAGES } from './documents.constants';
+import { DOCUMENT_ID_REGEX } from './documents.constants';
 
 export const documentIdSchema = createRegexSchema(DOCUMENT_ID_REGEX);
 
@@ -23,13 +23,6 @@ export const updateDocumentBodySchema = v.pipe(
       data.notes !== undefined,
     "At least one of 'name', 'content', 'documentDate' or 'notes' must be provided",
   ),
-);
-
-export const ocrLanguagesSchema = v.array(v.picklist(OCR_LANGUAGES));
-export const stringCoercedOcrLanguagesSchema = v.pipe(
-  v.string(),
-  v.transform((value) => value.split(',').map((lang) => lang.trim())),
-  ocrLanguagesSchema,
 );
 
 export const searchDocumentsQuerySchema = v.pipe(v.string(), v.maxLength(1024));

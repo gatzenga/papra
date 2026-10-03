@@ -3,7 +3,7 @@ import type { Component, ParentComponent } from 'solid-js';
 import { A, useNavigate, useParams } from '@solidjs/router';
 import { AppLogo } from '@/modules/ui/components/app-logo';
 import { useQuery } from '@tanstack/solid-query';
-import { createEffect, on, Show } from 'solid-js';
+import { createEffect, on } from 'solid-js';
 import {
   DocumentUploadProvider,
   useDocumentUpload,

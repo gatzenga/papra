@@ -1,3 +1,0 @@
-Test document for 1-bit scanned PDF
-This fixture tests GRAYSCALE_1BPP extraction.
-Line three with some more text.
