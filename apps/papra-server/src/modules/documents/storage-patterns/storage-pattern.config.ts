@@ -16,6 +16,12 @@ export const storagePatternConfig = {
     default: true,
     env: 'DOCUMENT_STORAGE_USE_LEGACY_STORAGE_KEY_DEFINITION_SYSTEM',
   },
+  isLegacyMigrationOnStartEnabled: {
+    doc: 'On startup, copy documents that still use the legacy storage key format ({{organization.id}}/originals/{{document.id}}) to the configured pattern and update the database. Old files are kept and the migration is skipped once nothing is left to migrate.',
+    schema: booleanishSchema,
+    default: true,
+    env: 'DOCUMENT_STORAGE_MIGRATE_LEGACY_ON_START',
+  },
   maxIncrementalSuffixAttempts: {
     doc: 'How many incremental suffixes to try when a storage key is already taken (e.g. file_1.txt, file_2.txt, ...). Set to 0 to skip incremental suffixes entirely.',
     schema: coercedPositiveIntegerSchema,

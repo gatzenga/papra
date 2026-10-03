@@ -12,6 +12,7 @@ import { createGracefulShutdownService } from './modules/app/graceful-shutdown/g
 import { getProcessMode } from './modules/app/process.models';
 import { createServer } from './modules/app/server';
 import { parseConfig } from './modules/config/config';
+import { migrateLegacyDocumentStorageKeys } from './modules/documents/document-storage.migration';
 import { createDocumentSearchServices } from './modules/documents/document-search/document-search.registry';
 import { createStorageService } from './modules/storage/storage.services';
 import { createEmailsServices } from './modules/emails/emails.services';
@@ -134,6 +135,15 @@ export async function startApp() {
   logger.info({ isWebMode, isWorkerMode }, 'Starting application');
 
   const globalDependencies = await buildServices({ config });
+
+  const { pattern: storagePatternConfig } = config.documentsStorage;
+  if (storagePatternConfig.isLegacyMigrationOnStartEnabled && !storagePatternConfig.useLegacyStorageKeyDefinitionSystem) {
+    await migrateLegacyDocumentStorageKeys({
+      db: globalDependencies.db,
+      documentsStorageService: globalDependencies.documentsStorageService,
+      storagePatternConfig,
+    });
+  }
 
   if (isWebMode) {
     await startWebMode({ logger, ...globalDependencies });

@@ -64,6 +64,12 @@ ENV INGESTION_FOLDER_ROOT=./ingestion
 ENV EMAILS_DRY_RUN=true
 ENV CLIENT_BASE_URL=http://localhost:1221
 
+# Store documents under their real name (no organization folder) instead of <org>/originals/<doc-id>.
+# Existing documents are copied to their name on the next start, the old files are kept.
+ENV DOCUMENT_STORAGE_USE_LEGACY_STORAGE_KEY_DEFINITION_SYSTEM=false
+ENV DOCUMENT_STORAGE_KEY_PATTERN={{document.name}}
+ENV DOCUMENT_STORAGE_MIGRATE_LEGACY_ON_START=true
+
 # Disable Better Auth telemetry
 ENV BETTER_AUTH_TELEMETRY=0
 
